@@ -1,0 +1,549 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <meta property="og:title" content="4000 английских слов за 2 месяца!"/>
+    <meta property="og:description" content="Веб-приложение поможет весело и непринужденно освоить 4000 английских слов за 2 месяца!"/>
+    <meta property="og:image" content="http://denisorlovmusic.ru/english4040/i/4000w.png"/>
+    <meta property="og:url" content= "http://denisorlovmusic.ru/english4040/m.html"/>
+
+    <script type="text/javascript" src="http://yandex.st/jquery/1.6.1/jquery.min.js"></script>
+    <title>4000 английских слов за 2 месяца</title>
+
+    <script type="text/javascript" src="utils.js"></script>
+    <script type="text/javascript" src="cookieLib.js"></script>
+    <script type="text/javascript" src="info.js"></script>
+    <script type="text/javascript" src="system.js"></script>
+    <script type="text/javascript" src="scheme.js"></script>
+    <script type="text/javascript" src="sets.js"></script>
+
+    <!--script type="text/javascript" src="dict51100.js"></script-->
+    <script type="text/javascript" src="dict71700.js"></script>
+    <script type="text/javascript" src="my_dict.js"></script>
+    <script type="text/javascript" src="img_dict.js"></script>
+    <script type="text/javascript" src="beginEnglishBase.js"></script>
+    <script type="text/javascript" src="trans.js"></script>
+
+<style type="text/css">
+#img{
+  border: 1px solid gray;
+  margin: 15px;
+  position: relative;
+
+   /* width: 350px;
+    height: 200px;
+    background-image: url(http://en365.ru/foto/fruit.jpg);
+    background-position-x: -25px;
+    background-position-y: -680px;
+    background-size: 410%;*/
+}
+#img, #enImagesPanel{
+    float: left;
+}
+#eiLearnedLabel:hover{
+    background-color: white;
+}
+#imgCurtan{
+    position: absolute;
+    background-color: white;
+    border: 1px solid gray;
+}
+#imgCurtan:hover{
+    opacity: 0.8;
+}
+/***/
+#swListWrap, #swScreen, #swMesure,#swListPanel{
+    /*float: left;
+    width: 100%;*/ /*800px;*/
+    border-radius: 3px;
+}
+    #swListPanel{
+        /*width: 100%;*/
+    }
+
+#swScreen{
+    /*height: 50%;
+    border1: 1px solid navy;*/
+}
+    #swScreen label:hover{background-color: white}
+
+#swListWrap{
+    height: 700px;
+    overflow: auto;
+}
+
+#swImageWrap{
+    /*background-image: url(http://en365.ru/foto/transport.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 40%;
+	float: left;*/
+	height: 50%;/*64*/
+    margin: 0.1%;
+    text-align: right;
+    position: relative;
+    background-color: white;
+}
+    #swImage{
+		height: 100%;
+        max-width: 100%;
+        max-height: 100%;	
+    }
+#swTranslation,#swWord,#swButtons{
+    margin: 0.1%;
+    /*float: right;
+	width: 59%;*/
+    z-index: 10000;
+}
+    #swButtons>*, #swButtons>*>*,#info {
+        font-size: 36px;
+    }
+    #swButtons > select {
+        max-width: 39%;
+    }
+#swTranslation,#swButtons,#swTranscription,#swOrigin,#info{
+    background-color: rgba(230, 230, 230, 0.2);
+    border-radius: 10px;
+}
+#swTranslation,#swWord,#swTranscription,#swOrigin,#inputOrigin{
+    font-size: 400%;
+    text-align: center;
+    text-shadow: 1px 1px 2px white;
+}
+    #inputOrigin{
+        width: 100%;
+    }
+#swTranslation{
+    color:green;
+
+    /*
+    height: 30%;
+    line-height: 88%;
+    overflow: auto;*/
+}
+#swWord{
+    /*height: 43%;*/
+    margin: 0 0.1% 0 0;
+    background-color: inherit;
+}
+
+#swTranscription, .transcription{
+    font-family: sans-serif;
+    font-weight: bold;
+    /*height: 49%;*/
+    color:red;
+}
+.origin{
+    /*height: 48%;*/
+    color:blue;
+    margin-top: 0.5%;
+}
+    .origin a {
+        text-decoration: none;
+        border-bottom: 1px dashed;
+    }
+#swTranslation.hide,#swWord.hide,#swTranscription.hide,#swOrigin.hide{
+    opacity: 0;
+}
+#swTranslation.hide:hover,#swWord.hide:hover,#swTranscription.hide:hover,#swOrigin.hide:hover{
+    opacity: 1;
+}
+
+#swButtons{
+    overflow: auto;
+    background-color: rgba(230, 230, 230, 0.5);
+}
+#swButtons > *{
+    vertical-align: top;
+    float: left;
+}
+
+
+#swButtons input[type=button], #swButtons button{
+    width: 20%;
+    height: 100px;
+}
+
+#swPlayer{
+    height: 0;
+}
+
+/***/
+.warn{
+    font-weight: bold;
+    color:red;
+}
+/***/
+.swText,.swLabel{
+    font-size: 150%;
+}
+    .swLabel{
+        color: white;
+        min-width: 550px;
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: sub;
+    }
+    .swLabel:hover{
+        color: inherit; background-color: lightskyblue;
+    }
+    .swText{
+        width: 200px;
+    }
+
+.keyBoardButton,.qwertyKeyBoardButton{
+    float:left;
+    width:15.5%;
+    height:12%;
+    margin: 0 1% 1% 0;
+    font-size:300%;
+    font-weight: bold;
+}
+.qwertyKeyBoardButton{
+    width:9%;
+}
+</style>
+
+
+
+<div style="display:none">
+	<textarea id="inTextarea" rows="10" cols="97"></textarea>
+	<div>
+		<input type="checkbox" id="toFilterLearnedChBox" title="Фильтровать выученые....">
+		<input type="button" value="by Words" onclick="outStudyWords( splitWords( getElem('inTextarea').value ) );">
+		<input type="button" value="by Rows" onclick="outStudyWords( splitWords( getElem('inTextarea').value, 1 ) );">
+		<input type="button" value="fastDict" onclick="fastDict( getElem('inTextarea').value )">
+		<br>
+		<input type="button" value="Scheme Buttons..." onclick="outSchemeButtons()">
+		<input type="button" value="tableToArray" onclick="tableToArray( getElem('inTextarea').value );">
+		<input type="button" value="tableToObj" onclick="tableToObj( getElem('inTextarea').value );">
+		<input type="button" value="buildPhrase" onclick="getElem('out').innerHTML = buildPhrase( getElem('inTextarea').value);">
+
+	</div>
+	<div id="out"></div>
+	<textarea id="outTextarea" cols="97"></textarea>
+	<div id="panel"></div>
+</div>
+
+<div id="studyWords">
+    <div id="swMesure" style="border: 1px solid green;box-sizing: border-box;position: relative;" title="">
+        <div id="swmPosition" style="height: 90%; border: 1px solid red; position: absolute; background-color: red; left: 89%;"></div>
+        <div id="swmIndicator" style="background-color: green; text-align: center; color: white; width: 0%;"></div>
+    </div>
+    <div id="swScreen">
+        <div id="swImageWrap" onclick="onImageClick()">
+            <div id="swWordWrap" style="position: absolute;" onclick="event.stopPropagation();">
+                <div id="swTranslation">Привет!</div>
+                <div id="swTranscription" class="transcription">[ˈheˈləu]</div>
+                <div id="swOrigin" class="origin">Hello</div>
+                <div id="swWord" class=" hide">
+                </div>
+            </div>
+
+            <div id="swChBoxWrap" style="position:absolute;right:0" onclick="event.stopPropagation();">
+                <input id="swChangeImage" type="button" value="*" title="сменить картинку" style="display:none" onclick="el=getElem('swImage'); getGoogleImg( el.getAttribute('data-word'), +(el.getAttribute('data-start'))+1 );">
+                <!--input type="checkbox" id="swLearnedChBox" value="appear" onclick="checkLearned(this.value, this.checked);">
+                <label for="swLearnedChBox">Выучено</label-->
+            </div>
+            <img id="swImage" src="http://www.jellymuffin.com/images/hello/images/pic47.jpg" onload="getElem('swChangeImage').value='*'" onerror="getGoogleImg( this.getAttribute('data-word'), +(this.getAttribute('data-start'))+1 )" title="a_ _ _ _ r" data-word="appear" data-start="1">
+            <div id="swImageFind" style="position: absolute; bottom: 0px; display: none; text-align: left;" onclick="event.stopPropagation();">
+                <input type="text" id="swTheme"><br>
+                <input type="text" id="swfWord">
+                <input type="button" value="find..." onclick="window.open('https://www.google.ru/search?q='+getElem('swfWord').value+'&amp;tbm=isch')"><br>
+                <input type="text" id="swfUrl">
+                <input type="button" value="set" onclick="setImageUrl( getElem('swfWord').value, {url: getElem('swfUrl').value} );getElem('swfUrl').value='';this.parentNode.style.display='none'">
+                <input type="button" value="X" onclick="this.parentNode.style.display='none'">
+            </div>
+        </div>
+        <div id="swButtons">
+            <div id="swPlayer"></div>
+            <audio id="swHtml5Player" src="http://www.howjsay.com/mp3/appear.mp3"></audio>
+
+            <button style="float: right;" onclick="playWord( getElem('swOrigin').innerHTML );">&#9654;<br>play</button>
+            <button style="float: right;" onclick="infoWrapToggle();">&#9786;<br>help</button>
+
+            <select style="display: none" id="swDictMode" title="Режим словаря">
+                <option>common</option><option>irreg.verbs</option><!--option>fast dict</option-->
+            </select>
+
+            <div style="display:none">
+                <select id="swShowMode" title="Режим показа слов">
+                    <option title="русский">rus</option><option title="английский">eng</option><option title="вперемешку">mix</option>
+                    <option title="все">all</option><option title="все со звуком">all+</option>
+                    <option title="не показывать">not</option><option title="не показывать со звуком">not+</option>
+                </select>
+                <input type="checkbox" id="swByOrder" value="" onclick=""><label for="swByOrder">подряд</label>
+                <input type="checkbox" id="swRepeat" checked="checked" value="" onclick=""><label for="swRepeat">повтор</label>
+            </div>
+
+
+            <select id="swBeginEnglishBaseFreq" title="Словарь с картинками: наиболее частое" onchange="ar=this.value.split(/[^\d]+/);repeated_dict = beginEnglishBase.slice(0,ar[0]);outStudyWords( objFromArrRange( beginEnglishBase, ar[0],ar[1]) );"></select>
+            <!--select id="swBeginEnglishBase" title="Словарь с картинками: по алфавиту" onchange="ar=this.value.split(/[^\d]+/);repeated_dict = beginEnglishBase.slice(0,ar[0]);outStudyWords( objFromArrRange( beginEnglishBase, ar[0],ar[1]) );" style="display:none"></select-->
+
+            <select id="swOptionMode" title="Режим изучения" onchange="setOptionMode( this.value )">
+                <option value="learn" title="изучение слов, вперемешку, с повторами">учим</option>
+                <option value="view" title="показ слов по порядку, с переводом, без повторов">смотрим</option>
+            </select>
+                
+        </div>
+        <input type="text" id="inputOrigin" value="" placeholder="введите слово..." onkeyup="inputOnKeyup(this)" onkeydown="inputOnKeydown(this)">
+        <span id="info" style="float: right;">Выберите набор карточек...</span>
+    </div>
+
+
+    <div id="swListWrap" style="display:none">
+        <div id="swListPanel">
+            <input type="checkbox" id="swListChAllBox" value="Все..." onclick="wordListCheckAll(this.checked);">
+            <label for="swListChAllBox">Все..</label>
+            <span id="swListOut">100/100</span>
+        </div>
+        <div id="swList"></div>
+    </div>
+
+    <div style="clear:both"></div>
+</div>
+
+<div id="keyBoard"></div>
+
+<style>
+#infoWrap{
+    display:none;
+    border: 1px solid navy;
+    width: 95%;
+    height: 95%;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.941176);
+    padding: 2%;
+    border-radius: 5px;
+    box-sizing: border-box;
+    position: fixed;
+    right: 2%;;
+    bottom: 2%;;
+    left: 2%;
+    font-size: 2em;
+}
+#infoPanel{
+    float: right;
+    width: 3.5em;
+    overflow: auto;
+    height: 100%;
+}
+#infoDictHead{
+    cursor: pointer;
+    border-bottom: 1px dashed;
+    margin-bottom:0;
+}
+
+.ipBut,.dcBut{
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 2px;
+}
+.ipBut{
+    float:right;
+    font-size: 2em;
+    width: 1.5em;
+    height: 20%;
+}
+.infoContent{
+    height: 100%;
+    overflow: auto;
+    display: none;
+}
+#infoSetting input,#infoSetting select{
+    text-align: center;
+    font-size: 100%;
+    width: 20%;
+    margin: 0.2em 0.2em 0 0;
+}
+
+</style>
+<div  id="infoWrap" style="">
+    <div id="infoPanel">
+        <input class="ipBut" title="Закрыть" type="button" value="&#215;" style="color: red;" onclick="infoWrapToggle();"/>
+        <input class="ipBut" title="Словарь" type="button" value="&#9997;" style="" onclick="infoWinShow('infoDict')"/>
+        <input class="ipBut" title="Настройки" type="button" value="&#9773;" style="" onclick="infoWinShow('infoSetting')"/>
+        <input class="ipBut" title="Помощь" type="button" value="&#9786;" style="" onclick="infoWinShow('infoHelp')"/>
+        <!-- $('.ipBut').height(Math.floor(100/($('.ipBut').length+1))+'%')// автоподгон высоты -->
+    </div>
+
+    <div class="infoContent" id="infoDict">
+        <h2 onclick="if(res = prompt('Найти в cловаре:', this.innerHTML), res!='') showA(res);" id="infoDictHead" class="origin">dictionary</h2>
+        <div>
+            <input type="button" class="dcBut" id="dictPrevBut" disabled="disabled" value="&#8666;" onclick="showA(dh.previous(), true)">
+            <input type="button" class="dcBut" style="float:right" id="dictNextBut" disabled="disabled" value="&#8667;" onclick="showA(dh.next(), true)">
+        </div>
+        <div id="infoDictTranscription" class="transcription"></div>
+        <div id="infoDictContent">&#9997; Здесь будут отображаться словарные статьи. Щелкните по заголовку если хотите найти произвольную статью.</div>
+    </div>
+    <div class="infoContent" id="infoSetting"><h3>&#9773; Настройки</h3>
+        <select id="ImageH" onchange="changeImageH(this)">
+            <script>writeOptions(5, 80, '%', '50%', 5);</script>
+        </select>Высота изображения
+        <br/>
+        <select id="selectVKeyBrd" onchange="coChange(this);initKeyboard(this)">
+            <option value="n">нет</option><option value="q">qwerty</option><option value="b">блок</option>
+        </select>Виртуальная клавиатура
+        <br/>
+        <input id="autoEnterNoWrong" type="checkbox"  onchange="coChange(this);"/><label for="autoEnterNoWrong">Авто-отравка простых</label>
+        <fieldset>
+            <legend>Озвучивать( только онлайн ) при :</legend>
+            <input id="playWordOnEnter" type="checkbox" onchange="coChange(this);"/><label for="playWordOnEnter">отправке( Enter )</label>
+            <br/>
+            <input id="playWordOnHelp" type="checkbox" onchange="coChange(this);"/><label for="playWordOnHelp">открытии словаря</label>
+        </fieldset>
+
+        <!--select id="selectMInfoWrapHeight" onchange="coChange(this);getElem('infoWrap').style.height=this.value;">
+            <script>writeOptions(15, 95, '%', '95%', 10);</script>
+        </select>Высота окна информации<br/-->
+    </div>
+    <div class="infoContent" id="infoHelp" style="display:block"><h3>&#9786; Помощь</h3>
+
+        <p>
+            Веб-приложение "4000 слов" поможет весело и непринужденно освоить 4000 английских слов за 2 месяца!<br/>
+            Выбирайте набор карточек. После загрузки картинок, набором можно пользоваться off-line.<br/> 
+            Вводите слово и нажимайте "Enter". Забыли? Тоже - "Enter"!<br/>
+            Нажатие на 0 - открывает/закрывает словарь. Учите вглубь!<br/>
+            Нажатие на 9 - озвучивает слово. Про-из-но-си-те!
+        </p>
+        <p>
+            Советы:
+        </p>
+        <ul>
+            <li>Перед каждым новым уроком (набором карточек) - разминайтесь на предыдущем.</li>
+            <li>Не "глотайте" больше одного набора карточек в день. Требует усвоения.</li>
+            <li>Повторение - мать учения. Любите встроенный алгоритм повторений.</li>
+            <li>И конечно, если понравилось - делитесь с друзьями: </li>
+        </ul>
+
+        <script type="text/javascript" src="pluso.js"></script>
+
+        <p>
+            &#174; <img style="height: 0.8em;" src="/favicon.ico"> <a href="/" title="Электронная музыка - Денис Орлов">HOME</a>
+        </p>
+    </div>
+</div>
+
+<div style="display:none">
+	<input type="button" value="Images List..." onclick="outImagesList()">
+	<div id="imagesShow">
+		<div id="enImagesPanel"></div>
+		<div id="img" onclick="showImg()">
+			<input type="checkbox" id="eiLearnedChBox" onclick="setLearnedEnImg(this.checked); event.stopPropagation();">
+			<label onclick="event.stopPropagation();" for="eiLearnedChBox" id="eiLearnedLabel">Выучено</label>
+
+			<div id="imgCurtan" onclick="this.style.display='none'; event.stopPropagation();"></div>
+		</div>
+
+		<div style="clear:both"></div>
+	</div>
+</div>
+
+<script>
+    function infoWinShow( id ){
+        jQuery('.infoContent').hide(); $('#'+id).show();
+        if(id=='infoDict' && getElem('playWordOnHelp').checked && jQuery('#infoWrap').is(':visible'))
+            playWord( getElem('swOrigin').innerHTML );
+    }
+    /** commonChange */
+    function coChange(elem){
+        cookieLib.writeElemValue(elem, 3600*24*365);
+    }
+
+    function changeImageH(inp, val){// value = параметр val, либо input.value
+        var value = val || inp.value;
+        getElem('swImageWrap').style.height = inp.value = value;
+        coChange(inp);
+    }
+
+    function initCookieElemValue(){
+        var k, cookieEls = ["ImageH","autoEnterNoWrong","playWordOnEnter","playWordOnHelp","selectVKeyBrd", "selectMInfoWrapHeight"];
+        for(k in cookieEls)
+            cookieLib.initElemValue(getElem(cookieEls[k]));
+
+    };
+    initCookieElemValue();
+
+    function initKeyboard(elem){
+        var keyBoard = document.getElementById('keyBoard'),
+            keys = 'qwertyuiopasdfghjklzxcvbnm<>';//\'-
+        keyBoard.innerHTML = '';
+
+        if(elem.value=='n')return;
+
+        for(i=0;i<keys.length;i++){
+            var b = document.createElement('input');
+                b.type = 'button';
+                b.value = keys[i];
+                b.value = keys[i];
+                b.className = elem.value=='q' ? 'qwertyKeyBoardButton':'keyBoardButton';
+            if(/[<>]/.test(b.value)){
+                b.style.width = '32%';
+                b.style.marginRight = '10px';
+            }
+            if(elem.value=='q'){
+                if(b.value=='a') b.style.marginLeft = '5%';
+                if(/[<z]/.test(b.value)) b.style.marginLeft = '10%';
+            }
+            if(b.value=='<') b.value = 'back';
+            if(b.value=='>') b.value = 'enter';
+            (function(b){
+                b.onclick = function(){
+                    var input = getElem('inputOrigin');
+                    input.value = b.value=='back' ? input.value.slice(0,-1)
+                            :(b.value=='enter' ? input.value : input.value + b.value);
+                    if(b.value=='enter')
+                        inputOnEntering(input);
+                    else
+                        inputOnInputing(input);
+                };
+            })(b);
+
+            keyBoard.appendChild(b);
+        }
+
+        changeImageH(getElem('ImageH'), 20+'%');
+    }
+
+
+</script>
+
+<script type="text/javascript" src="interface.js"></script>
+<script>
+    document.body.children[0].style.right = '100%';
+
+    (function(){
+        function fillSelect(select, arr, label){
+            var step = 100, last;
+            select=getElem( select );
+            clearOptions( select );
+            addAnyOption( select, label );
+            for(var i=0;i<arr.length;i+=step){
+                last = i+step-1;
+                if(last>arr.length) last=arr.length-1;
+                op = new Option( (i+1)+' - '+(last+1) + ': '+arr[i]+' ... '+arr[last], i+'-'+last , false, false);
+                op.title = arr[i]+' ... '+arr[last];
+                select.appendChild( op );
+            }
+        };
+
+        //fillSelect('swBeginEnglishBase', beginEnglishBase, 'по алфавиту:');
+        fillSelect('swBeginEnglishBaseFreq', beginEnglishBase, 'карточки:');//по частоте:
+    }());
+
+    for(var i=0;i<SYSTEM.TENSES.length;i++){
+        mylog(
+                SYSTEM.TENSES[i]+':'+
+                        'He '+verbToTense('close', SYSTEM.TENSES[i], 3,1, 0)+' the door. '+
+                        'The door '+verbToTense('be', SYSTEM.TENSES[i], 3,1, 0)+' closed. '+
+                        askInTense('close', SYSTEM.TENSES[i], getPronoun(3,1,'m'), 1)+' the door? '+
+                        askInTense('be', SYSTEM.TENSES[i], 'the door', 1)+' closed? '
+        )
+    }
+</script>
+</body>
+</html>

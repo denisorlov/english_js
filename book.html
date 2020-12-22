@@ -1,0 +1,414 @@
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="http://yandex.st/jquery/1.6.1/jquery.min.js"></script>
+    <title>Денис Орлов - Параллельные тексты на английском</title>
+
+    <script type="text/javascript" src="utils.js"></script>
+    <script type="text/javascript" src="cookieLib.js"></script>
+    <script type="text/javascript" src="htmlColors.js"></script>
+    <!--script type="text/javascript" src="dict51100.js"></script-->
+    <script type="text/javascript" src="dict71700.js"></script>
+    <script type="text/javascript" src="trans.js"></script>
+	
+	<script type="text/javascript" src="book/bookMenu.js"></script>
+    <script type="text/javascript" src="book/bookUtils.js"></script>
+
+    <!--script type="text/javascript" src="info.js"></script-->
+    <script type="text/javascript" src="system.js"></script>
+    <!--script type="text/javascript" src="scheme.js"></script-->
+    <!--script type="text/javascript" src="sets.js"></script-->
+    <!--script type="text/javascript" src="my_dict.js"></script-->
+    <!--script type="text/javascript" src="img_dict.js"></script-->
+    <!--script type="text/javascript" src="beginEnglishBase.js"></script-->
+
+<style type="text/css">
+body{
+    font-size: 1.5em;
+    margin:0;
+}
+.bookTable{
+    width: 200%;
+    border-collapse: collapse;
+    position: relative;
+    left: -100%;
+}
+    .bookTable tbody{
+        line-height: 2em;
+        font-size: 3em;
+        background-color: aliceblue;
+     }
+    .bookTable td{
+        width: 50%;
+        padding: .5em;
+        vertical-align: top;
+    }
+    .bookTable td.en{
+        position: relative;
+        left: 50%;
+        top: -0.5em;
+        /*color: red;*/
+        z-index: 2;
+    }
+    td.ru {
+        border: 2px dashed lightgray;
+        position: relative;
+        top: 0.5em;
+		color: lightgray;
+    }
+    .wrap_ru{
+        position: relative;
+    }
+
+span.word {
+    border-bottom: 1px dashed;
+    cursor: pointer;
+}
+.rowCount{
+     text-align: right;
+     color: gray;
+     font-weight: bold;
+     position: absolute;
+     bottom: 0;
+     right: 0;
+     z-index: 10;
+ }
+.play_btn{
+    font-size: 0.5em;
+}
+span.bwA {
+    display: inline-block;
+    width: 95%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-weight: bold;
+}
+
+#bookMenuWpap, #bookContentDiv{
+    border: 2px dashed gray;
+    border-radius: 1em;
+    background-color: lightyellow;
+    padding: .5em;
+}
+#bookMenuWpap select{
+    font-size: 1em;
+    border-radius: 1em;
+    width:30%
+}
+.bookMenuUl{
+    padding: 0;
+}
+    .bookMenuUl li, .bookContentUl li{
+        cursor: pointer;
+        border-radius: .5em;
+        padding: .2em;
+        border: 2px dashed transparent;
+    }
+    .bookMenuUl li{
+        list-style-type: decimal;/*asterisks*/
+        padding: .5em;
+        list-style-position: inside;
+    }
+        .bookMenuUl li:hover, .bookContentUl li:hover{
+            background-color: white;
+            border-color: gray;
+        }
+    .bookMenuUl h3{
+        margin: 0;
+    }
+
+.origin {
+    /* height: 48%; */
+    color: blue;
+    margin-top: 0.5%;
+}
+.swTranscription, .transcription {
+    font-family: sans-serif;
+    font-weight: bold;
+    /* height: 49%; */
+    color: red;
+}
+
+#swButtons{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    /*background-color: rgba(230, 230, 230, 0.5);*/
+    z-index: 10;
+    height: 10%;
+    min-height: 1.5em;
+}
+    #swButtons > *{
+        vertical-align: top;
+        float: right;
+        font-size: 1.5em;
+    }
+    #swButtons input[type=button], #swButtons button, #swButtonsPadding{
+        width: 25%;/* для четырех */
+        /*font-size: 2em; height: 2.5em;*/
+        height: 98%;
+        min-height: 1em;
+    }
+    #swButtons > select {
+        max-width: 39%;
+    }
+#info{
+    background-color: rgba(255, 255, 255, 0.5);
+    font-size: 1em;
+    border: solid 1px seagreen;
+    position: fixed;
+    top: 40%;
+    right: 5%;
+    padding: 0.2em;
+    max-width: 45%;
+    border-radius: .4em;
+}
+#swButtonsPadding{
+    height: 4em;
+}
+
+#bigHint {
+    display: none;
+    position: fixed;
+    top: 465px;
+    left: 50px;
+    background-color: lightyellow;
+    z-index: 1001;
+    overflow: auto;
+    padding: .5em;
+    border: 1px dotted gold;
+    max-width: 48%;
+    max-height: 48%;
+}
+</style>
+</head>
+<div id="allWrap" class="allWrap" style=" height: 89%; overflow: auto; ">
+<h1 id="bookMenuHead" name="bookMenuHead">Книги:</h1>
+<div id="bookMenuWpap">
+    <select id="filterAuthor" title="" onchange="BOOK_FILTER.author=this.value; getElem('bookMenuDiv').innerHTML =buildBookMenu(BOOK_FILTER)"></select>
+    <select id="filterGenre" title="" onchange="BOOK_FILTER.genre=this.value; getElem('bookMenuDiv').innerHTML =buildBookMenu(BOOK_FILTER)"></select>
+    <div id="bookMenuDiv">
+    </div>
+</div>
+<h2 id="bookContentHead" name="bookContentHead">Содержание:</h2>
+<div id="bookContentDiv"><!-- содержание книги -->
+</div>
+
+<div id="bookDiv"></div>
+
+<div id="keyBoard"></div>
+
+<div id="bigHint" onmouseout="this.style.display='none'"></div>
+
+<link rel="stylesheet" href="infoWin.css">
+<div  id="infoWrap" style="">
+    <div id="infoPanel">
+        <input class="ipBut" title="Закрыть" type="button" value="&#215;" style="color: red;" onclick="infoWrapToggle();"/>
+        <input class="ipBut" title="Словарь" type="button" value="&#9997;" style="" onclick="infoWinShow('infoDict')"/>
+        <input class="ipBut" title="Слова книги" type="button" value="&#10004;" style="" onclick="infoWinShow('infoBookWords')"/>
+        <input class="ipBut" title="Настройки" type="button" value="&#9773;" style="" onclick="infoWinShow('infoSetting')"/>
+        <input class="ipBut" title="Помощь" type="button" value="&#9786;" style="" onclick="infoWinShow('infoHelp')"/>
+
+        <!-- $('.ipBut').height(Math.floor(100/($('.ipBut').length+1))+'%')// автоподгон высоты -->
+    </div>
+
+    <div class="infoContent" id="infoDict">
+        <h2 id="infoDictHead" onclick="if(res = prompt('Найти в cловаре:', this.innerHTML), res!=null && res!='') showA(res.toLowerCase());"  class="origin">dictionary</h2>
+        <div>
+            <input type="button" class="dcBut" id="dictPrevBut" disabled="disabled" value="&#8666;" onclick="showA(dh.previous(), true)">
+            <input type="button" class="dcBut" style="float:right" id="dictNextBut" disabled="disabled" value="&#8667;" onclick="showA(dh.next(), true)">
+        </div>
+        <button id="playInfoDict" onclick="playWord( getElem('infoDictHead').innerHTML );">
+            <div id="swPlayer" style="height:0"></div><audio id="swHtml5Player" src=""></audio>
+            &#9654;
+            <span id="infoDictTranscription" class="transcription">[ˈdɪkʃənrɪ]</span>
+        </button>
+        <div id="infoDictContent">&#9997; Здесь будут отображаться словарные статьи. Щелкните по заголовку если хотите найти произвольную статью.</div>
+    </div>
+    <div class="infoContent" id="infoSetting"><h3>&#9773; Настройки</h3>
+        <select id="selectApplFontSize" onchange="coChange(this);document.body.style.fontSize=this.value;">
+            <script>writeOptions(1, 5, 'em', '1.5em', 0.5);</script>
+        </select>Размер шрифта программы<br/>
+        <select id="selectBookFontSize" onchange="coChange(this);$('.bookTable tbody').css({fontSize:this.value});">
+            <script>writeOptions(1, 7, 'em', '3em');</script>
+        </select>Размер шрифта книги<br/>
+        <select id="selectInfoWrapHeight" onchange="coChange(this);getElem('infoWrap').style.height=this.value;">
+            <script>writeOptions(15, 95, '%', '95%', 10);</script>
+        </select>Высота окна информации<br/>
+        При клике по тексту:<br/>
+        <input id="noCloseInfoByTextClick" type="checkbox" onchange="coChange(this);"/><label for="noCloseInfoByTextClick">Не закрывать окно информации</label><br/>
+        <input id="chboxAutoPlayWord" type="checkbox" onchange="coChange(this);"/><label for="chboxAutoPlayWord">Озвучивать слово</label><br/>
+        <select id="selectOnTextClickOpenDict" onchange="coChange(this);">
+            <option value="">в окне информации</option>
+            <option value="inNewWin">в отдельном окне</option>
+            <option value="inHint">во всплывающей подсказке</option>
+        </select> - открывать словарь<br/>
+        Цвета:<br/>
+        <select id="selectEnColor"></select>английский текст<br/>
+        <select id="selectRuColor"></select>русский текст<br/>
+        <select id="selectBgColor"></select>задний фон<br/>
+        <script>
+            fillColorSelect('selectEnColor','Black', '.en');
+            fillColorSelect('selectRuColor','LightGrey', '.ru');
+            fillColorSelect('selectBgColor','AliceBlue', '.bookTable tbody');
+            function fillColorSelect(id, def, selector){
+                var step= 1, arr = htmlColors, select = getElem(id);
+
+                select.onchange=(function(this_, selector){
+                    return function(){
+                        if(window.coChange) coChange(this_);
+                        var cArr = this_.value.split('|');
+                        this_.style.backgroundColor = cArr[0];
+                        this_.style.color = cArr[1];
+                        if(this_.id=='selectBgColor')
+                            $(selector).css({backgroundColor:cArr[0]});
+                        else
+                            $(selector).css({color:cArr[0]});
+                    };
+                }(select, selector));
+
+                for(var i=0;i<arr.length;i+=step){
+                    var textColor = i>arr.length/4?'black':'white';
+                    if(i>arr.length-1) i=arr.length-1;
+                    op = new Option( arr[i], arr[i]+'|'+textColor , arr[i]==def?true:false, arr[i]==def?true:false);
+                    op.style.backgroundColor = arr[i];
+                    op.style.color = textColor;
+                    select.appendChild( op );
+                }
+
+                select.onchange();
+            }
+        </script>
+        <!--br/><input id="autoEnterNoWrong" type="checkbox"/><label for="autoEnterNoWrong">Авто-отравка простых</label-->
+        <!--fieldset>
+            <legend>Озвучивать( только онлайн ) при :</legend>
+            <input id="playWordOnEnter" type="checkbox"/><label for="playWordOnEnter">отправке( Enter )</label>
+            <br/><input id="playWordOnHelp" type="checkbox"/><label for="playWordOnHelp">открытии словаря</label>
+        </fieldset-->
+
+    </div>
+    <div class="infoContent" id="infoHelp" style="display:block"><h3>&#9786; Помощь</h3>
+        <p>
+            Советы:
+        </p>
+        <ul>
+            <li>Если слово не найдено в словаре, для повторного поиска предлагается ввести его простую форму.</li>
+        </ul>
+        <p>
+            &#174; <img style="height: 0.8em;" src="/favicon.ico"> <a href="/" title="Электронная музыка - Денис Орлов">HOME</a>
+        </p>
+    </div>
+
+    <div class="infoContent" id="infoBookWords"><h3>&#10004; Слова из книги</h3>
+        <div id="bookWordsDiv"><hr/>Здесь будут слова и предложения, выбранные для повторения. Кликайте по ним для получения перевода.
+        </div>
+    </div>
+</div>
+
+<div id="swButtonsPadding"></div>
+<div id="swButtons">
+    <div id="info"></div>
+
+    <button onclick="infoWrapToggle();">&#9786;<br>help</button>
+    <button onclick="infoWrapToggle();infoWinShow('infoBookWords')">&#10004;<br>words</button>
+    <button onclick="scroll_To('#bookContentHead')">&#9775;<br>content</button>
+    <button onclick="scroll_To('#bookMenuHead')">&#9829;<br>books</button>
+
+    <select style="display: none" id="swDictMode" title="Режим словаря">
+        <option>common</option><option>irreg.verbs</option><!--option>fast dict</option-->
+    </select>
+
+</div>
+
+</div><!-- allWrap -->
+
+<script>
+    getElem('bookMenuDiv').innerHTML = buildBookMenu();
+    updateOptions( 'filterAuthor', getFilterKeys('author'),'автор...');
+    updateOptions( 'filterGenre', getFilterKeys('genre'),'жанр...');
+
+    addEvent(document,'keydown',function(e){e = fixEvent(e);
+        if(e.keyCode==40) scrollInc();
+        if(e.keyCode==38) scrollDec();
+    })
+</script>
+<script>
+    function infoWinShow( id ){
+        jQuery('.infoContent').hide(); $('#'+id).show();
+    }
+    /** commonChange */
+    function coChange(elem){
+        cookieLib.writeElemValue(elem, BOOK_COOKIE_EXPIRES);
+    }
+
+    function initCookieElemValue(){
+        var cookieEls = ["selectApplFontSize","selectBookFontSize","selectInfoWrapHeight","noCloseInfoByTextClick", "chboxAutoPlayWord",
+               "selectOnTextClickOpenDict","selectEnColor","selectRuColor","selectBgColor"],
+                k;
+        for(k in cookieEls)
+            cookieLib.initElemValue(getElem(cookieEls[k]));
+
+        var bcKey = cookieLib.get('BOOK_CURRENT_KEY'),
+            anchor = cookieLib.get('BOOK_CURRENT_ANCHOR');
+        if(bcKey!=undefined && myconfirm('Загрузить книгу "'+cookieLib.get('BOOK_CURRENT_TITLE')+'"?')){
+            showBook(bcKey, anchor);
+        }
+    };
+    initCookieElemValue();
+
+
+    var $_GET = parseGetParams();
+    // keyboard
+    if('kbd' in $_GET) initKeyboard( $_GET['kbd']!='b' );// b - "block" т.е. не gwerty
+    // Image Height
+    if('imgh' in $_GET && !NaN($_GET['imgh'])) changeImageH(getElem('ImageH'), $_GET['imgh']);
+
+    function initKeyboard( gwerty){
+        keys = 'qwertyuiopasdfghjklzxcvbnm-<>';//\'-
+        keyBoard = document.getElementById('keyBoard');
+        keyBoard.innerHTML = '';
+        for(i=0;i<keys.length;i++){
+            b = document.createElement('input');
+            b.type = 'button';
+            b.value = keys[i];
+            b.className = gwerty ? 'qwertyKeyBoardButton':'keyBoardButton';
+            if(/[<>]/.test(b.value)){
+                b.style.width = '32%';
+                b.style.marginRight = '10px';
+            }
+            if(gwerty){
+                if(b.value=='a') b.style.marginLeft = '5%';
+                if(/[<z]/.test(b.value)) b.style.marginLeft = '10%';
+            }
+            if(b.value=='<') b.value = 'back';
+            if(b.value=='>') b.value = 'enter';
+            (function(b){
+                b.onclick = function(){
+                    var input = getElem('inputOrigin');
+                    input.value = b.value=='back' ? input.value.slice(0,-1)
+                            :(b.value=='enter' ? input.value : input.value + b.value);
+                    if(b.value=='enter')
+                        inputOnEntering(input);
+                    else
+                        inputOnInputing(input);
+                };
+            })(b);
+
+            keyBoard.appendChild(b);
+        }
+        getElem('swImageWrap').style.height = 20+'%';
+    }
+
+
+</script>
+
+<script type="text/javascript" src="interface.js"></script>
+<script>
+    //document.body.children[0].style.right = '100%';
+</script>
+</body>
+</html>

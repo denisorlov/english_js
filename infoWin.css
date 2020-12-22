@@ -1,0 +1,65 @@
+#infoWrap{
+    display:none;
+    border: 1px solid navy;
+    width: 95%;
+    height: 95%;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.941176);
+    padding: 2%;
+    border-radius: 5px;
+    box-sizing: border-box;
+    /*font-size: 2em;*/
+    /*position: absolute;
+    top: 2%; left: 2%;*/
+    position: fixed;
+    right: 2%;;
+    bottom: 2%;;
+    left: 2%;
+}
+#infoPanel{
+    float: right;
+    width: 3.5em;
+    overflow: auto;
+    height: 100%;
+}
+#infoDictHead{
+    cursor: pointer;
+    border-bottom: 1px dashed;
+    margin-bottom:0;
+}
+
+.ipBut,.dcBut{
+    font-weight: bold;
+    font-size: 1em;
+    margin-bottom: 2px;
+	border-radius: 0.2em;
+}
+.ipBut{
+    float:right;
+    font-size: 2em;
+    width: 1.5em;
+    height: 17%;
+}
+.infoContent{
+    height: 100%;
+    overflow: auto;
+    display: none;
+}
+#infoSetting input,#infoSetting select, #infoHelp input{
+    text-align: center;
+    font-size: 1em;
+    width: 20%;
+    margin: 0.2em 0.2em 0 0;
+}
+
+#playInfoDict{
+	cursor:pointer;
+	border-radius: 0.2em;
+	font-size: 1em;
+	display:block;
+	width:100%;
+    color: green;
+}
+	#playInfoDict:hover{
+		background-color:lightgreen
+	}

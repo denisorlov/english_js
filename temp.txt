@@ -1,0 +1,90 @@
+1: PresentSimple,
+	Is she hot?
+	Are you hungry?
+	Are they drunk?
+	Do you like pizza?
+	Do they drink cola?
+	Does your father drink beer?
+	Does she write indie songs?
+	(УYes, he does.Ф или УNo, he doesnТt.Ф), ну или просто УyesФ или УnoФ.
+	≈сли в вопросе у нас по€вл€етс€ вопросительное слово, то оно ставитс€ в 
+	начало, затем идет вспомогательный глагол, а затем вс€ остальна€ 
+	конструкци€:
+	What is this? Where are my glasses? Why are you so serious?
+	What do you do? Ц „ем вы занимаетесь?
+	Where do they go every Saturday? Ц  уда они ход€т каждую субботу?
+	How does he make those cakes? Ц  ак он делает эти пирожные?
+	Why does she like Chinese food? Ц ѕочему она любит  итайскую кухню?
+
+6: PresentContinuous
+	Are you trying to kill me? ( IТm not trying. )
+	Is the noise in my head bothering you?
+	Where is she going?
+	Why are they singing?
+	What are you doing?
+
+7: PresentPerfect,
+	Have you seen my dog? (ответом будет УYes, I haveФ или УNo, I havenТtФ) 
+	Has she called you yet? (Yes, she has/No, she hasnТt)
+	Where have you been? Ц √де ты был?
+	What have you done? Ц „то ты сделал?
+	Have you read that book already? - “ы уже прочитал ту книгу?
+	Has she found her key? - ќна нашла свой ключ?
+	Where have you found a key? - √де ты нашел ключ? 
+	Ќеобходимо запомнить, что с данным временем употребл€ютс€ следующие наречи€ неопределенного времени:
+	already - уже;
+	ever - когда-либо;
+	just - только что;
+	never - никогда;
+	yet - еще;
+	recently - недавно (за последние мес€цы или годы);
+	lately - недавно (за последние дни или недели);
+	often - часто;
+	up to now - до сих пор;
+	once - однажды и т.д
+
+8: PresentPerfectContinuous,	
+	
+	
+
+0: PastSimple,
+	Were you at work this morning? Ц “ы был на работе сегодн€ утром?
+	No, I wasnТt. I was sick. Ц Ќет, € болел.
+	When were you born? Ц  огда ты родилс€?
+	Why was he so sad? Ц ѕочему он был таким печальным?
+	Did you take my glasses? Ц “ы брал мои очки?
+	Did he like my song? Ц ≈му понравилась мо€ песн€?
+	(Yes, I did./No, I didnТtФ, УYes, he did./No he didnТt.Ф) 
+	¬опросы с вопросителными словами:
+	When did you start smoking? -  огда ты начал курить?
+	Why did you quit your job? Ц ѕочему ты ушел с работы?
+	Where did you take that cat? Ц √де ты вз€л эту кошку?
+	ѕринцип построени€ таких вопроосов:
+	”тверждение: I played football when I was young.
+	¬опрос: Did you play football when you were young?
+	ќтрицани€ стро€тс€ при поможи вспомогательного глагола УdidФ + частица УnotФ (коротко Ц didnТt):
+	”тверждение: I went to work.
+	ќтрицание: I didnТt go to work.
+	
+3: PastContinuous,
+4: PastPerfect,
+5: PastPerfectContinuous,
+
+
+
+2: FutureSimple,
+	Will you go out with me? Ц “ы пойдешь на свидание со мной?
+	Will you stop screaming if I give you 50 dollars? Ц “ы перестанешь вопить если € дам тебе 50 долларов?
+	ќтветом на такие вопросы будет УYes, I willФ или УNo, I wonТtФ.
+9: FutureContinuous,
+	Will you be talking on the phone all night? Ц “ы всю ночь будешь разговоривать по телефону? (ќтвет: Yes, I will/No, I wonТt)
+	Where will you be waiting when I come? Ц √де ты будешь ждать, когда € приду?
+10: FuturePerfect,
+	Will you have finished watching TV by 9 p.m.? Ц “ы закончишь смотреть телевизор к дев€ти вечера?
+	What will you have done by the end of the day? Ц „то ты успеешь сделать к концу дн€?
+11: FuturePerfectContinuous,
+	Will he have been writing his book for 2 years by the end of February?
+	How long will you have been learning English this year? (вопросы с Уhow
+	longФ попадаютс€ наиболее часто в этом времени)
+
+

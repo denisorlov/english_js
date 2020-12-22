@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="http://yandex.st/jquery/1.6.1/jquery.min.js"></script>
+    <title>Денис Орлов - 4000 английских слов за 2 месяца</title>
+
+    <script type="text/javascript" src="utils.js"></script>
+    <script type="text/javascript" src="system.js"></script>
+    <script type="text/javascript" src="scheme.js"></script>
+    <script type="text/javascript" src="sets.js"></script>
+    <script type="text/javascript" src="dict51100.js"></script>
+    <script type="text/javascript" src="my_dict.js"></script>
+    <script type="text/javascript" src="img_dict.js"></script>
+    <script type="text/javascript" src="beginEnglishBase.js"></script>
+    <script type="text/javascript" src="trans.js"></script>
+
+<style type="text/css">
+#img{
+  border: 1px solid gray;
+  margin: 15px;
+  position: relative;
+
+   /* width: 350px;
+    height: 200px;
+    background-image: url(http://en365.ru/foto/fruit.jpg);
+    background-position-x: -25px;
+    background-position-y: -680px;
+    background-size: 410%;*/
+}
+#img, #enImagesPanel{
+    float: left;
+}
+#eiLearnedLabel:hover{
+    background-color: white;
+}
+#imgCurtan{
+    position: absolute;
+    background-color: white;
+    border: 1px solid gray;
+}
+#imgCurtan:hover{
+    opacity: 0.8;
+}
+/***/
+#swListWrap, #swScreen, #swMesure,#swListPanel{
+    float: left;
+    width: 100%; /*800px;*/
+    border-radius: 3px;
+}
+    #swListPanel{
+        width: 100%;
+    }
+
+#swScreen{
+    height: 300px;
+    border1: 1px solid navy;
+}
+    #swScreen label:hover{background-color: white}
+
+#swListWrap{
+    height: 700px;
+    overflow: auto;
+}
+
+#swImageWrap{
+    /*background-image: url(http://en365.ru/foto/transport.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;*/
+    width: 40%;
+    height: 99%;
+    float: left;
+    margin: 0.1%;
+    text-align: center;
+    position: relative;
+    background-color: white;
+}
+    #swImage{
+        max-width: 100%;
+        max-height: 100%;
+    }
+#swTranslation,#swWord,#swButtons{
+    width: 59%;
+    margin: 0.1%;
+    float: right;
+    z-index: 10000;
+}
+#swTranslation,#swWord{
+    text-align: center;
+}
+#swButtons{
+     height: 24%;
+}
+#swTranslation,#swButtons,#swTranscription,#swOrigin{
+     background-color: rgb(230, 230, 230);
+ }
+
+#swTranslation,#swWord{
+    font-size: 275%;
+}
+#swTranslation{
+    color:green;
+
+    /*
+    height: 30%;
+    line-height: 88%;
+    overflow: auto;*/
+}
+#swWord{
+    height: 43%;
+    margin: 0 0.1% 0 0;
+    background-color: inherit;
+}
+
+#swTranscription{
+    font-family: sans-serif;
+    font-weight: bold;
+    /*height: 49%;*/
+    color:red;
+}
+#swOrigin{
+    /*height: 48%;*/
+    color:blue;
+    margin-top: 0.5%;
+}
+#swTranslation.hide,#swWord.hide{
+    opacity: 0;
+}
+#swTranslation.hide:hover,#swWord.hide:hover{
+    opacity: 1;
+}
+
+#swButtons input[type=button], #swButtons button{
+    /*width: 49%;*/
+    height: 99%;
+}
+#swButtons{
+    overflow: auto;
+}
+    #swButtons > *{
+        vertical-align: top;
+        float: left;
+    }
+#swPlayer{
+    height: 0;
+}
+
+/***/
+.warn{
+    font-weight: bold;
+    color:red;
+}
+/***/
+.swText,.swLabel{
+    font-size: 150%;
+}
+    .swLabel{
+        color: white;
+        min-width: 550px;
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: sub;
+    }
+    .swLabel:hover{
+        color: inherit; background-color: lightskyblue;
+    }
+    .swText{
+        width: 200px;
+    }
+</style>
+</head>
+<body style="">
+
+<div style="display:none">
+	<textarea id="inTextarea" rows="10" cols="97"></textarea>
+	<div>
+		<input type="checkbox" id="toFilterLearnedChBox" title="Фильтровать выученые....">
+		<input type="button" value="by Words" onclick="outStudyWords( splitWords( getElem('inTextarea').value ) );">
+		<input type="button" value="by Rows" onclick="outStudyWords( splitWords( getElem('inTextarea').value, 1 ) );">
+		<input type="button" value="fastDict" onclick="fastDict( getElem('inTextarea').value )">
+		<br>
+		<input type="button" value="Scheme Buttons..." onclick="outSchemeButtons()">
+		<input type="button" value="tableToArray" onclick="tableToArray( getElem('inTextarea').value );">
+		<input type="button" value="tableToObj" onclick="tableToObj( getElem('inTextarea').value );">
+		<input type="button" value="buildPhrase" onclick="getElem('out').innerHTML = buildPhrase( getElem('inTextarea').value);">
+
+	</div>
+	<div id="out"></div>
+	<textarea id="outTextarea" cols="97"></textarea>
+	<div id="panel"></div>
+</div>
+
+<a href="/" title="Электронная музыка - Денис Орлов">Главная страница : </a><a href="/menu.htm#articles" title="Еще статьи...">Статьи</a> <span id="info"></span>
+<div id="studyWords">
+    <div id="swMesure" style="border: 1px solid green;box-sizing: border-box;position: relative;">
+        <div id="swmPosition" style="height: 90%;border: 1px solid red;position: absolute;background-color: red;"></div>
+        <div id="swmIndicator" style="background-color: green; text-align: center;color: white;width: 0%"></div>
+    </div>
+    <div id="swScreen">
+        <div id="swImageWrap" onclick="onImageClick()" >
+            <div id="swChBoxWrap" style="position:absolute;right:0" onclick="event.stopPropagation();">
+                <input id="swChangeImage" type="button" value="*" title="сменить картинку" style="display:none"
+                       onclick="el=getElem('swImage'); getGoogleImg( el.getAttribute('data-word'), +(el.getAttribute('data-start'))+1 );">
+                <input type="checkbox" id="swLearnedChBox" value="" onclick="checkLearned(this.value, this.checked);">
+                <label for="swLearnedChBox">Выучено</label>
+            </div>
+            <img id="swImage" src="i/no_img.jpg"
+                 onload="getElem('swChangeImage').value='*'"
+                 onerror="getGoogleImg( this.getAttribute('data-word'), +(this.getAttribute('data-start'))+1 )">
+            <div id="swImageFind" style="position:absolute;bottom:0;display:none;text-align: left;" onclick="event.stopPropagation();">
+                <input type="text" id="swTheme"></br>
+                <input type="text" id="swfWord">
+                <input type="button" value="find..."
+                    onclick="window.open('https://www.google.ru/search?q='+getElem('swfWord').value+'&tbm=isch')"></br>
+                <input type="text" id="swfUrl">
+                <input type="button" value="set"
+                    onclick="setImageUrl( getElem('swfWord').value, {url: getElem('swfUrl').value} );getElem('swfUrl').value='';this.parentNode.style.display='none'">
+                <input type="button" value="X"
+                       onclick="this.parentNode.style.display='none'">
+            </div>
+        </div>
+        <div id="swButtons">
+            <div id="swPlayer"></div>
+            <audio id="swHtml5Player"></audio>
+            <button value="" onclick="playWord( getElem('swOrigin').innerHTML )">Listen<br/>word</button>
+            <!--button value="" onclick="playWord( getElem('swOrigin').innerHTML,1 )">Listen<br/>phrase</button-->
+
+            <select id="swDictMode" title="Режим словаря">
+                <option>common</option><option>irreg.verbs</option><!--option>fast dict</option-->
+            </select>
+
+                <select id="swShowMode" title="Режим показа слов">
+                    <option title="русский">rus</option><option title="английский">eng</option><option title="вперемешку">mix</option>
+                    <option title="все">all</option><option title="все со звуком">all+</option>
+                    <option title="не показывать">not</option><option title="не показывать со звуком">not+</option>
+                </select>
+
+                <div><input type="checkbox" id="swByOrder" value="" onclick=""><label for="swByOrder">По порядку</label></div>
+                <div><input type="checkbox" id="swRepeat" checked="checked" value="" onclick=""><label for="swRepeat">Повтор</label></div>
+                <input type="text" id="swResponse" value="" style="font-size: 150%;" onkeyup="checkOrigin(this)">
+        </div>
+        <div id="swTranslation">Привет!</div>
+        <div id="swWord">
+            <div id="swTranscription">[&#712;he&#712;l&#601;u]</div>
+            <div id="swOrigin">Hello</div>
+        </div>
+    </div>
+    <div id="swListPanel">
+        <select id="swOptionMode" title="Режим изучения" onchange="setOptionMode( this.value )">
+            <option value="0">режим...</option>
+            <option value="view" title="показ слов по порядку, с переводом, без повторов">смотрим</option>
+            <option value="learn" title="изучение слов, вперемешку, с повторами">учим</option>
+        </select>
+        <select id="swBeginEnglishBaseFreq" title="Словарь с картинками: наиболее частое" onchange="ar=this.value.split(/[^\d]+/);repeated_dict = beginEnglishBaseFreq.slice(0,ar[0]);outStudyWords( objFromArrRange( beginEnglishBaseFreq, ar[0],ar[1]) );"></select>
+        <select id="swBeginEnglishBase" title="Словарь с картинками: по алфавиту" onchange="ar=this.value.split(/[^\d]+/);repeated_dict = beginEnglishBase.slice(0,ar[0]);outStudyWords( objFromArrRange( beginEnglishBase, ar[0],ar[1]) );"></select>
+
+        <br>
+        <input type="checkbox" id="swListChAllBox" value="Все..." onclick="wordListCheckAll(this.checked);"><label for="swListChAllBox">Все..</label>
+        <span id="swListOut"></span>
+    </div>
+    <div id="swListWrap">
+
+        <div id="swList"></div>
+    </div>
+
+    <div style="clear:both"></div>
+</div>
+
+<hr>
+<div style="display:none">
+	<input type="button" value="Images List..." onclick="outImagesList()">
+	<div id="imagesShow">
+		<div id="enImagesPanel"></div>
+		<div id="img" onclick="showImg()">
+			<input type="checkbox" id="eiLearnedChBox" onclick="setLearnedEnImg(this.checked); event.stopPropagation();">
+			<label onclick="event.stopPropagation();" for="eiLearnedChBox" id="eiLearnedLabel">Выучено</label>
+
+			<div id="imgCurtan" onclick="this.style.display='none'; event.stopPropagation();"></div>
+		</div>
+
+		<div style="clear:both"></div>
+	</div>
+</div>
+
+<style>
+    #infoWrap{
+        display:none;
+        border: 1px solid navy;
+        position: absolute;
+        width: 95%; height: 95%;
+        z-index: 1000;
+        top: 2%; left: 2%;
+        background-color: rgba(255, 255, 255, 0.941176);
+        padding: 2%;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 2em;
+    }
+    #infoPanel{
+        float: right;
+        width: 3.5em;
+    }
+    .ipBut{
+        float:right;
+        font-weight: bold;
+        font-size: 2em;
+        width: 1.5em;
+        margin-bottom: 10px;
+    }
+    .infoContent{
+        height: 100%;
+        overflow: auto;
+        display: none;
+    }
+
+</style>
+<div  id="infoWrap" style="">
+    <div id="infoPanel">
+        <script>
+            function infoWinShow( id ){
+                $('.infoContent').hide(); $('#'+id).show();
+            }
+        </script>
+        <input class="ipBut" title="Закрыть" type="button" value="&#215;" style="color: red;" onclick="infoWrapToggle();">
+        <input class="ipBut" title="Словарь" type="button" value="&#9997;" style="" onclick="infoWinShow('infoDict')">
+        <input class="ipBut" title="Настройки" type="button" value="&#9998;" style="" onclick="infoWinShow('infoSetting')">
+        <input class="ipBut" title="Помощь" type="button" value="&#9786;" style="" onclick="infoWinShow('infoHelp')">
+    </div>
+
+    <div class="infoContent" id="infoDict">
+        <h3  id="infoDictHead">Словарь</h3>
+        <div id="infoDictTranscription"></div>
+        <div id="infoDictContent">Здесь будут отображаться словарные статьи</div>
+    </div>
+    <div class="infoContent" id="infoSetting"><h3>Настройки</h3></div>
+    <div class="infoContent" id="infoHelp" style="display:none"><h3>Помощь</h3></div>
+</div>
+
+
+
+<!--input type="text" onclick="showImg(this.value)"-->
+<img width="200" id="enImagesPreview" src="">
+
+
+<script type="text/javascript" src="interface.js"></script>
+<script>
+    document.body.children[0].style.right = '100%';
+</script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--meta property="og:title" content="Русско-Английский Разговорник Тренажер"/>
+    <meta property="og:description" content="Веб-приложение 'Разговорник - тренажер' для изучения/повторения иностранных фраз, адаптировано под мобильные устройства."/>
+    <meta property="og:image" content="http://denisorlovmusic.ru/english4040/i/phrases.png"/>
+    <meta property="og:url" content= "http://denisorlovmusic.ru/english4040/phrases.html"/-->
+
+    <!--script type="text/javascript" src="http://yandex.st/jquery/1.6.1/jquery.min.js"></script-->
+    <title></title>
+	<style>
+textarea{
+	display:none;
+}
+#lessonCombo{
+	width: 100%;
+	font-size: 20px;
+}
+#swMesure{
+    border-radius: 3px;
+}
+.contentPanel{
+    float: left;
+    width: 83%;
+	margin: 0;
+}
+.butPanel{
+    float: right;
+    width: 15%;
+	margin: 0;
+}	
+.but{
+	width: 95%;
+	padding: 15% 5%;
+	text-align: start;
+    margin: 0 0 8% 0;
+    font-size: 20px;
+	display: block;
+	overflow: hidden;
+}
+#phraseOutput{
+	font-size: 48px;
+	float: left;
+    width: 82%;
+}
+.blue{
+	color: blue;
+}
+.green{
+	color: green;
+}
+.transription{
+	color: orange;
+}
+
+#infoWrap{
+    display:none;
+    border: 1px solid navy;
+    width: 95%;
+    height: 95%;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.941176);
+	color: black;
+    padding: 2%;
+    border-radius: 5px;
+    box-sizing: border-box;
+    position: fixed;
+    right: 2%;;
+    bottom: 2%;;
+    left: 2%;
+    font-size: 2em;
+}
+#infoPanel{
+    float: right;
+    width: 3.5em;
+    overflow: auto;
+    height: 100%;
+}
+.ipBut,.dcBut{
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 2px;
+}
+.ipBut{
+    float:right;
+    font-size: 2em;
+    width: 1.5em;
+    height: 20%;
+}
+.infoContent{
+    height: 100%;
+    overflow: auto;
+    display: none;
+}
+#infoSetting input,#infoSetting select{
+    text-align: center;
+    font-size: 100%;
+    width: 20%;
+    margin: 0.2em 0.2em 0 0;
+}
+	</style>
+</head>
+<body>
+
+<div class="contentPanel">
+	<select id="lessonCombo"></select>
+	<div id="swMesure" style="border: 1px solid green;box-sizing: border-box;position: relative;" title="">
+		<div id="swmIndicator" style="background-color: green; text-align: center; color: white; width: 0%;"></div>
+	</div>
+	<div id="phraseOutput"></div>
+</div>
+<div class="butPanel">
+	<button id="buttonGooTr" class="but">...</button>
+	<button onclick="infoWrapToggle('infoSetting')" class="but">☭Setting</button>
+</div>
+
+<div style="clear:both"></div>
+<script type="text/javascript">
+function infoWrapToggle(infoContentId){
+	var i, elems = document.querySelectorAll('.infoContent');
+	for(i=0;i<elems.length;i++){
+		var infoContId = elems[i].id;
+		document.getElementById(infoContId).style.display = infoContId===infoContentId ? 'block' : 'none'
+	}
+
+	document.getElementById('infoWrap').style.display = infoContentId ? 'block' : 'none';
+
+}
+function changeTheme(night){
+	document.body.style.backgroundColor = night ? 'black' : 'white';
+    document.body.style.color = night ? 'white' : 'black';
+}
+</script>
+<div  id="infoWrap" style="">
+	<div id="infoPanel">
+        <input class="ipBut" title="Закрыть" type="button" value="&#215;" style="color: red;" onclick="infoWrapToggle();"/>
+		<input class="ipBut" title="Настройки" type="button" value="☭" style="" onclick="infoWrapToggle('infoSetting')">
+		<input class="ipBut" title="Помощь" type="button" value="&#9786;" style="" onclick="infoWrapToggle('infoHelp')">
+        <!-- $('.ipBut').height(Math.floor(100/($('.ipBut').length+1))+'%')// автоподгон высоты -->
+    </div>
+	<div class="infoContent" id="infoHelp" style=""><h3>&#9786; Help</h3><hr/>
+		<p>
+			Веб-приложение ....
+		</p>
+
+		<script type="text/javascript" src="pluso.js"></script>
+			<p>
+				&#174; Денис Орлов <img style="height: 0.8em;" src="http://denisorlovmusic.ru/favicon.ico"> <a href="http://denisorlovmusic.ru/" title="Электронная музыка - Денис Орлов">HOME</a>
+			</p>
+	</div>
+	<div class="infoContent" id="infoSetting" style=""><h3>☭ Settings</h3><hr/>
+		<label><input type="checkbox" onclick="changeTheme(this.checked)"/>
+			Night theme</label><br/>
+	</div>
+</div>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--meta property="og:title" content="Русско-Английский Разговорник Тренажер"/>
+    <meta property="og:description" content="Веб-приложение 'Разговорник - тренажер' для изучения/повторения иностранных фраз, адаптировано под мобильные устройства."/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content= ""/-->
+
+    <!--script type="text/javascript" src="http://yandex.st/jquery/1.6.1/jquery.min.js"></script-->
+	
+	<script type="text/javascript" src="playerMediaLib.js"></script>
+
+	<!-- DICTIONARY -->
+	<script type="text/javascript" src="dict71700.js"></script>
+	<script type="text/javascript" src="trans.js"></script>
+	<script type="text/javascript" src="utils.js"></script>
+	<script type="text/javascript" src="interface.js"></script>
+    <title></title>
+	<style>
+textarea{
+	displays:none;
+}
+#lessonCombo{
+	width: 100%;
+	font-size: 20px;
+}
+#swMesure{
+    border-radius: 3px;
+}
+.contentPanel{
+    float: left;
+    width: 63%; /*83*/
+	margin: 0;
+}
+.butPanel{
+    float: right;
+    width: 35%; /*15*/
+	margin: 0;
+}	
+.but{
+	width: 45%; /*95*/
+	padding: 15% 5%;
+	text-align: center;
+    margin: 2% 2% 2% 0;
+    font-size: 20px;
+	/*display: block;*/
+	overflow: hidden;
+	white-space: nowrap;
+	border-radius: 20%;
+	border: solid 1px gray;
+}
+#phraseOutput{
+	font-size: 40px;
+	float: left;
+	width: 95%;
+}
+.blue{
+	color: blue;
+}
+.green{
+	color: green;
+}
+.gray{
+	color: gray;
+}
+.transription{
+	color: orange;
+}
+.toggler{
+	width: 1em;
+	font-size: 1em;
+	font-weight: bold;
+	border: solid 1px gray;
+	border-radius: 1em;
+	text-align: center;
+}
+.pointered{
+	cursor: pointer;
+}
+
+#infoWrap, #objectPanel{
+    display:none;
+    border: 1px solid navy;
+    width: 95%;
+    height: 95%;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.941176);
+	color: black;
+    padding: 2%;
+    border-radius: 5px;
+    box-sizing: border-box;
+    position: fixed;
+    right: 2%;;
+    bottom: 2%;;
+    left: 2%;
+    font-size: 2em;
+}
+#infoPanel{
+    float: right;
+    width: 3.5em;
+    overflow: auto;
+    height: 100%;
+}
+.ipBut,.dcBut{
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 2px;
+}
+.ipBut{
+    float:right;
+    font-size: 2em;
+    width: 1.5em;
+    height: 20%;
+}
+.closeBut{
+	height: 1.5em;
+	margin-bottom: .5em;
+}
+.infoContent{
+    height: 100%;
+    overflow: auto;
+    display: none;
+}
+#infoSetting input,#infoSetting select{
+    text-align: center;
+    font-size: 100%;
+    width: 20%;
+    margin: 0.2em 0.2em 0 0;
+}
+
+#infoDictHead {
+	cursor: pointer;
+	border-bottom: 1px dashed;
+	margin-bottom: 0;
+}
+.transcription{
+	font-family: sans-serif;
+	font-weight: bold;
+	/*height: 49%;*/
+	color:red;
+}
+.origin{
+	/*height: 48%;*/
+	color:blue;
+	margin-top: 0.5%;
+}
+.origin a {
+	text-decoration: none;
+	border-bottom: 1px dashed;
+}
+.dcBut{
+	font-size: 1em;
+}
+
+#media{
+	height: 20px;
+    width: 98%;
+    position: fixed;
+    top: 0;
+}
+.contentPanel,.butPanel{
+	margin-top: 20px;
+}	
+#statusPanel{
+    border: dashed 1px green;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    font-size: 1.5em;
+    max-width: 100%;
+    padding: 0.1em;
+    background-color: aliceblue;
+    border-radius: 0.2em;
+}
+	</style>
+</head>
+<body>
+<!--	
+	https://reallanguage.club/wp-content/uploads/2016/08/3_Corruption.mp3?_=1	
+-->
+<video id="media" controls name="media" src="https://d1qx7pbj0dvboc.cloudfront.net/hello.mp3"></video><!-- http://www.howjsay.com/mp3/hello.mp3 -->
+<div class="contentPanel">
+	<select id="lessonCombo"></select>
+	<!--div id="swMesure" style="border: 1px solid green;box-sizing: border-box;position: relative;" title="">
+		<div id="swmIndicator" style="background-color: green; text-align: center; color: white; width: 0%;"></div>
+	</div-->
+	
+	<div id="editPanel" style="display: none">
+		<input type="button" value="Загрузить..." onclick="loadForEdit()"/>
+		<input type="button" value="Очистить..." onclick="resetForEdit()"/>&nbsp;&nbsp;
+		<select id="selTextEdit" style="width: 100px;">
+			<option value="">править тексты...</option>
+		</select>
+		<input type="button" value="Построить..." onclick="buildTable()"/>
+		<input type="button" value="Завернуть..."  onclick="wrapToObj()"/>
+		<a href="https://reallanguage.club/anglijskie-teksty-s-audio/" target=_blank>reallanguage</a>
+		<a href="https://ouenglish.ru/english-story-audio" target=_blank>ouenglish</a>
+		<a href="https://tophonetics.com/" target=_blank>tophonetics</a>
+		<a href="http://englishfox.ru/" target=_blank>englishfox</a>
+		<br/>
+		ссылка на медиа <input type="text" id="inSrc" onchange="media.src=this.value"/>
+		название <input type="text" id="inTitle"/>
+		уровень <select id="selLevel">
+			<option value="">не выбран</option>
+			<option value="A">A (начальный)</option>
+			<option value="B">B (средний)</option>
+			<option value="C">C (продвинутый)</option>
+		</select>
+		<input type="hidden" id="inPos" style="width: 98%;"/>
+		<br/>
+		<textarea id="taEn" style="height: 300px; width: 48%;"></textarea>
+		<textarea id="taRu" style="height: 300px; width: 48%;"></textarea>
+		<textarea id="taTr" style="height: 100px; width: 98%;"></textarea>
+		<table id="posTable" border="1" style="font-size: 1.5em">
+			<tbody style="vertical-align: baseline"></tbody>
+		</table>
+		<div id="objectPanel" style="display: none">
+			<input type="button" value="Close" onclick="objectPanel.style.display='none'"/>
+			<br/>
+			<textarea id="taObj" style="height: 95%; width: 98%;background-color: black;color:antiquewhite;"></textarea>
+		</div>
+	</div>
+
+	<div id="phraseOutput"></div>
+</div>
+<div class="butPanel">
+	<select id="selLevelFilter" title="Фильтр уровня" style="font-size: 20px;width: 45%;margin-right: 2%;" onchange="filterByLevel(this.value)">
+		<option value="">все</option>
+		<option value="A">A</option>
+		<option value="B">B</option>
+		<option value="C">C </option>
+	</select>
+	<button id="buttonToggleEdit" title="Редактор..." style="width: 45%; margin: 0 0 2% 0;" onclick="toggleEdit('editPanel')">&#9997;...</button>
+	<br/>
+	<button id="togglePlay" onclick="mTrainer.togglePlay()" class="but">▲ Play</button>
+	<button id="toStart" onclick="mTrainer.toStart()" class="but">▼ Rept</button>
+	<button id="toPrev" onclick="mTrainer.toPrev()" class="but">◄ Prev</button>
+	<button id="toNext" onclick="mTrainer.toNext()" class="but">► Next</button>
+	<div title="toggle buttons..." onclick="toggleElem('hiddenBut', this)" class="toggler pointered">+</div>
+	<div id="hiddenBut" style="display: none">
+		<button onclick="mTrainer.splitPhrase(3)" class="but">3/12</button>
+		<button onclick="mTrainer.splitPhrase(5)" class="but">5/12</button>
+		<button onclick="mTrainer.splitPhrase(7)" class="but">7/12</button>
+		<button onclick="mTrainer.splitPhrase(9)" class="but">9/12</button>
+	</div>
+	<button onclick="infoWrapToggle('infoSetting')" class="but">🔧 Menu</button>
+	<button id="toSlow" onclick="mTrainer.toSlow(this)" class="but">🕒 Slow</button>
+</div>
+
+<div style="clear:both"></div>
+
+<!-- statusPanel -->
+<script type="text/javascript">
+function showStatus(str, dur){
+	dur = dur || Math.ceil(str.length/8)*1000;
+	let el = document.getElementById('statusPanel');
+	el.innerHTML = str;
+	setTimeout( (function(_el, _str){ 
+		return ()=>{ _el.innerHTML ==_str ? _el.innerHTML = '': 0;} 
+	}(el, str)), dur);
+}
+</script>
+<div id="statusPanel"></div>
+
+<script type="text/javascript">
+function infoWrapToggle(infoContentId){
+	var i, elems = document.querySelectorAll('.infoContent');
+	for(i=0;i<elems.length;i++){
+		var infoContId = elems[i].id;
+		document.getElementById(infoContId).style.display = infoContId===infoContentId ? 'block' : 'none'
+	}
+
+	document.getElementById('infoWrap').style.display = infoContentId ? 'block' : 'none';
+
+}
+function changeTheme(night){
+	document.body.style.backgroundColor = night ? 'black' : 'white';
+    document.body.style.color = night ? 'white' : 'black';
+}
+
+function toggleElem(id, handle){
+	let el = document.getElementById(id);
+	el.style.display = el.style.display == 'none' ? 'block' : 'none';
+
+	if(handle){
+		handle.innerHTML = el.style.display == 'block' ? '-' : '+';
+	}
+	return el.style.display == 'block'; // boolean
+}
+function resetForEdit(){
+	if(taEn.value.length>1 && !confirm('Точно очистить редактор?')) return;
+
+	resetPosTable();
+	inSrc.value = '';
+	media.src = '';
+	
+	inTitle.value = '';
+	selLevel.value = '';
+	
+	taEn.value = '';
+	taRu.value = '';
+	taTr.value = '';
+	inPos._value = null;
+}
+function loadForEdit(){
+	let les = lessons[lessonCombo.value];
+	if(!les){
+		alert('Выберите урок из списка...');
+		return;
+	}
+	let cPosArr = getPosArrFromTable().filter(function(it){return it!==''});
+	if(cPosArr.length>1 && !confirm('Загрузка заменит таблицу с позициями. Продолжить?')) return;
+	
+	resetPosTable();
+	inSrc.value = les.src;
+	media.src = les.src;
+	
+	inTitle.value = les.title;
+	selLevel.value = les.lev;
+	
+	taEn.value = les.en;
+	taRu.value = les.ru;
+	taTr.value = les.tr || '';
+	inPos._value = les.pos;
+	
+	buildTable();
+}
+function splitText(text){
+	return text.replace(/\n/g, '').replace(/([\.!\?…]+)/g, '$1\n').trim().split('\n')
+}
+function buildTable(){
+	let cPosArr = getPosArrFromTable().filter(function(it){return it!==''});
+	if(cPosArr.length>0){
+		inPos._value = cPosArr;
+	}
+
+	let enArr = splitText(taEn.value),
+		ruArr = splitText(taRu.value),
+		trArr = splitText(taTr.value),
+		posArr = inPos._value;
+	buildPosTable(enArr, ruArr, trArr, posArr);
+}
+function getPosArrFromTable(){
+	let posArr = [];
+	document.querySelectorAll("#posTable tbody tr").forEach(function(tr){
+		posArr.push(tr.cells[0].innerHTML);
+	});
+	return posArr;
+}
+function wrapToObj(){
+	let posArr = getPosArrFromTable(),
+		resObj = {
+			title: inTitle.value, 
+			lev: selLevel.value, 
+			src: inSrc.value, 
+			pos: posArr, 
+			en: taEn.value, 
+			ru: taRu.value,
+			tr: taTr.value
+		},
+		str = JSON.stringify(resObj, function(k, value){
+			if(k=='pos') return undefined; // массив pos - отдельно иначе будет вертикальным
+			return value;
+		}, 2)
+		.replace(/({)/, '$1\n  "pos": '+JSON.stringify(resObj.pos)+',');
+
+	console.log(str);
+	taObj.value = str;
+	toggleElem('objectPanel');
+}
+
+function resetPosTable(){
+	document.querySelectorAll("#posTable tbody tr").forEach(function(e){e.remove()});
+}
+function buildPosTable(enArr, ruArr, trArr, posArr){
+	resetPosTable();
+
+	enArr.forEach(function(item, i, arr){
+		var newRow=posTable.insertRow();
+		newRow.style.cursor = 'pointer';
+
+		var cellPos = newRow.insertCell();
+		cellPos.style.textAlign = 'center';
+		cellPos.innerHTML= posArr && posArr[i] ? posArr[i] : '';
+		cellPos.onclick = (function(cell){
+			return ()=>{
+				media.currentTime = cell.innerHTML;
+				media.paused ? media.play() : 0;
+			}
+		}(cellPos));
+		cellPos.width="50";
+
+		var cellMin = newRow.insertCell();
+		cellMin.innerHTML="◄";
+		cellMin.onclick = (function(cell){
+			return ()=>{
+				cell.innerHTML = Math.max(0, parseFloat(cell.innerHTML)-0.5);
+				media.currentTime = cell.innerHTML;
+			}
+		}(cellPos));
+		var cellPls = newRow.insertCell();
+		cellPls.innerHTML="►";
+		cellPls.onclick = (function(cell){
+			return ()=>{
+				cell.innerHTML = Math.min(Math.floor(media.duration), parseFloat(cell.innerHTML)+0.5);
+				media.currentTime = cell.innerHTML;
+			}
+		}(cellPos));
+
+
+		var cellEn = newRow.insertCell(),
+			cellRu = newRow.insertCell(),
+			cellTr = newRow.insertCell();
+		cellEn.innerHTML=item;
+		cellRu.innerHTML=ruArr[i];
+		cellTr.innerHTML=trArr[i] ? trArr[i] : '';
+
+		cellEn.onclick = cellRu.onclick = (function(cell){
+			return ()=>{
+				cell.innerHTML = Math.floor(media.currentTime);
+			}
+		}(cellPos))
+	});
+}
+
+// init selTextEdit
+(function(){
+	let selectId = 'selTextEdit',
+		k, select = document.getElementById(selectId),
+		opts = {
+			'применить все:': ()=>{
+				document.querySelectorAll('#'+selectId+' option').forEach((it)=>{
+					if(it.value!=='применить все:' && it._editFn instanceof Function) it._editFn();
+				})
+			},
+			'убрать пустые строки': ()=>{
+				taEn.value = taEn.value.replace(/\n\s*\n/g, '\n\n');
+				taRu.value = taRu.value.replace(/\n\s*\n/g, '\n\n');
+			},
+			'убрать точку после Mr, Mrs и т.п.': ()=>{ taEn.value = taEn.value
+				// /(([^\u0400-\u04FF\w]|^)[\w\u0400-\u04FF]{1,3})\./g
+				let reg = /((\s|^)[A-ZА-ЯЁ][A-zА-яЁё]{0,2})\./g; /* /(Mrs?)\./g */
+				taEn.value = taEn.value.replace(reg, '$1');
+				taRu.value = taRu.value.replace(reg, '$1');
+			},
+			'обменять местами кавычки и .!?…': ()=>{
+				taEn.value = taEn.value.replace(/([\.!\?…]+)(”|"|'|»)/g, '$2$1');
+				taRu.value = taRu.value.replace(/([\.!\?…]+)(”|"|'|»)/g, '$2$1');
+			}
+		}
+	;
+
+	for(k in opts){
+		let opt = new Option(k, k,  false, false);
+		opt._editFn = opts[k];
+		select.appendChild(opt);
+	}
+
+	select.onchange = function(e){
+		if(this.selectedOptions[0] && this.selectedOptions[0]._editFn instanceof Function)
+			this.selectedOptions[0]._editFn();
+		this.value = ''; // вернуть на выбор
+	};
+}());
+
+</script>
+<div  id="infoWrap" style="">
+	<div id="infoPanel">
+        <input class="ipBut closeBut" title="Закрыть" type="button" value="&#215;" style="color: red;" onclick="infoWrapToggle();"/>
+		<input class="ipBut" title="Словарь" type="button" value="&#9997;" style="" onclick="infoWrapToggle('infoDict')"/>
+		<input class="ipBut" title="Настройки" type="button" value="🔧" style="" onclick="infoWrapToggle('infoSetting')">
+		<input class="ipBut" title="Помощь" type="button" value="🕮" style="" onclick="infoWrapToggle('infoHelp')">
+        <!-- $('.ipBut').height(Math.floor(100/($('.ipBut').length+1))+'%')// автоподгон высоты -->
+    </div>
+	<div class="infoContent" id="infoHelp" style=""><h3>&#9786; Help</h3><hr/>
+		<p>
+			Веб-приложение ....
+		</p>
+
+		Кнопки:
+		<ul>
+			<li>▲ Play: запуск и пауза плеера, клавиша ▲</li>
+			<li>▼ Rept: повторить текущую фразу, клавиша ▼</li>
+			<li>◄ Prev: перейти на фразу назад, клавиша ◄</li>
+			<li>► Next: перейти на фразу вперед, клавиша ►</li>
+			<li>🕒 Slow/Norm: замедлить и вернуть нормальную скорость, клавиша 0</li>
+			<li>🔧 Menu: открыть настройки</li>
+			<li>3/12 5/12 7/12 9/12: воспроизвести часть фразы начиная с 3, 5, 7 или 9 доли</li>
+		</ul>
+
+		Горячие клавиши:
+		<ul>
+			<li>- +: уровень громкости плеера</li>
+			<li>1-9: воспроизвести часть фразы начиная с с 1 по 9 долю</li>
+		</ul>
+
+		<script type="text/javascript" src="pluso.js"></script>
+
+	</div>
+	<div class="infoContent" id="infoSetting" style=""><h3>☭ Settings</h3><hr/>
+		<label><input type="checkbox" onclick="changeTheme(this.checked)"/> Night theme</label>
+		<br/>
+		<select id="selectVKeyBrd" onchange="media.preload = this.value">
+			<option value="metadata">частичная</option><option value="auto">полная сразу</option>
+		</select> Загрузка медиа файла
+	</div>
+<!--
+ let initAResult = dictFindSmart(word);
+ treatHistoryNavigator(word);
+ initInfoDictElements(initAResult);
+
+ infoWrapToggle('infoDict');
+-->
+	<div class="infoContent" id="infoDict">
+		<h2 onclick="if(res = prompt('Найти в cловаре:', this.innerHTML), res!='') showA(res);" id="infoDictHead" class="origin">dictionary</h2>
+		<div>
+			<input type="button" class="dcBut" id="dictPrevBut" disabled="disabled" value="&#8666;" onclick="showA(dh.previous(), true)">
+			<input type="button" class="dcBut" style="float:right" id="dictNextBut" disabled="disabled" value="&#8667;" onclick="showA(dh.next(), true)">
+		</div>
+		<div id="infoDictTranscription" class="transcription"></div>
+		<div id="infoDictContent">&#9997; Здесь будут отображаться словарные статьи. Щелкните по заголовку если хотите найти произвольную статью.</div>
+	</div>
+</div>
+<script type="text/javascript">
+var mTrainer = new MediaTrainer(
+	media,
+	'phraseOutput',
+	function(learned){ // setIndicatorFunction
+		var swmIndicator = document.getElementById("swmIndicator");
+		swmIndicator.style.width = swmIndicator.innerHTML = learned+'%';
+		swmIndicator.parentNode.title = 'Выучено ' + learned+'%';
+	}
+);
+media.addEventListener('timeupdate', function () {
+    mTrainer.treatPosition(media.currentTime);
+}, false);
+//media.volume=0.7;
+//media.preload = 'auto'; //Загрузить  целиком при загрузке страницы
+
+function MediaTrainer(
+	mediaElem,
+	phraseOutputId,
+	setIndicatorFunction
+){
+	this.setIndicator = setIndicatorFunction || function(){};
+	
+	// private
+	var _this = this,
+		currentLessonId,
+		currentLesson,
+		currEn, currRu, currTr,
+		prevStart = 0, nextStart = 0,
+		currStart = 0, currentEnd = -1,
+		currIndex = -1
+	;
+
+	this.resetLesson = function(){
+		currentLessonId = null;
+		currentLesson = null;
+		currEn = null; currRu = null; currTr = null;
+
+		prevStart = 0; nextStart = 0;
+		currStart = 0; currEnd = -1;
+		currIndex = -1;
+		document.getElementById(phraseOutputId).innerHTML = '';
+	}
+
+	this.initAndStart = function(id){
+		this.resetLesson();
+		if(!lessons[id]) return;
+
+		currentLessonId = id;
+		currentLesson = lessons[id];
+		mediaElem.src = lessons[id].src;
+		currEn = splitText(currentLesson.en);
+		currRu = splitText(currentLesson.ru);
+		currTr = splitText(currentLesson.tr || '');
+	}
+
+	this.togglePlay = function(){
+		mediaElem.paused ? mediaElem.play() : mediaElem.pause();
+	};
+	this.toStart = function(){
+		mediaElem.currentTime = currStart;
+		mediaElem.play();
+	};
+	this.toSlow = function(but){
+		mediaElem.playbackRate = (mediaElem.playbackRate === 1 ? 0.7 : 1);
+		but.innerHTML = '🕒 '+(mediaElem.playbackRate === 1 ? 'Slow' : 'Norm');
+		showStatus('playback rate = '+mediaElem.playbackRate);
+	};
+	this.toPrev = function(){
+		mediaElem.currentTime = prevStart;
+	};
+	this.toNext = function(){
+		mediaElem.currentTime = nextStart;
+	};
+	this.splitPhrase = function(cnt){
+		let curSt = parseFloat(currStart), 
+			curEnd = parseFloat(currEnd),
+			gain = ((curEnd-curSt)/12*(cnt+1));
+		mediaElem.currentTime = curSt+gain;
+	}
+	
+	var _initButtons = (function(){
+		// @TODO
+	}());
+	
+	this.treatPosition = function(position){
+		if(!currentLesson) return;
+		if(position == mediaElem.duration) return;
+		if(position>=currStart && position < currEnd) return;
+		
+		let pos  = currentLesson.pos, i, end;
+		for(i=0; i<pos.length; i++){
+			end = i < pos.length-1 ? pos[i+1] : mediaElem.duration;
+			if(position>=pos[i] && position < end){
+				prevStart = i<1 ? pos[0] : pos[i-1];
+				nextStart = i < pos.length-1 ? pos[i+1] : pos[i];
+				currStart = pos[i];
+				currEnd = end;
+				currIndex = i;
+				document.getElementById(phraseOutputId).innerHTML = dictUtils.wrapInClass(currEn[currIndex], dictUtils.WORD_CLASS)
+				+'<div class="gray">'
+					+currRu[currIndex]
+					+'<br/><i>('+(i+1)+'/'+pos.length+', '+currStart+')</i>'
+				+'</div>'
+				+(currTr[currIndex] ? '<div class="transription">'+currTr[currIndex]+'</div>' : '')
+				;
+				dictUtils.initClass(dictUtils.WORD_CLASS);
+				break;
+			}
+		}
+	}
+}
+
+function toggleEdit(id){
+	if(toggleElem(id)){
+		mTrainer.resetLesson();
+		document.getElementById('lessonCombo').value = -1; // выбрать...
+	}
+}
+
+lessons = lessons || [];
+lessons.push({
+	"pos": ["3","10","14","21","28","34","42","49","54","63","68.5","77","83.5","89","102","105.5","109","115","119","123","129.5","135","141","143","148.5","151.5","156.5"],
+	"title": "Corruption ",
+	"lev": "B",
+	"src": "https://reallanguage.club/wp-content/uploads/2016/08/3_Corruption.mp3?_=1",
+	"en": "When an official of a government or business is acting dishonestly, we say that this person is corrupt. Corruption is a serious problem in many countries around the world. There are several different kinds of corrupt practices, including bribes, kickbacks, nepotism, and embezzlement.\n\nA bribe is a payment of money or some other benefit, in exchange for a decision that would not otherwise be made. For example, an accused criminal might bribe a judge so that the judge would make a decision of “not guilty.” Another example is that a business owner might bribe a government official so that the official would allow the construction of very unsafe buildings.\n\nA kickback is similar to a bribe, except that the official receives some part of the money in a dishonest business deal. For example, governments sometimes decide which company should build a road. A company might offer money to the government official who makes the decision, so that this company will be chosen, even if it is not the best company for the job.\n\nNepotism happens when an official unfairly gives advantages to his or her relatives. For example, a government official might hire a brother or sister to do a job even though other people would be much better qualified for the job. Of course, all of us want to help our relatives, but it is wrong to do this at the expense of the public.\n\nEmbezzlement happens when an official secretly steals some money from a company or government. For example, a manager at a company might secretly move some of the company’s money to his or her own bank account, or that manager might lie about his or her expenses in order to receive more payment from the company.\n\n \n\nCorruption has very bad effects on people, in several ways. Sometimes it can lead to very dangerous situations. One example of this is when unsafe construction projects are approved by officials who have been bribed. Another example is when criminals are freed as a result of bribes. Also, a country’s economy can be damaged by corruption. For example, if companies must pay bribes in order to do business, then they may decide to leave the country. Also, if people’s tax money is stolen by corrupt officials, this makes the people poorer. In addition, when company officials are corrupt, it makes the company less able to compete with other companies.\n\nHow can corruption be stopped? An important step is for each person to decide not to act in ways that are corrupt. People must agree to take this problem seriously. Also, each company and each government must have strict rules about corruption. It must be very clear to all employees-from the lowest to the highest-that corruption is totally unacceptable.",
+	"ru": "Когда правительственный чиновник или служащий делового предприятия действует нечестно, мы говорим, что этот человек коррумпированный. Коррупция является серьезной проблемой во многих странах мира. Существует несколько различных видов коррупционной деятельности, включая взятки, откаты, кумовство и казнокрадство.\n\nВзятка — это выплата денег или предоставление какой-либо другой выгоды в обмен на решение, которое в противном случае не было бы принято. Например, обвиняемый преступник может подкупить судью, с тем чтобы судья принял вердикт “не виновен».” Другой пример — владелец бизнеса может подкупить чиновника, чтобы тот разрешил строительство очень ненадежных зданий.\n\nОткат похож на взятку, за исключением того, что чиновник получает часть денег в нечестной сделке. Например, правительство иногда решает, какая компания должна строить дорогу. Компания может предложить деньги правительственному чиновнику, который принимает решение, чтобы эта компания была выбрана, даже если это не лучшая компания для работы.\n\n \n\nКумовство — это когда чиновник неоправданно предоставляет преимущества своим родственникам. Например, правительственный чиновник может нанять брата или сестру для выполнения работы, даже если другие люди будут гораздо лучше подготовлены для этой работы. Конечно, все мы хотим помочь своим близким, но делать это за счет общественности неправильно.\n\nКазнокрадство происходит, когда чиновник тайно крадет деньги у компании или правительства. Например, менеджер в компании может тайно перевести часть денег компании на свой банковский счет или этот менеджер может солгать о своих расходах, чтобы получить больше платежей от компании.\n\nКоррупция очень плохо влияет на людей, в нескольких аспектах. Иногда это может привести к очень опасным ситуациям. Одним из примеров этого является утверждение ненадежных строительных проектов должностными лицами, получившими взятки. Другой пример — освобождение преступников в результате получения взяток. Кроме того, коррупция может нанести ущерб экономике страны. Например, если компании вынуждены давать взятки, чтобы вести бизнес, они могут принять решение покинуть страну. Кроме того, если народные налоговые деньги украдены коррумпированными чиновниками, это обедняет людей. Кроме того, когда должностные лица компании коррумпированы, это делает компанию менее конкурентоспособной.\n\nКак остановить коррупцию? Важным шагом для каждого человека является решение не действовать коррумпированными способами. Люди должны согласиться серьезно отнестись к этой проблеме. Кроме того, каждая компания и каждое правительство должно иметь строгие правила относительно коррупции. Всем сотрудникам-от самых низких должностей до самых высоких, должно быть совершенно ясно, что коррупция абсолютно неприемлема."
+});
+
+// initLessonCombo
+initLessonCombo();
+document.getElementById('lessonCombo').onchange = function(e){
+	mTrainer.initAndStart(this.value);
+};
+document.getElementById('lessonCombo').onchange();
+
+function filterByLevel(lev){
+	let options = document.querySelectorAll("#lessonCombo option");
+	options.forEach(function(op){
+		op.style.display = 'inherit';
+	});
+	if(lev!=='')
+		options.forEach(function(op){
+			op.style.display = op.getAttribute('data-level')===lev? 'inherit' : 'none';
+		})
+}
+// initKeydown
+(function(){
+	document.onkeydown = function(event){
+		var id, key = event.keyCode;
+		//console.log(key);
+		if(key===109){ // -
+			media.volume = Math.max(0, media.volume-0.1);
+			showStatus('volume = '+media.volume.toFixed(1));
+			return;
+		}
+		if(key===107){ // +
+			media.volume = Math.min(1, media.volume+0.1);
+			showStatus('volume = '+media.volume.toFixed(1));
+			return;
+		}
+		if(key>=97 && key<=105){ // 1,2,3,4,5,6,7,8,9
+			mTrainer.splitPhrase(key-96);
+			return;
+		}
+		switch(key) {
+		  case 37: // <-
+			id = 'toPrev';
+			break;
+		  case 38:
+		  	id = 'togglePlay';
+			break;
+		  case 39: // ->
+			id = 'toNext';
+			break;
+		  case 40:
+			id = 'toStart';
+			break;
+		  case 96: // 0
+		  	id = 'toSlow';
+		  	break;
+		}
+		let el = document.getElementById(id);
+		if(el) el.click();
+	}
+}())
+
+
+// document.onkeydown = function(event){
+// 	var med = $('audio')[1], key = event.keyCode;
+// 	if(key===37){  // <-
+// 		med.currentTime-=2;
+// 		event.preventDefault();
+// 		return;
+// 	}
+// 	if(key===39){ // ->
+// 		med.currentTime+=2;
+// 		event.preventDefault();
+// 		return;
+// 	}
+// }
+
+</script>
+<!-- DICTIONARY -->
+<style>
+	span.word {
+		border-bottom: 1px dashed;
+		cursor: pointer;
+	}
+</style>
+<script type="text/javascript">
+	// DICTIONARY Utils
+	dictUtils = {
+		WORD_CLASS: "word",
+		checkFoo: function(){
+			return window.dictFind instanceof Function
+				&& window.dictFindSmart instanceof Function;
+		},
+		hint: function (el){
+			var w=dictFind(dictSmall, el.innerHTML);
+			if(w!=null) el.title = w.fw+': '+w.a;
+		},
+		openDictWin: function(word, top, left, width,height){
+			var newWin = window.open(
+					"dict.html#"+encodeURIComponent(word),
+					"DictWin",
+					"top="+(top||0)+",left="+(left||document.body.offsetWidth)+
+					",width="+(width||420)+",height="+(height||500)+
+					",resizable=yes,scrollbars=yes"
+			);
+			newWin.focus();
+		},
+		wrapInClass: function(en, className){
+			if(!dictUtils.checkFoo()) return en;
+
+			let w = en.split(/\b/ig);
+			for(let i=0;i<w.length;i++){
+				if(/^[a-z'-]+$/i.test(w[i])){
+					w[i] = '<span class="'+className+'">'+w[i]+'</span>';//
+				}
+			}
+			return w.join('');
+		},
+		initClass: function(className){
+			if(!dictUtils.checkFoo()) return;
+
+			let ind, ws = document.getElementsByClassName(className);
+			for(ind in ws){
+				let el = ws[ind];
+				el.onmouseover = (function(this_){ return function(){
+					dictUtils.hint(this_);
+				}}(el));
+				el.onclick = (function(this_){ return function(){
+					let word = this_.innerHTML.toLowerCase(),
+							initAResult = dictFindSmart(word);
+					if(initAResult==null) return;
+					dictUtils.openDictWin(initAResult.word);
+				}}(el));
+			}
+		}
+	};
+</script>
+</body>
+</html>

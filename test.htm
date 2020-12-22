@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="cookieLib.js"></script>
+ 
+ <title></title>
+</head>
+<body>
+
+<input type="text" id="text" onchange="commonChange(this)">
+<br/>
+<input type="checkbox" id="checkbox" onchange="commonChange(this)">
+<br/>
+<select id="select" onchange="commonChange(this)">
+    <option value="">...</option>
+    <option value="первый">первый</option>
+    <option value="2">2</option>
+</select>
+<br/>
+<textarea id="textarea" onchange="commonChange(this)"></textarea>
+<br/>
+<script>
+    function commonChange(elem){
+        console.log(elem.id+': '+elem.value);
+        cookieLib.writeElemValue(elem, 60);
+    }
+
+    cookieLib.initElemValue(text);
+    cookieLib.initElemValue(checkbox);
+    cookieLib.initElemValue(select);
+    cookieLib.initElemValue(textarea);
+
+</script>
+<script>
+
+
+</script>
+
+</body></html>

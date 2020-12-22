@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<script type="text/javascript" src="speechMediaLib.js"></script>
+
+	<script type="text/javascript" src="cookieLib.js"></script>
+
+	<!-- book -->
+	<!--script type="text/javascript" src="book/bookUtils.js"></script>
+	<script type="text/javascript" src="book/Angels_and_Demons.js"></script-->
+<style>
+body {
+    margin-top: 20px;
+}
+.ru{
+    color: gray;
+    padding-left: 1em;
+}
+.gray{
+	color: gray;
+}
+.red{
+	color: red;
+}
+
+#objectPanel, #infoDict{
+	display:none;
+	border: 1px solid navy;
+	width: 95%;
+	height: 95%;
+	z-index: 1000;
+	background-color: rgba(255, 255, 255, 0.941176);
+	color: black;
+	padding: 2%;
+	border-radius: 5px;
+	box-sizing: border-box;
+	position: fixed;
+	right: 2%;;
+	bottom: 2%;;
+	left: 2%;
+	font-size: 2em;
+}
+</style>
+</head>
+<body>
+
+<!-- speechSynthesis -->
+<select id="speechSynthesisVoicesEn"></select>
+<select id="speechSynthesisVoicesRu"></select>
+<button id="speechSynthesisVoicesInitBut" class="red" onclick="speechSynthesisVoicesInit(this);">Активировать голосовые движки</button>
+<script type="text/javascript">
+let speechUtils = {
+	voicesInited: false,
+	utteranceEn: (function(){
+		let utterance = new SpeechSynthesisUtterance();
+		utterance.onend = function(){ playNext(); };
+		return utterance;
+	}()),
+	utteranceRu: (function(){
+		let utterance = new SpeechSynthesisUtterance();
+		return utterance;
+	}()),
+	initVoicesSelect: function(selectId, utterance, valueName){
+		let voices = window.speechSynthesis.getVoices(),
+				sel = document.querySelector('#'+selectId);
+		voices.forEach(function(c) {
+			sel.appendChild(new Option(c.name, c.name,  false, false)); // Добавляем в селект
+		});
+		if(voices.length>0){
+			sel.onchange = function(){
+				let this_value = this.value;
+				utterance.voice = window.speechSynthesis.getVoices().filter(function(v){return v.name===this_value})[0];
+			};
+			valueName ? sel.value = valueName : 0;
+			sel.onchange();
+		}
+		return voices.length>0;
+	},
+	// более мягкое условие, применяется рандомно
+	humaniteRegExpLight: new RegExp( '([a-z])( (when|where|until|till) |:)', "g"),
+	humaniteRegExp:   new RegExp( '([a-z])( (or|when|where|until|till) |:)', "g"), //and|like|
+	/* "очеловечивание" доп. паузами */
+	humaniteText: function(txt){
+		let reg = getRandomInt(1,4,true)<3 ? speechUtils.humaniteRegExp : speechUtils.humaniteRegExpLight; // utils.js
+		return txt.replace(reg, '$1, $2')
+	},
+	play: function(text, utterance){
+		utterance = utterance || speechUtils.utteranceEn;
+		if(!speechUtils.voicesInited){
+			alert('требуется: '+'Активировать голосовые движки');
+			return;
+		}
+		utterance.text = speechUtils.humaniteText(text);
+		window.speechSynthesis.cancel();
+		window.speechSynthesis.speak(utterance);
+	}
+};
+/** humanite test
+ // speechUtils.humaniteRegExp = new RegExp( '([a-z])( (like|when|where|and|until)|:)', "g");
+ text = 'he was like to the ladies:«I like to keep.';
+ console.log(speechUtils.humaniteText(text));
+ speechUtils.play(text, speechUtils.utteranceEn);
+*/
+
+function speechSynthesisVoicesInit(button){
+	if(speechUtils.initVoicesSelect('speechSynthesisVoicesEn', speechUtils.utteranceEn)) {
+		speechUtils.initVoicesSelect('speechSynthesisVoicesRu', speechUtils.utteranceRu, 'Google русский');
+		speechUtils.voicesInited = true;
+		button.remove();
+		showStatus('Активировано!');
+	}else{
+		showStatus('Не удалось, попробуйте еще раз...');
+	}
+}
+
+// document.addEventListener("DOMContentLoaded", function () {
+// 	//console.log(window.speechSynthesis.getVoices());
+// });
+
+</script>
+<!-- /speechSynthesis -->
+<br/>
+<select id="lessonCombo"></select>
+<input type="button" value="Загрузить..." id="loadForEditButton" onclick="loadForEdit()"/>
+<input type="button" value="Очистить..." onclick="resetForEdit()"/>&nbsp;
+<select id="selTextEdit" style="width: 100px;">
+	<option value="">править тексты...</option>
+</select>
+<!--input type="button" value="Построить..." onclick="buildTable()"/-->
+<select onchange="buildTableSelect(this)">
+	<option value="none" class="gray">построить таблицу:...</option>
+	<option>По фразам</option>
+	<option>По строкам</option>
+</select>
+<input type="button" value="Завернуть..."  onclick="wrapToObj()"/>
+<input type="checkbox" id="hotKeysOff"> <label for="hotKeysOff">Отключить горячие клавиши</label>
+<br/>
+<a href="https://reallanguage.club/anglijskie-teksty-s-audio/" target=_blank>reallanguage</a>
+<a href="https://ouenglish.ru/english-story-audio" target=_blank>ouenglish</a>
+<a href="https://tophonetics.com/" target=_blank>tophonetics</a>
+<a href="http://englishfox.ru/" target=_blank>englishfox</a>
+<a href="https://madbook.org/" target=_blank>madbook</a>
+<a href="https://english-e-reader.net/level/advanced" target=_blank>english-e-reader</a>
+<a href="https://e-libra.me/read/432477-garri-potter-i-filosofskiy-kamen.html" target=_blank>e-libra</a>
+<br/>
+
+<!-- taEn -->
+<!--style>
+#taEn{
+    width: 100%;
+    height: 20em;
+    font-size: 36px;
+}
+</style>
+<textarea id="taEn">
+
+</textarea-->
+название <input type="text" id="inTitle"/>
+уровень <select id="selLevel">
+	<option value="">не выбран</option>
+	<option value="A">A (начальный)</option>
+	<option value="B">B (средний)</option>
+	<option value="C">C (продвинутый)</option>
+</select>
+<br/>
+<textarea id="taEn" style="height: 100px; width: 48%;" onmouseup="let s = getSelected();if(s.length>0) showStatus('selected = '+s.length);"></textarea>
+<textarea id="taRu" style="height: 100px; width: 48%;"></textarea>
+<textarea id="taTr" style="height: 10px; width: 98%;"></textarea>
+<table id="posTable" border="1" style="font-size: 2em">
+	<tbody style="vertical-align: baseline"></tbody>
+</table>
+<!-- just a pad after table -->
+<div id="padDiv" style="margin-top: 50%;"></div>
+
+<!-- statusPanel -->
+<div class="hidden">
+	<style>
+	#statusPanel{
+		border: dashed 1px green;
+		position: fixed;
+		left: 0;
+		bottom: 0;
+		font-size: 1.5em;
+		max-width: 100%;
+		padding: 0.1em;
+		background-color: aliceblue;
+		border-radius: 0.2em;
+	}
+	</style>
+	<script type="text/javascript">
+	function showStatus(str, dur){
+		dur = dur || 4000;
+		let el = document.getElementById('statusPanel');
+		el.innerHTML = str;
+		setTimeout( (function(_el, _str){ 
+			return ()=>{ _el.innerHTML ==_str ? _el.innerHTML = '': 0;} 
+		}(el, str)), dur);
+	}
+	</script>
+	<div id="statusPanel"></div>
+</div>
+<!-- statusPanel -->
+
+<!-- objectPanel -->
+<div id="objectPanel" style="display: none">
+	<input type="button" value="Close" onclick="objectPanel.style.display='none'"/>
+	<br/>
+	<textarea id="taObj" style="height: 95%; width: 98%;background-color: black;color:antiquewhite;"></textarea>
+</div>
+<!-- objectPanel -->
+
+<!-- infoDict -->
+<style>
+	#infoDictHead {
+		cursor: pointer;
+		border-bottom: 1px dashed;
+		margin-bottom: 0;
+	}
+	.transcription{
+		font-family: sans-serif;
+		font-weight: bold;
+		/*height: 49%;*/
+		color:red;
+	}
+	.origin{
+		/*height: 48%;*/
+		color:blue;
+		margin-top: 0.5%;
+	}
+		.origin a {
+			text-decoration: none;
+			border-bottom: 1px dashed;
+		}
+	.dcBut{
+		font-weight: bold;
+		font-size: 1.5em;
+		margin-bottom: 2px;
+	}
+</style>
+<!--
+ let initAResult = dictFindSmart(word);
+ treatHistoryNavigator(word);
+ initInfoDictElements(initAResult);
+
+ toggleElem('infoDict');
+-->
+<div id="infoDict" style="display: none">
+	<input type="button" value="Close" onclick="this.parentNode.style.display='none'"/>
+	<h2 onclick="if(res = prompt('Найти в cловаре:', this.innerHTML), res!='') showA(res);" id="infoDictHead" class="origin">dictionary</h2>
+	<div>
+		<input type="button" class="dcBut" id="dictPrevBut" disabled="disabled" value="&#8666;" onclick="showA(dh.previous(), true)">
+		<input type="button" class="dcBut" style="float:right" id="dictNextBut" disabled="disabled" value="&#8667;" onclick="showA(dh.next(), true)">
+	</div>
+	<div id="infoDictTranscription" class="transcription"></div>
+	<div id="infoDictContent">&#9997; Здесь будут отображаться словарные статьи. Щелкните по заголовку если хотите найти произвольную статью.</div>
+</div>
+<!-- infoDict -->
+
+<script type="text/javascript">
+	if(window.initLessonCombo instanceof Function){
+		initLessonCombo();
+	}else{
+		loadForEditButton.setAttribute('disabled', 'disabled');
+	}
+
+var currInd=0, // индекс текущей позиции
+	cookieCurrIndName = 'speechCurrInd',
+	toNext = false; // движение дальше
+function setCurrInd(val){
+	currInd=val;
+	cookieLib.set(cookieCurrIndName, currInd, 3600*24*365);
+}
+
+// HOT KEYS
+(function(){
+	document.onkeydown = function(event){
+		if(hotKeysOff.checked) return;
+		var id, key = event.keyCode,
+				trs = document.querySelectorAll("#posTable tbody tr"),
+				prev = false;
+		switch(key) {
+			case 37: // <-
+			case 39: // ->
+			case 40: // down narrow
+				if(key===37 || key===39){
+					setCurrInd( key=== 37 ? Math.max(0, currInd-1) : Math.min(trs.length-1, currInd+1));
+				}
+				toNext = key>=39;
+				playPosInTable(currInd, trs[currInd]._en);
+				showStatus('current row = '+(currInd+1), 1000);
+				prev = true; break;
+			case 38: // up narrow
+				toNext = false;
+				playPosInTable(currInd, trs[currInd]._ru, speechUtils.utteranceRu);
+				prev = true; break;
+			case 13: // Enter
+				showStatus(window.speechSynthesis.paused ? 'resumed' : 'paused', 2000);
+				window.speechSynthesis.paused ? window.speechSynthesis.resume() : window.speechSynthesis.pause();
+				prev = true; break;
+			case 110: // , Del (Num Lock)
+				toNext = false;
+				window.speechSynthesis.cancel();
+				showStatus('speechSynthesis canceled');
+				// 	console.dir(window.speechSynthesis);
+				// showStatus(window.speechSynthesis.paused ? 'resumed' : 'paused', 4000);
+				// window.speechSynthesis.paused ? window.speechSynthesis.resume() : window.speechSynthesis.pause();
+				prev = true; break;
+			case 96: // 0
+				let cRate = speechUtils.utteranceEn.rate;
+				speechUtils.utteranceEn.rate = cRate === 1 ? 0.5.toFixed(1) : 1;
+				showStatus('playback rate = '+speechUtils.utteranceEn.rate);
+				prev = true; break;
+		}
+
+		if(key>=97 && key<=105){ // 1-9
+			let pl = key-96, sliceText, arrsl,
+				arr = trs[currInd]._en.trim().split(/\s/),
+				from = Math.ceil(arr.length/10*pl);
+			// для целостности фрагмента дополняем из начала часть от запятой и т.п.
+			if(arr[from-3] && /[,;:]$/.test(arr[from-3]) && !/[,;:]$/.test(arr[from-2])){
+				from = from-2;
+			}else
+			if(arr[from-2] && /[,;:]$/.test(arr[from-2]) && !/[,;:]$/.test(arr[from-1])){
+				from = from-1;
+			}
+			arrsl = arr.slice(from);
+			// для целостности фрагмента отсекаем из начала часть с запятыми и т.п.
+			while(arrsl.length>2 && /[,;:]$/.test(arrsl[0])){
+				arrsl = arrsl.slice(1);
+			}
+			sliceText = arrsl.join(' ');
+			toNext = false;
+			playPosInTable(currInd, sliceText);
+			showStatus('slice text = '+(pl+1)+'/10');
+			prev = true;
+		}
+		
+		prev === true ? event.preventDefault() : 0;
+	}
+}());
+
+
+// init selTextEdit
+(function(){
+	let selectId = 'selTextEdit',
+		k, select = document.getElementById(selectId),
+		opts = {
+			'применить все:': ()=>{
+				document.querySelectorAll('#'+selectId+' option').forEach((it)=>{
+					if(it.value!=='применить все:' && it._editFn instanceof Function) it._editFn();
+				})
+			},
+			'убрать пустые строки': ()=>{
+				taEn.value = taEn.value.replace(/\n\s*\n/g, '\n\n');
+				taRu.value = taRu.value.replace(/\n\s*\n/g, '\n\n');
+			},
+			'убрать точку после Mr, Mrs и т.п.': ()=>{ taEn.value = taEn.value
+				// /(([^\u0400-\u04FF\w]|^)[\w\u0400-\u04FF]{1,3})\./g
+				let reg = /(Mrs?)\./g; /* /((\s|^)[A-ZА-ЯЁ][A-zА-яЁё]{0,2})\./g */
+				taEn.value = taEn.value.replace(reg, '$1');
+				taRu.value = taRu.value.replace(reg, '$1');
+			},
+			'обменять местами кавычки и .!?…': ()=>{
+				taEn.value = taEn.value.replace(/([\.!\?…]+)(”|"|'|»)/g, '$2$1');
+				taRu.value = taRu.value.replace(/([\.!\?…]+)(”|"|'|»)/g, '$2$1');
+			},
+			'заменить \'. . .\' на \'…\'': ()=>{
+				taEn.value = taEn.value.replace(/\. \. \./g, '…');
+				taRu.value = taRu.value.replace(/\. \. \./g, '…');
+			}
+		}
+	;
+
+	for(k in opts){
+		let opt = new Option(k, k,  false, false);
+		opt._editFn = opts[k];
+		select.appendChild(opt);
+	}
+
+	select.onchange = function(e){
+		if(this.selectedOptions[0] && this.selectedOptions[0]._editFn instanceof Function)
+			this.selectedOptions[0]._editFn();
+		this.value = ''; // вернуть на выбор
+	};
+}());
+
+function toggleElem(id, handle){
+	let el = document.getElementById(id);
+	el.style.display = el.style.display == 'none' ? 'block' : 'none';
+
+	if(handle){
+		handle.innerHTML = el.style.display == 'block' ? '-' : '+';
+	}
+	return el.style.display == 'block'; // boolean
+}
+function getSelected(){
+	let selected = '';
+	if (window.getSelection) selected = window.getSelection();
+	else if (document.getSelection) selected = document.getSelection();
+	else selected = document.selection.createRange().text;
+	return '' + selected;
+}
+
+function loadForEdit(){
+	let les = lessons[lessonCombo.value];
+	if(!les){
+		alert('Выберите урок из списка...');
+		return;
+	}
+
+	resetPosTable();
+
+	inTitle.value = les.title;
+	selLevel.value = les.lev;
+
+	taEn.value = les.en;
+	taRu.value = les.ru;
+	taTr.value = les.tr || '';
+
+	buildTable();
+}
+function resetForEdit(){
+	if(taEn.value.length>1 && !confirm('Точно очистить редактор?')) return;
+
+	resetPosTable();
+
+	inTitle.value = '';
+	selLevel.value = '';
+
+	taEn.value = '';
+	taRu.value = '';
+	taTr.value = '';
+}
+
+function playNext(){
+	if(!toNext) return;
+	let trs = document.querySelectorAll("#posTable tbody tr");
+	if(currInd<trs.length-1){
+		setCurrInd(currInd+1);
+		playPosInTable(currInd, trs[currInd]._en);
+	}
+}
+
+function playPosInTable(ind, text, utterance){
+	utterance = utterance || speechUtils.utteranceEn;
+	speechUtils.play(text, utterance);
+	scrollIntoPosInTable(ind);
+	highlightPosInTable(ind);
+}
+
+function scrollIntoPosInTable(ind) {
+	let tr = document.querySelectorAll("#posTable tbody tr"),
+			rect = tr[ind].getBoundingClientRect();
+	if(rect.bottom < document.documentElement.clientHeight && rect.top>0 ) return;
+	tr[ind].scrollIntoView();
+	window.scrollBy(0,-Math.floor(document.documentElement.clientHeight/3)); // откат на 1/3
+}
+function highlightPosInTable(ind) {
+	document.querySelectorAll("#posTable tbody tr").forEach(function(tr, key){
+		tr.style.backgroundColor = (key=== ind ? 'beige' : 'inherit'); // azure
+	});
+}
+
+function initCookieCurrInd(len){
+	let ind = cookieLib.get(cookieCurrIndName);
+	if(!ind) return;
+	ind = parseInt(ind);
+	if(len>=ind){
+		setCurrInd(ind);
+		scrollIntoPosInTable(ind);
+		highlightPosInTable(ind);
+	}
+}
+
+function loadFromBOOK(name){// loadFromBOOK('Angels_and_Demons')
+	let k, enArr = [], ruArr = [];
+	for(k in BOOK[name]){
+		if(k==='utils') continue;
+		let it = BOOK[name][k];
+		enArr.push(it.en);
+		ruArr.push(it.ru);
+	}
+
+	buildPosTable(enArr, ruArr, []);
+}
+
+function wrapToObj(){
+	let resObj = {
+				title: window.inTitle ? inTitle.value : '',
+				lev: window.selLevel ? selLevel.value : '',
+				en: taEn.value,
+				ru: taRu.value,
+				tr: window.taTr ? taTr.value : ''
+			},
+			str = JSON.stringify(resObj, null, 2);
+
+	//console.log(str);
+	taObj.value = str;
+	toggleElem('objectPanel');
+}
+
+function splitText(text){
+	return text.replace(/\n/g, '').replace(/([;\.!\?…]+)/g, '$1\n').trim().split('\n')
+}
+function buildTableSelect(sel){
+	switch(sel.value) {
+		case 'По фразам':
+			buildTable()
+			break;
+		case 'По строкам':
+			let enArr = taEn.value.split(/\n/).filter(function(s){return s.trim().length>0}),
+				ruArr = taRu.value.split(/\n/).filter(function(s){return s.trim().length>0});
+			buildPosTable(enArr, ruArr, []);
+			break;
+	}
+	sel.value = 'none'; // reset
+}
+
+function buildTable(){
+	let enArr = splitText(taEn.value),
+		ruArr = splitText(taRu.value);
+	buildPosTable(enArr, ruArr, []);
+	initCookieCurrInd(enArr.length);
+}
+function resetPosTable(){
+	document.querySelectorAll("#posTable tbody tr").forEach(function(e){e.remove()});
+}
+function buildPosTable(enArr, ruArr, trArr){
+	resetPosTable();
+	console.clear();
+
+	let foundErr = 0;
+	enArr.forEach(function(item, i, arr){
+		let newRow=posTable.insertRow();
+		newRow.style.cursor = 'pointer';
+		newRow._en = item;
+		newRow._ru = ruArr[i];
+		newRow._tr = trArr[i];
+
+		let cellPos = newRow.insertCell();
+		cellPos.style.textAlign = 'center';
+		cellPos.innerHTML= '►<br/><i class="gray">'+(i+1)+'</i>';
+		cellPos.onclick = (function(ind, text){
+			return ()=>{
+				if(currInd === ind && window.speechSynthesis.speaking){
+					toNext = false;
+					window.speechSynthesis.cancel();
+				}else{
+					toNext = true;
+					setCurrInd(ind);
+					playPosInTable(ind, text);
+				}
+			}
+		}(i, item));
+		//cellPos.width="50";
+
+		let cellEn = newRow.insertCell();
+			//cellRu = newRow.insertCell();
+		cellEn.innerHTML='<div>'+dictUtils.wrapInClass(item, dictUtils.WORD_CLASS)+'<div class="ru">'+ruArr[i]+'</div></div>';
+		if(foundErr<8 && ruArr[i] && (item.length*2<ruArr[i].length || ruArr[i].length*2<item.length)){
+			console.warn('Line '+(i+1)+'\n'+item+'\n'+ruArr[i]);
+			foundErr++;
+		}
+		//cellRu.innerHTML=ruArr[i];
+	});
+	showStatus('en/rus: '+enArr.length+'/'+ruArr.length);
+
+	dictUtils.initClass(dictUtils.WORD_CLASS);
+}
+</script>
+<!-- DICTIONARY -->
+<script type="text/javascript" src="dict71700.js"></script>
+<script type="text/javascript" src="trans.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript" src="interface.js"></script>
+<style>
+	span.word {
+		border-bottom: 1px dashed;
+		cursor: pointer;
+	}
+</style>
+<script type="text/javascript">
+// DICTIONARY Utils
+dictUtils = {
+	WORD_CLASS: "word",
+	checkFoo: function(){
+		return window.dictFind instanceof Function
+				&& window.dictFindSmart instanceof Function;
+	},
+	hint: function (el){
+		var w=dictFind(dictSmall, el.innerHTML);
+		if(w!=null) el.title = w.fw+': '+w.a;
+	},
+	openDictWin: function(word, top, left, width,height){
+		var newWin = window.open(
+				"dict.html#"+encodeURIComponent(word),
+				"DictWin",
+				"top="+(top||0)+",left="+(left||document.body.offsetWidth)+
+				",width="+(width||700)+
+				",height="+(height||document.documentElement.clientHeight)+
+				",resizable=yes,scrollbars=yes"
+		);
+		//newWin.focus();
+	},
+	wrapInClass: function(en, className){
+		if(!dictUtils.checkFoo()) return en;
+
+		let w = (en+"").split(/\b/ig);
+		for(let i=0;i<w.length;i++){
+			if(/^[a-z'-]+$/i.test(w[i])){
+				w[i] = '<span class="'+className+'">'+w[i]+'</span>';//
+			}
+		}
+		return w.join('');
+	},
+	initClass: function(className){
+		if(!dictUtils.checkFoo()) return;
+
+		let ind, ws = document.getElementsByClassName(className);
+		for(ind in ws){
+			let el = ws[ind];
+			el.onmouseover = (function(this_){ return function(){
+				dictUtils.hint(this_);
+			}}(el));
+			el.onclick = (function(this_){ return function(){
+				let word = this_.innerHTML.toLowerCase(),
+						initAResult = dictFindSmart(word);
+				if(initAResult==null) return;
+				dictUtils.openDictWin(initAResult.word);
+			}}(el));
+		}
+	}
+};
+</script>
+</body>
+</html>

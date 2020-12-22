@@ -1,0 +1,225 @@
+<html>
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="http://yandex.st/jquery/1.6.1/jquery.min.js"></script>
+    <title>Денис Орлов - Онлайн словарь английского языка</title>
+
+    <script type="text/javascript" src="utils.js"></script>
+    <!--script type="text/javascript" src="cookieLib.js"></script>
+    <script type="text/javascript" src="htmlColors.js"></script-->
+    <!--script type="text/javascript" src="dict51100.js"></script-->
+    <script type="text/javascript" src="dict71700.js"></script>
+    <script type="text/javascript" src="dictMnemonic.js"></script>
+    <script type="text/javascript" src="trans.js"></script>
+	
+    <!--script type="text/javascript" src="system.js"></script-->
+
+<link rel="stylesheet" href="infoWin.css">
+<style type="text/css">
+.infoContent{
+    display: block;
+}
+</style>
+<style type="text/css">
+body{
+    font-size: 1.5em;
+}
+
+.origin {
+    /* height: 48%; */
+    color: blue;
+    margin-top: 0.5%;
+}
+.swTranscription, .transcription {
+    font-family: sans-serif;
+    font-weight: bold;
+    /* height: 49%; */
+    color: red;
+}
+
+#swButtons{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: auto;
+    /*background-color: rgba(230, 230, 230, 0.5);*/
+    z-index: 10;
+    height: 10%;
+    min-height: 1.5em;
+}
+    #swButtons > *{
+        vertical-align: top;
+        float: right;
+        font-size: 1.5em;
+    }
+    #swButtons input[type=button], #swButtons button, #swButtonsPadding{
+        width: 25%;/* для четырех */
+        /*font-size: 2em; height: 2.5em;*/
+        height: 98%;
+        min-height: 1em;
+    }
+    #swButtons > select {
+        max-width: 39%;
+    }
+#info{
+    float: none;
+    background-color: rgba(255, 255, 255, 0.5);
+    text-align: right;
+    max-height: 1%;
+    font-size: 1em;
+}
+#swButtonsPadding{
+    height: 4em;
+}
+
+.selectInput{
+	font-size: 1.5em;
+	color: blue;
+	font-weight: bold;
+	border: none;
+	width: 100%;
+}
+.selectDiv{
+	display: none;
+	position: absolute;
+	overflow-x: hidden;
+	white-space: nowrap;
+	background-color: #fffffff0;
+	font-size: .8em;
+	border: 1px dashed blue;
+	width: 95%;
+	padding: 0.1em;
+}
+	.selectDivItem.sel:hover {
+		background-color: aliceblue;
+		cursor: pointer;
+	}
+   .selectDivItem b{
+	   color: blue;
+   }
+</style>
+
+<div class="infoContent" id="infoDict">
+	<h2 id="infoDictHead" style="display: none" onclick="if(res = prompt('Найти в cловаре:', this.innerHTML), res!=null && res!='') showA(res.toLowerCase());" class="origin">dictionary</h2>
+	<!-- selectInput -->
+	<div style="position: relative">
+		<input value="input the word..." id="infoDictInput" class="selectInput"
+			   onclick="unputSelect.find(arguments[0])" onkeyup="unputSelect.find(arguments[0])"
+			   type="text"/><div class="selectDiv" onmouseleave="unputSelect.itemsMouseLeave(arguments[0])"></div>
+		<script>infoDictInput._value="input the word...";</script>
+	</div>
+	<div>
+		<input type="button" class="dcBut" id="dictPrevBut" disabled="disabled" value="&#8666;" onclick="showA(dh.previous(), true)">
+		<input type="button" class="dcBut" style="float:right" id="dictNextBut" disabled="disabled" value="&#8667;" onclick="showA(dh.next(), true)">
+	</div>
+	<button id="playInfoDict" onclick="playWord( getElem('infoDictHead').innerHTML );">
+		<div id="swPlayer" style="height:0"></div><audio id="swHtml5Player" src=""></audio>
+        <input type="checkbox" onclick="event.stopPropagation();" id="checkboxWordAutoPlaying" title="Word Auto Playing"/>
+		&#9654;
+		<span id="infoDictTranscription" class="transcription">[ˈdɪkʃənrɪ]</span>
+	</button>
+	<div id="infoDictContent">&#9997; Здесь будут отображаться словарные статьи. Щелкните по заголовку если хотите найти произвольную статью.</div>
+</div>
+
+<script>
+	unputSelect = {
+		itemsMouseLeave: function(event){
+			let selectDiv = event.target, input=selectDiv.previousSibling;
+			selectDiv.style.display='none';
+			input.value = input._value;
+		},
+		appendItem: function(selectDiv, innerHTML){
+			let item = document.createElement('div');
+			item.className = 'selectDivItem';
+			item.innerHTML = innerHTML;
+			selectDiv.appendChild(item);
+			return item;
+		},
+		initItems: function(input, selectDiv, reg){
+			let fnd=false, k, item;
+			for(k in dict){
+				if(reg.test(k)){
+					let w = dictFind(dictSmall, k),
+						innerHTML = '<b>'+k+'</b>: '+'<span class="transcription ">'+dict[k].t+'</span> '+(w!=null && dict[k].a.length>128 ? w.a : dict[k].a);
+					item = unputSelect.appendItem(selectDiv, innerHTML);
+					item.className = 'selectDivItem sel';
+					item._value = k;
+					item.onclick = function(){
+						selectDiv.style.display='none';
+						input.value = this._value;
+						input._value = this._value;
+						showA(this._value.toLowerCase());
+					};
+					fnd=true;
+				}
+			}
+			return fnd;
+		},
+		showSelectDiv: function(selectDiv){
+			selectDiv.style.display='inherit';
+			selectDiv.style.maxHeight = Math.floor(document.documentElement.clientHeight*0.8)+'px';
+		},
+		lastFind: {val: null, fnd: false},
+		find: function(event){
+			let input = event.target,
+					val = input.value;
+			if(val.length<1) return;
+
+			let selectDiv = input.nextSibling, fnd;
+			if(val===unputSelect.lastFind.val){
+				fnd = unputSelect.lastFind.fnd;
+			}else{
+				selectDiv.querySelectorAll('.selectDivItem').forEach((it)=>{it.remove()});
+				selectDiv.style.display='none';
+
+				fnd = unputSelect.initItems(input, selectDiv, new RegExp( '^'+val, "i"));
+				unputSelect.appendItem(selectDiv, '*** *** *** *** ***');
+				unputSelect.initItems(input, selectDiv, new RegExp( '.+'+val+'$', "i"));
+				if(!dict[val] && dictSmall[val]) {
+					unputSelect.appendItem(selectDiv, val + ': ' + dictSmall[val].a);
+					fnd = true;
+				}
+				unputSelect.lastFind = {val: val, fnd: fnd};
+			}
+
+			if(fnd){
+				if(event.keyCode && event.keyCode===13 && dict[val]){
+					showA(val.toLowerCase());
+				}else{
+					unputSelect.showSelectDiv(selectDiv);
+				}
+			}
+		}
+	}
+</script>
+
+<script>
+function infoWinShow( id ){
+	jQuery('.infoContent').hide(); $('#'+id).show();
+}
+
+function showAByHash(){
+    var w = document.location.hash.split('#').pop();
+    if( w!=null && w!='' ) showA(w.toLowerCase());
+    if(getElem('checkboxWordAutoPlaying').checked){
+        playWord( w.toLowerCase() );
+    }
+}
+
+jQuery(document).ready(function(){
+    showAByHash();
+
+    $( window ).bind( 'popstate', function( e ){
+        showAByHash();
+    });
+});
+</script>
+
+<script type="text/javascript" src="interface.js"></script>
+<script>
+    //document.body.children[0].style.right = '100%';
+</script>
+</body>
+</html>

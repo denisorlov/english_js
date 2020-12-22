@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta property="og:title" content="Русско-Английский Разговорник Тренажер"/>
+    <meta property="og:description" content="Веб-приложение 'Разговорник - тренажер' для изучения/повторения иностранных фраз, адаптировано под мобильные устройства."/>
+    <meta property="og:image" content="http://denisorlovmusic.ru/english4040/i/phrases.png"/>
+    <meta property="og:url" content= "http://denisorlovmusic.ru/english4040/phrases.html"/>
+
+    <!--script type="text/javascript" src="http://yandex.st/jquery/1.6.1/jquery.min.js"></script-->
+    <title>Русско-Английский Разговорник Тренажер</title>
+	<style>
+textarea{
+	display:none;
+}
+#lessonCombo{
+	width: 100%;
+	font-size: 20px;
+}
+#swMesure{
+    border-radius: 3px;
+}
+.contentPanel{
+    float: left;
+    width: 83%;
+	margin: 0;
+}
+.butPanel{
+    float: right;
+    width: 15%;
+	margin: 0;
+}	
+.but{
+	width: 95%;
+	padding: 15% 5%;
+	text-align: start;
+    margin: 0 0 8% 0;
+    font-size: 20px;
+	display: block;
+	overflow: hidden;
+}
+#phraseOutput{
+	font-size: 48px;
+	float: left;
+    width: 82%;
+}
+.blue{
+	color: blue;
+}
+.green{
+	color: green;
+}
+.transription{
+	color: orange;
+}
+
+#infoWrap{
+    display:none;
+    border: 1px solid navy;
+    width: 95%;
+    height: 95%;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.941176);
+	color: black;
+    padding: 2%;
+    border-radius: 5px;
+    box-sizing: border-box;
+    position: fixed;
+    right: 2%;;
+    bottom: 2%;;
+    left: 2%;
+    font-size: 2em;
+}
+#infoPanel{
+    float: right;
+    width: 3.5em;
+    overflow: auto;
+    height: 100%;
+}
+.ipBut,.dcBut{
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 2px;
+}
+.ipBut{
+    float:right;
+    font-size: 2em;
+    width: 1.5em;
+    height: 20%;
+}
+.infoContent{
+    height: 100%;
+    overflow: auto;
+    display: none;
+}
+#infoSetting input,#infoSetting select{
+    text-align: center;
+    font-size: 100%;
+    width: 20%;
+    margin: 0.2em 0.2em 0 0;
+}
+	</style>
+</head>
+<body>
+
+<div id="allLessons">
+<textarea id="irregular verbs 1gr: 1=2=3">
+читать	read read read	[riːd] [rǝd] [rǝd]
+устанавливать	set set set	[set] [set] [set]
+стоить	cost cost cost	[kɔst] [kɔst] [kɔst]
+пустить, дать	let let let	[let] [let] [let]
+класть	put put put	[pʊt] [pʊt] [pʊt]
+велеть, просить	bid bid bid	[bɪd] [bɪd] [bɪd]
+резать	cut cut cut	[kʌt] [kʌt] [kʌt]
+входить	input input input	[ˈɪnpʊt] [ˈɪnpʊt] [ˈɪnpʊt]
+выходить	output output output	[ˈaʊtpʊt] [ˈaʊtpʊt] [ˈaʊtpʊt]
+ударить, попасть	hit hit hit	[hɪt] [hɪt] [hɪt]
+кинуть, лить металл	cast cast cast	[kɑːst] [kɑːst] [kɑːst]
+предсказывать	forecast forecast forecast	[ˈfɔːkɑːst] [ˈfɔːkɑːst] [ˈfɔːkɑːst]
+распространиться	spread spread spread	[spred] [spred] [spred]
+мочить, увлажнять	wet wet wet	[wet] [wet] [wet]
+расщепить(ся)	split split split	[splɪt] [splɪt] [splɪt]
+распространять, разбрасывать	broadcast broadcast broadcast	[ˈbrɔːdkɑːst] [ˈbrɔːdkɑːst] [ˈbrɔːdkɑːst]
+держать пари	bet bet bet	[bet] [bet] [bet]
+причинить боль	hurt hurt hurt	[hɜːt] [hɜːt] [hɜːt]
+закрывать,запирать	shut shut shut	[ʃʌt] [ʃʌt] [ʃʌt]
+покидать, оставлять	quit quit quit	[kwɪt] [kwɪt] [kwɪt]
+избавлять	rid rid rid	[rɪd] [rɪd] [rɪd]
+проливать	shed shed shed	[ʃed] [ʃed] [ʃed]
+разразиться, взорваться	burst burst burst	[bɜːst] [bɜːst] [bɜːst]
+вязать	knit knit knit	[nɪt] [nɪt] [nɪt]
+разжаловать	bust bust bust	[bʌst] [bʌst] [bʌst]
+толкнуть, сунуть	thrust thrust thrust	[θrʌst] [θrʌst] [θrʌst]
+раздирать(ся), разрезать (вдоль)	slit slit slit	[slɪt] [slɪt] [slɪt]
+</textarea>
+<textarea id="irregular verbs 2gr: 2=3">
+иметь	have had had	[hæv] [hæd] [hæd]
+получить	get got got	[get] [gɔt] [gɔt]
+находить	find found found	[faɪnd] [faʊnd] [faʊnd]
+купить	buy bought bought	[baɪ] [bɔːt] [bɔːt]
+делать	make made made	[meɪk] [meɪd] [meɪd]
+послать	send sent sent	[send] [sent] [sent]
+думать	think thought thought	[θɪŋk] [θɔːt] [θɔːt]
+учить	learn learnt learnt	[lɜːn] [lɜː(r)nt] [lɜː(r)nt]
+говорить, сказать	say said said	[seɪ] [sed] [sed]
+продавать	sell sold sold	[sel] [səʊld] [səʊld]
+платить	pay paid paid	[peɪ] [peɪd] [peɪd]
+осветить	light lit lit	[laɪt] [lɪt] [lɪt]
+хранить	keep kept kept	[kiːp] [kept] [kept]
+рассказывать, сказать	tell told told	[tel] [təʊld] [təʊld]
+встретить	meet met met	[miːt] [met] [met]
+чувствовать	feel felt felt	[fiːl] [felt] [felt]
+ускорять, спешить	speed sped sped	[spiːd] [sped] [sped]
+подразумевать	mean meant meant	[miːn] [ment] [ment]
+строить	build built built	[bɪld] [bɪlt] [bɪlt]
+оставить	leave left left	[liːv] [left] [left]
+вести	lead led led	[liːd] [led] [led]
+выиграть	win won won	[wɪn] [wʌn] [wʌn]
+иметь дело	deal dealt dealt	[diːl] [delt] [delt]
+держать	hold held held	[həʊld] [held] [held]
+кормить	feed fed fed	[fiːd] [fed] [fed]
+принести	bring brought brought	[brɪŋ] [brɔːt] [brɔːt]
+нанизать, натянуть	string strung strung	[strɪŋ] [strʌŋ] [strʌŋ]
+слушать	hear heard heard	[hɪə] [hɜː(r)d] [hɜː(r)d]
+стоять	stand stood stood	[stænd] [stʊd] [stʊd]
+грезить, мечтать	dream dreamt dreamt	[driːm] [dremt] [dremt]
+сражаться	fight fought fought	[faɪt] [fɔːt] [fɔːt]
+спать	sleep slept slept	[sliːp] [slept] [slept]
+тратить	spend spent spent	[spend] [spent] [spent]
+терять	lose lost lost	[luːz] [lɔst] [lɔst]
+искать	seek sought sought	[siːk] [sɔːt] [sɔːt]
+уколоть, приклеить	stick stuck stuck	[stɪk] [stʌk] [stʌk]
+скользить	slide slid slid	[slaɪd] [slɪd] [slɪd]
+ловить, поймать	catch caught caught	[kæʧ] [kɔːt] [kɔːt]
+сидеть	sit sat sat	[sɪt] [sæt] [sæt]
+учить	teach taught taught	[tiːʧ] [tɔːt] [tɔːt]
+ударить, бить, бастовать	strike struck struck	[straɪk] [strʌk] [strʌk]
+обувать, подковывать	shoe shod shod	[ʃuː] [ʃɔd] [ʃɔd]
+класть, положить	lay laid laid	[leɪ] [leɪd] [leɪd]
+жечь, гореть	burn burnt burnt	[bɜːn] [bɜːnt] [bɜːnt]
+качаться	swing swung swung	[swɪŋ] [swʌŋ] [swʌŋ]
+стрелять, давать побеги	shoot shot shot	[ʃuːt] [ʃɔt] [ʃɔt]
+крутиться, вращаться	spin spun spun	[spɪn] [spʌn] [spʌn]
+висеть, повесить	hang hung hung	[hæŋ] [hʌŋ] [hʌŋ]
+согнуть(ся)	bend bent bent	[bend] [bent] [bent]
+выращивать	breed bred bred	[briːd] [bred] [bred]
+копать	dig dug dug	[dɪg] [dʌg] [dʌg]
+связать	bind bound bound	[baɪnd] [baʊnd] [baʊnd]
+пахнуть, нюхать	smell smelt smelt	[smel] [smelt] [smelt]
+опереться, прислониться	lean leant leant	[liːn] [lent] [lent]
+светить, сиять	shine shone shone	[ʃaɪn] [ʃɒn] [ʃɒn]
+прыгать	leap leapt leapt	[liːp] [lept] [lept]
+пролить	spill spilt spilt	[spɪl] [spɪlt] [spɪlt]
+мести, промчаться	sweep swept swept	[swiːp] [swept] [swept]
+одолжить	lend lent lent	[lend] [lent] [lent]
+ужалить	sting stung stung	[stɪŋ] [stʌŋ] [stʌŋ]
+точить, молоть	grind ground ground	[graɪnd] [graʊnd] [graʊnd]
+скрутить, сжать	wring wrung wrung	[rɪŋ] [rʌŋ] [rʌŋ]
+плевать	spit spat spat	[spɪt] [spæt] [spæt]
+обитать, задерживаться	dwell dwelt dwelt	[dwel] [dwelt] [dwelt]
+кровоточить	bleed bled bled	[bliːd] [bled] [bled]
+ползти	creep crept crept	[kriːp] [krɛpt] [krɛpt]
+бежать, спасаться	flee fled fled	[fliː] [fled] [fled]
+швырять, подвешивать	sling slung slung	[slɪŋ] [slʌŋ] [slʌŋ]
+бросить	fling flung flung	[flɪŋ] [flʌŋ] [flʌŋ]
+отрицать, противоречить	gainsay gainsaid gainsaid	[geɪnˈseɪ] [ˌɡeɪnˈsed] [ˌɡeɪnˈsed]
+подымать(ся), подъём	heave heaved heaved	[hiːv] [hiːvd] [hiːvd]
+раздирать, отдирать	rend rent rent	[rend] [rent] [rent]
+идти крадучись	slink slunk slunk	[slɪŋk] [slʌŋk] [slʌŋk]
+портить	spoil spoilt spoilt	[spɔːɪl] [spɔɪlt] [spɔɪlt]
+плакать	weep wept wept	[wiːp] [wept] [wept]
+</textarea>
+<textarea id="irregular verbs 3gr: 1=3">
+прийти	come came come	[kʌm] [keɪm] [kʌm]
+стать, сделаться	become became become	[bɪˈkʌm] [bɪˈkeɪm] [bɪˈkʌm]
+бежать, течь	run ran run	[rʌn] [ræn] [rʌn]
+писать или читать по буквам	spell spelt spell	[spel] [spelt] [spelt]
+</textarea>
+<textarea id="irregular verbs 4gr: ɪ - æ - ʌ">
+вскочить, возникнуть	spring sprang sprung	[sprɪŋ] [spræŋ] [sprʌŋ]
+звонить	ring rang rung	[rɪŋ] [ræŋ] [rʌŋ]
+начать	begin began begun	[bɪˈgɪn] [bɪˈɡæn] [bɪˈgʌn]
+пить, выпить	drink drank drunk	[drɪŋk] [dræŋk] [drʌŋk]
+петь	sing sang sung	[sɪŋ] [sæŋg] [sʌŋ]
+плыть	swim swam swum	[swɪm] [swæm] [swʌm]
+опускаться, погружаться, тонуть	sink sank sunk	[sɪŋk] [sæŋk] [sʌŋk]
+сокращаться, сжиматься, отпрянуть	shrink shrank shrunk	[ʃrɪŋk] [ʃræŋk] [ʃrʌŋk]
+вонять	stink stank stunk	[stɪŋk] [stæŋk] [stʌŋk]
+</textarea>
+<textarea id="irregular verbs 5gr: 3 - en">
+видеть	see saw seen	[siː] [sɔː] [siːn]
+взять, брать	take took taken	[teɪk] [tʊk] [ˈteɪkən]
+дать	give gave given	[gɪv] [ɡeɪv] [ˈɡɪv.ən]
+писать	write wrote written	[raɪt] [rəʊt] [rɪtn]
+гнать, ехать	drive drove driven	[draɪv] [drəʊv] [drɪvn]
+выбрать	choose chose chosen	[ʧuːz] [tʃəʊz] [ʧəʊzn]
+падать	fall fell fallen	[fɔːl] [fel] [ˈfɔːlən]
+(с)ломать	break broke broken	[breɪk] [brəʊk] [ˈbrəʊkən]
+говорить	speak spoke spoken	[spiːk] [spəʊk] [ˈspəʊkən]
+подняться	rise rose risen	[raɪz] [rəʊz] [ˈrɪzn]
+кушать, есть	eat ate eaten	[iːt] [et] [iːtn]
+бить	beat beat beaten	[biːt] [biːt] [biːtn]
+прятать(ся)	hide hid hidden	[haɪd] [hɪd] [hɪdn]
+ездить верхом	ride rode ridden	[raɪd] [rəʊd] [ˈrɪd.ən]
+забыть	forget forgot forgotten	[fəˈget] [fə(r)ˈɡɒt] [fəˈgɔtn]
+подняться, возникнуть	arise arose arisen	[əˈraɪz] [əˈrəʊz] [əˈrɪz(ə)n]
+трясти	shake shook shaken	[ʃeɪk] [ʃʊk] [ˈʃeɪkən]
+украсть	steal stole stolen	[stiːl] [stəʊl] [ˈstəʊlən]
+кусать	bite bit bitten	[baɪt] [bɪt] [ˈbɪt.ən]
+замерзнуть, замораживать	freeze froze frozen	[friːz] [frəʊz] [frəʊzn]
+стараться	strive strove striven	[straɪv] [strəʊv] [ˈstrɪv(ə)n]
+простить	forgive forgave forgiven	[fəˈgɪv] [fəˈɡeɪv] [fəˈgɪvn]
+будить, проснуться	awake awoke awoken	[əˈweɪk] [əˈwəʊk] [əˈwəʊ.kən]
+вздуться	swell swelled swollen	[swel] [sweld] [ˈswəʊlən]
+запретить	forbid forbade forbidden	[fəˈbɪd] [fə(r)ˈbæd] [fəˈbɪd.ən]
+ткать	weave wove woven	[wiːv] [wəʊv] [ˈwəʊ.vən]
+процветать	thrive throve thriven	[θraɪv] [θrəʊv] [ˈθrɪvən]
+шить	sew sewed sewn	[səʊ] [səʊd] [səʊn]
+ступать	tread trod trodden	[tred] [trɒd] [ˈtrɒdn]
+</textarea>
+<textarea id="irregular verbs 6gr: 3 - own/awn">
+знать	know knew known	[nəʊ] [nju:] [nəʊn]
+показывать	show showed shown	[ʃəʊ] [ʃəʊd] [ʃəʊn]
+пилить	saw sawed sawn	[sɔː] [sɔːd] [sɔːn]
+дуть	blow blew blown	[bləʊ] [bluː] [bləʊn]
+летать	fly flew flown	[flaɪ] [fluː] [fləʊn]
+расти	grow grew grown	[grəʊ] [ɡruː] [grəʊn]
+тащить, рисовать	draw drew drawn	[drɔː] [druː] [drɔːn]
+бросить	throw threw thrown	[θrəʊ] [θruː] [θrəʊn]
+</textarea>
+<textarea id="irregular verbs 7gr: 1!=2!=3">
+идти, уходить	go went gone	[gəʊ] [went] [ɡɒn]
+родить	bear bore born	[bɛə] [bɔː] [bɔːn]
+носить(одежду)	wear wore worn	[wɛə] [wɔːr] [wɔːn]
+просыпаться, будить	wake woke woken	[weɪk] [wəʊk] [ˈwəʊ.kən]
+лежать	lie lay lain	[laɪ] [leɪ] [leɪn]
+рвать	tear tore torn	[tɛə] [tɔː] [tɔːn]
+благословлять	bless blessed blest	[bles] [blest] [blest]
+(по)клясться, присягнуть	swear swore sworn	[swɛə] [swɔːr] [swɔːn]
+</textarea>
+</div>
+<textarea id="Результаты поиска"></textarea>
+<textarea id="Mix"></textarea>
+<!--textarea id="Карьера, профессия(тест)">
+He is a software developer.	Он программист.	hiː ɪz ə ˈsɒftweə dɪˈvɛləpə. (ˈprəʊgræmə) 
+Где вы работаете?	Where do you work?
+Он работает поваром в местном ресторане.	He works as a cook in a local restaurant.
+</textarea-->
+<!--textarea id="пусто"></textarea-->
+
+<div class="contentPanel">
+	<select id="lessonCombo"></select>
+	<div id="swMesure" style="border: 1px solid green;box-sizing: border-box;position: relative;" title="">
+		<!--div id="swmPosition" style="height: 90%; border: 1px solid red; position: absolute; background-color: red; left: 89%;"></div-->
+		<div id="swmIndicator" style="background-color: green; text-align: center; color: white; width: 0%;"></div>
+	</div>
+	<div id="phraseOutput"></div>
+</div>
+<div class="butPanel">
+	<button id="buttonGooTr" class="but">▲Google...</button>
+	<button id="buttonNextPhrase" class="but">►Next...</button>
+	<button id="buttonEngPhrase" class="but green">▼Hint...</button>
+	<button id="buttonLearnedPhrase" class="but">◄Learned!</button>
+	<button id="buttonfindByWord" onclick="trainer.utils.findByWord('phraseOutput')" class="but">🔎Find...</button>
+	<!--button onclick="window.open('http://denisorlovmusic.ru/');" class="but">@Author...</button-->
+	<button onclick="infoWrapToggle('infoSetting')" class="but">☭Setting</button>
+</div>
+
+<div style="clear:both"></div>
+<script type="text/javascript">
+function infoWrapToggle(infoContentId){
+	var i, elems = document.querySelectorAll('.infoContent');
+	for(i=0;i<elems.length;i++){
+		var infoContId = elems[i].id;
+		document.getElementById(infoContId).style.display = infoContId===infoContentId ? 'block' : 'none'
+	}
+
+	document.getElementById('infoWrap').style.display = infoContentId ? 'block' : 'none';
+
+}
+function changeTheme(night){
+	document.body.style.backgroundColor = night ? 'black' : 'white';
+    document.body.style.color = night ? 'white' : 'black';
+}
+</script>
+<div  id="infoWrap" style="">
+	<div id="infoPanel">
+        <input class="ipBut" title="Закрыть" type="button" value="&#215;" style="color: red;" onclick="infoWrapToggle();"/>
+		<input class="ipBut" title="Настройки" type="button" value="☭" style="" onclick="infoWrapToggle('infoSetting')">
+		<input class="ipBut" title="Помощь" type="button" value="&#9786;" style="" onclick="infoWrapToggle('infoHelp')">
+        <!-- $('.ipBut').height(Math.floor(100/($('.ipBut').length+1))+'%')// автоподгон высоты -->
+    </div>
+	<div class="infoContent" id="infoHelp" style=""><h3>&#9786; Help</h3><hr/>
+		<p>
+			Веб-приложение "Разговорник - тренажер" для изучения/повторения иностранных фраз, адаптировано под мобильные устройства.
+		</p>
+		<p>
+			Специальное издание:
+		</p>
+		
+		<h4>"Неправильные глаголы"</h4>
+		<ul>
+			<li>Группа 1: <b>одинаковы все</b> формы, но внимание с <b>read</b>!</li>
+			<li>Группа 2: одинаковы <b>2-я</b> и 3-я формы</li>
+			<li>Группа 3: одинаковы 1-я и <b>3-я</b> формы</li>
+			<li>Группа 4: глаголы на -ng, -nk, + begin и swim, формы на <b>-ing, -ang, -ung</b></li>
+			<li>Группа 5: 3 форма на <b>en</b></li>
+			<li>Группа 6: 3 форма на <b>own или awn</b></li>
+			<li>Группа 7: <b>разные все</b> формы!</li>
+		</ul>
+		
+		
+		<h4>Режимы обучения:</h4>
+		<ul>
+			<li>По темам - наборам в списке</li>
+			<li>По фразам результатам поиска - "Find", "Результаты поиска"</li>
+			<li>По случайным фразам - "Mix"</li>
+			<li>От простых к сложным - "Pаge"</li>
+		</ul>
+		<h4>Как учить:</h4>
+		<ol>
+			<li>►Next... - смотреть фразу и переводить</li>
+			<li>▼Hint...  - при затруднении использовать подсказку</li>
+			<li>◄Learned! - выученную фразу метить "Выучено!"</li>
+		</ol>
+		<h4>Кнопки и настройки:</h4>
+		<ul>
+			<li><i>▲Google...</i>: гор.клавиша ▲, открыть окно переводчика Google</li>
+			<li><i>►Next...</i>: гор.клавиша ►, перейти к следующей фразе урока</li>
+			<li><i>▼Hint...</i>: гор.клавиша ▼, подсказать, первый клик "прикрытая" подсказка, второй - открытая</li>
+			<li><i>◄Learned!</i>: гор.клавиша ◄, пометить фразу выученной в рамках данного урока</li>
+			<li><i>🔎Find...</i>: гор.клавиша F3, искать фразы по выражению(принимает regex), составить урок из найденных фраз в пункт "Результаты поиска"</li>
+			<li><i>☭Setting</i>: настройки приложения
+				<ul>
+					<li><i>Interchange native-foreign</i>: поменять языки местами</li>
+					<li><i>Show transription (or show on click)</i>: показывать транскрипцию автоматически, или только по клику по фразе</li>
+					<li><i>Night theme</i>: ночной режим</li>
+					<li><i>Make mixed lesson</i>: создать случайный микс фраз в пункт списка "Mix"</li>
+					<li><i>Load paged lesson</i>: загрузить "страницу" урока в пункт списка "Pаge". Все фразы группируются в страницы-уроки по принципу от простых коротких к сложным длинным, но примерно равного количества. Т.е. первые "страницы" содержат больше, но коротких фраз, последние - меньше, но длинных. (искл.: самая последняя страница может быть неполной)</li>
+				</ul>
+			</li>
+		</ul>
+
+		<script type="text/javascript" src="pluso.js"></script>
+			<p>
+				&#174; Денис Орлов <img style="height: 0.8em;" src="http://denisorlovmusic.ru/favicon.ico"> <a href="http://denisorlovmusic.ru/" title="Электронная музыка - Денис Орлов">HOME</a>
+			</p>
+	</div>
+	<div class="infoContent" id="infoSetting" style=""><h3>☭ Settings</h3><hr/>
+		<label><input type="checkbox" onclick="trainer.interchange = this.checked"/>
+		Interchange native-foreign</label><br/>
+		<label><input type="checkbox" onclick="trainer.showTransription = this.checked" checked="checked"/>
+		Show transription (or show on click)</label><br/>
+		<label><input type="checkbox" onclick="changeTheme(this.checked)"/>
+		Night theme</label><br/>
+		<label><input type="button" value="Mix!" onclick="trainer.utils.makeMix(33)">
+		Make mixed lesson</label><br/>
+		<label><input type="text" value="1" onclick="trainer.utils.setNextPage(this)" id="InpPageId"><input type="button" value="Page" onclick="trainer.utils.loadPage(this.previousSibling.value)">
+		Load paged lesson</label><br/>
+	</div>
+</div>
+<script type="text/javascript">
+var trainer = new Trainer(
+	'lessonCombo', 
+	'buttonNextPhrase', 'buttonEngPhrase', 'buttonLearnedPhrase', 
+	'buttonGooTr',
+	'phraseOutput',
+	function(learned){ // setIndicatorFunction
+		var swmIndicator = document.getElementById("swmIndicator");
+		swmIndicator.style.width = swmIndicator.innerHTML = learned+'%';
+		swmIndicator.parentNode.title = 'Выучено ' + learned+'%';
+	}
+);
+
+function Trainer(
+	lessonComboId,
+	buttonNextPhraseId, buttonEngPhraseId, buttonLearnedPhraseId, 
+	buttonGooTranslateId,
+	phraseOutputId,
+	setIndicatorFunction
+){
+
+	this.setIndicator = setIndicatorFunction || function(){};
+	
+	// private
+	var _this = this,
+		currentIndex = null,
+		currentLessons = null,
+		currentLessonId = null,
+		currentLessonsOrigLength = null,
+		msg_EmptyLesson = 'Текущий урок пройден или пуст. Выберите новый...'
+	;
+		
+	this.isCurrentLessonNotFinished = function(id){
+		return currentLessons!==null && currentLessons.length>0 && currentLessons.length!==currentLessonsOrigLength;
+	}
+	this.getRandomInt = (function randomInt(){
+		var last, rand;
+		return function(min, max, norepeat){
+			if(max-min>1 && norepeat){
+				do{
+					rand = Math.round( min +Math.random()*(max-min)); //mylog([last, rand]);
+				}while( rand == last )
+				last = rand;
+			}else{
+				rand = Math.round( min +Math.random()*(max-min));
+			}
+			return  rand ;
+		};
+	}())
+	/** interchange native and foreign */
+	this.interchange = false;
+	this.showTransription = true;
+	this.transriptionClass = 'transription';
+	function viewKey(){
+		return _this.interchange ? 'en' : 'ru';
+	}
+	function hintKey(){
+		return _this.interchange ? 'ru' : 'en';
+	}
+	var _showNextPhrase = function(){
+		if(currentLessons.length<1){
+			_initAndStart(currentLessonId);
+			return;
+		}
+		currentIndex = _this.getRandomInt(0, currentLessons.length-1, true);
+		document.getElementById(phraseOutputId).innerHTML = currentLessons[currentIndex][viewKey()];
+		
+		_enableButtonLearnedPhrase();
+	};
+	function _enableButtonLearnedPhrase(){
+		document.getElementById(buttonLearnedPhraseId).removeAttribute('disabled');
+		document.getElementById(buttonLearnedPhraseId).style.opacity = 1;
+	};
+	function checkEmptyOrNext(){
+		if(currentLessons.length<1){
+			document.getElementById(phraseOutputId).innerHTML = '(урок окончен, выберите новый...)';
+		}else{
+			_showNextPhrase();
+		}
+	}
+	var _showEngPhrase = function(){
+		if(currentLessons.length<1){
+			alert(msg_EmptyLesson); return;
+		}
+		document.getElementById(phraseOutputId).innerHTML = 
+			'<pre style="white-space: normal;margin: 0">'+
+			( currentLessons[currentIndex].prompted % 2 == 0 ? // first and even
+			currentLessons[currentIndex][hintKey()].split("").reverse().join("").replace(/[\w\u0400-\u04FF](?=[\w\u0400-\u04FF])/g, 'ˍ').split("").reverse().join("") : 
+			('<span onclick="Trainer.prototype.toggle(\'.'+_this.transriptionClass+'\')">'+currentLessons[currentIndex][hintKey()]+'</span>'+
+			'<div style="word-break:break-word; '+(_this.showTransription?'':'display:none')+'" class="'+_this.transriptionClass+'">'+currentLessons[currentIndex].tr+'</div>'))+
+			'</pre>'+
+			currentLessons[currentIndex][viewKey()]
+			;
+		
+		if(currentLessons[currentIndex].prompted == 1){
+			document.getElementById(buttonLearnedPhraseId).setAttribute('disabled', 'disabled');
+			document.getElementById(buttonLearnedPhraseId).style.opacity = 0.5;
+		}
+		
+		currentLessons[currentIndex].prompted = currentLessons[currentIndex].prompted + 1;	
+	};
+	var _markLearnedPhrase = function(){
+		currentLessons.splice(currentIndex, 1); // remove learned
+		_this.setIndicator( 100 - Math.round( currentLessons.length*100/currentLessonsOrigLength ) );
+		checkEmptyOrNext();
+	};
+	function _openGooTr(event, top, left, width,height){
+		if(currentLessons.length<1){
+			alert(msg_EmptyLesson); return;
+		}
+		var enText = currentLessons[currentIndex].en,
+			newWin = window.open(
+			"https://translate.google.ru/#en/ru/"+encodeURIComponent(enText),
+			"GooTrWin",
+			"top="+(top||0)+",left="+(left||document.body.offsetWidth)+
+			",width="+(width||420)+",height="+(height||500)+
+			",resizable=yes,scrollbars=yes"
+		);
+		newWin.focus();
+	}
+	function _initAndStart(id){
+		currentLessonId = id;
+		currentLessons = _this.getLessonArray(id);
+		currentLessonsOrigLength = currentLessons.length;
+		_this.setIndicator(0);
+		checkEmptyOrNext();
+	}
+	this.getLessonArray = function(id){
+		if(!id) return;
+		var lesson = document.getElementById(id).value;
+		var aLessons = [], aPhrase, 
+			ru, en, tr,
+			aLesson = lesson.split('\n');
+		for(var i=0; i<aLesson.length; i++){
+			aPhrase = aLesson[i].split('\t');
+			if(aPhrase.length<2) continue;
+			var firstRu = /[А-яЁ-ё]+/.test(aPhrase[0]);
+			ru = aPhrase[firstRu ? 0 : 1];
+			en = aPhrase[firstRu ? 1 : 0];
+			tr = aPhrase.length>2 ? aPhrase[2] : '';
+			aLessons.push({
+				ru: ru, 
+				en: en,
+				tr: tr,
+				prompted: 0
+			});
+		}
+		return aLessons;
+	};
+	var _initLessonCombo = (function(){
+		var select = document.getElementById(lessonComboId), tasLen,
+			tas = document.getElementsByTagName('textarea');
+		for(i=0;i<tas.length;i++){
+			tasLen = tas[i].value.split('\n').length-1; // -1 last \n
+			select.appendChild( new Option(tas[i].id+' ('+tasLen+')', tas[i].id,  false, false) );
+		}
+		_initAndStart(tas[0].id); // first
+
+		select.onchange = function(e){
+		  _initAndStart(this.value);
+		};
+	}());
+	var _initButtons = (function(){
+		document.getElementById(buttonNextPhraseId).onclick = _showNextPhrase;
+		document.getElementById(buttonEngPhraseId).onclick = _showEngPhrase;
+		document.getElementById(buttonLearnedPhraseId).onclick = _markLearnedPhrase;
+		document.getElementById(buttonGooTranslateId).onclick = _openGooTr;
+	}());
+};
+Trainer.prototype.toggle = function(selector){
+	var i, elems = document.querySelectorAll(selector);
+	for(i=0;i<elems.length;i++){
+		elems[i].style.display = elems[i].style.display=='none' ? '' : 'none';
+	}
+}
+
+trainer.utils = {
+	initKeydown: function(){
+		document.onkeydown = function(event){
+			var id;
+			switch(event.keyCode) {
+			  case 37:
+				id = 'buttonLearnedPhrase';
+				break;
+			  case 38:
+				id = 'buttonGooTr';
+				break;
+			  case 39:
+				id = 'buttonNextPhrase';
+				break;
+			  case 40:
+				id = 'buttonEngPhrase';
+				break;
+			  case 114: // F3
+				id = 'buttonfindByWord';
+				break;
+			}
+			let el = document.getElementById(id);
+			if(el) el.click();
+		}
+	}, 
+	
+	lastFindedByWord: (function(){
+		var ind, arr = ['would you please', 'can (you|i|we)', 'could (you|i|we)', '^do (you|i|we)', 
+			'does', 'is there'
+		];
+		ind = trainer.getRandomInt(0, arr.length-1, true);
+		return arr[ind];
+	}()),
+	findResultId: 'Результаты поиска',
+	mixId: 'Mix',
+	getSkipIds: function(){
+		return [this.findResultId, this.mixId];
+	},
+	findByWord: function(phraseOutputId){
+		var w = prompt('Find by word', this.lastFindedByWord);
+		if(w==='' || w==null) return;
+
+		this.lastFindedByWord = w;	
+		var result = [], res = [], resLesson = [],
+			skipId = this.getSkipIds(),		
+			i, q, aLessons, oLesson, reg = new RegExp( '([^\\u0400-\\u04FF\\w]|^)('+w+')', "ig"),
+			tas = document.getElementsByTagName('textarea');
+		for(i=0;i<tas.length;i++){
+			if(skipId.indexOf(tas[i].id)>-1) continue; // skip
+			aLessons = trainer.getLessonArray(tas[i].id);
+			res = [];
+			for(q=0;q<aLessons.length;q++){
+				oLesson = aLessons[q];
+				if(reg.test(oLesson.ru) || reg.test(oLesson.en)){
+					res.push(
+					'<span onclick="Trainer.prototype.toggle(\'.'+trainer.transriptionClass+'\')">'+
+					(oLesson.en+' - '+oLesson.ru).replace(reg, '$1<b class="blue">$2</b>')+'</span>'+
+					'<span class="'+trainer.transriptionClass+'" style="'+(trainer.showTransription?'':'display:none')+'"> - '+oLesson.tr+'</span>'
+					);
+					this._resLessonPush(resLesson, oLesson);
+				}
+			}
+			if(res.length>0){
+				result = result.concat('<h4>'+tas[i].id+'</h4>', res);
+			}
+		}
+		if(result.length>0){
+			var resMess = this.findResultId+' ('+resLesson.length+')';
+			document.getElementById(phraseOutputId).innerHTML = resMess+':<br/>'+result.join('<br/>\n');
+			document.getElementById(this.findResultId).value = resLesson.join('\n');
+			document.querySelector('option[value="'+this.findResultId+'"]').innerHTML = resMess+': '+w;
+		}
+	},
+	/** начальный размер страницы, коэффициент повышения */
+	initPages: function(pageL, koeff){
+		var all = this._getAll(),
+			i,
+			ind = [];
+		for(i=0;i<all.length;i++){
+			if(!ind[all[i].en.length])
+				ind[all[i].en.length] = []
+			ind[all[i].en.length].push(all[i]);
+		}
+		
+		var res = [],
+			//pageL = 1000,
+			page = 1,
+			totallen = 0;
+		ind.forEach(function(item, i, arr) {
+			item.forEach(function(_item, _i, _arr) {
+				res[page] = res[page] || [];
+			   res[page].push(_item); 
+			   totallen+=_item.en.length;
+				if(totallen>=page*pageL) {
+					page++;
+					pageL = (pageL*koeff).toFixed(0);
+				}
+			});
+		});
+		
+		this.pages = res;
+	},
+	setNextPage: function(input){
+		let next=parseInt(input.value)+1;
+		if(next>this.pages.length-1) next = 1;
+		input.value = next;
+	},
+	loadPage: function(page){
+		if(!this.pages[1]){
+			alert("No data for pages");
+			return;
+		}
+		if(!this.pages[page]){
+			alert("Not exists page №"+page+". Select from 1 to "+(this.pages.length-1)+".");
+			return;
+		}
+		
+		let resLesson = [], oLesson,
+			pageArr = this.pages[page];
+		for(i=0; i<pageArr.length; i++){
+			oLesson = pageArr[i];
+			this._resLessonPush(resLesson, oLesson);
+		}
+		if(resLesson.length>0){
+			document.getElementById(this.mixId).value = resLesson.join('\n');
+			document.querySelector('option[value="'+this.mixId+'"]').innerHTML = "Pаge "+page+' ('+resLesson.length+')';
+		}
+	},
+	_resLessonPush: function(resLesson, oLesson){
+		resLesson.push(oLesson.en+'\t'+oLesson.ru+'\t'+oLesson.tr);
+	},
+	_getAll: function(){
+		var all = [], i, q, 
+			skipId = this.getSkipIds(),		
+			tas = document.getElementsByTagName('textarea');
+		for(i=0;i<tas.length;i++){
+			if(skipId.indexOf(tas[i].id)>-1) continue; // skip
+			aLessons = trainer.getLessonArray(tas[i].id);
+			res = [];
+			for(q=0;q<aLessons.length;q++){
+				all.push(aLessons[q]);
+			}
+		}
+		return all;
+	},
+	makeMix: function(count){
+		var resLesson = [], 
+			all = this._getAll(), 
+			i, 
+			ind, oLesson;
+
+		for(i=0; i<count; i++){
+			if(all.length<1) break; 
+			ind = trainer.getRandomInt(0, all.length-1, true);
+			oLesson = all.splice(ind, 1).pop();
+			this._resLessonPush(resLesson, oLesson);
+		}
+		if(resLesson.length>0){
+			document.getElementById(this.mixId).value = resLesson.join('\n');
+			document.querySelector('option[value="'+this.mixId+'"]').innerHTML = this.mixId+' ('+count+')';
+		}
+	}
+};
+trainer.utils.initKeydown();
+trainer.utils.initPages(450, 1.02);
+window.onbeforeunload = function() {
+	if(trainer.isCurrentLessonNotFinished()){
+		return 'The lesson is not finished, are you sure you want to exit this page?';
+	}
+};
+
+</script>
+</body>
+</html>

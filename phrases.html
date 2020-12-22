@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta property="og:title" content="Русско-Английский Разговорник Тренажер"/>
+    <meta property="og:description" content="Веб-приложение 'Разговорник - тренажер' для изучения/повторения иностранных фраз, адаптировано под мобильные устройства."/>
+    <meta property="og:image" content="http://denisorlovmusic.ru/english4040/i/phrases.png"/>
+    <meta property="og:url" content= "http://denisorlovmusic.ru/english4040/phrases.html"/>
+
+    <!--script type="text/javascript" src="http://yandex.st/jquery/1.6.1/jquery.min.js"></script-->
+    <title>Русско-Английский Разговорник Тренажер</title>
+	<style>
+textarea{
+	display:none;
+}
+#lessonCombo{
+	width: 100%;
+	font-size: 20px;
+}
+#swMesure{
+    border-radius: 3px;
+}
+.contentPanel{
+    float: left;
+    width: 83%;
+	margin: 0;
+}
+.butPanel{
+    float: right;
+    width: 15%;
+	margin: 0;
+}	
+.but{
+	width: 95%;
+	padding: 15% 5%;
+	text-align: start;
+    margin: 0 0 8% 0;
+    font-size: 20px;
+	display: block;
+	overflow: hidden;
+}
+#phraseOutput{
+	font-size: 48px;
+	float: left;
+    width: 82%;
+}
+.blue{
+	color: blue;
+}
+.green{
+	color: green;
+}
+.transription{
+	color: orange;
+}
+
+#infoWrap{
+    display:none;
+    border: 1px solid navy;
+    width: 95%;
+    height: 95%;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.941176);
+	color: black;
+    padding: 2%;
+    border-radius: 5px;
+    box-sizing: border-box;
+    position: fixed;
+    right: 2%;;
+    bottom: 2%;;
+    left: 2%;
+    font-size: 2em;
+}
+#infoPanel{
+    float: right;
+    width: 3.5em;
+    overflow: auto;
+    height: 100%;
+}
+.ipBut,.dcBut{
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 2px;
+}
+.ipBut{
+    float:right;
+    font-size: 2em;
+    width: 1.5em;
+    height: 20%;
+}
+.infoContent{
+    height: 100%;
+    overflow: auto;
+    display: none;
+}
+#infoSetting input,#infoSetting select{
+    text-align: center;
+    font-size: 100%;
+    width: 20%;
+    margin: 0.2em 0.2em 0 0;
+}
+	</style>
+</head>
+<body>
+
+<div id="allLessons">
+<!--textarea id="Test">
+прийти	come came come	[kʌm] [keɪm] [kʌm]
+стать, сделаться	become became become	[bɪˈkʌm] [bɪˈkeɪm] [bɪˈkʌm]
+бежать, течь	run ran run	[rʌn] [ræn] [rʌn]
+писать или читать по буквам	spell spelt spell	[spel] [spelt] [spelt]
+</textarea-->
+<textarea id="Взаимопонимание 1">
+Вы меня понимаете?	Do you understand me?	duː juː ˌʌndəˈstænd miː? 
+Я не понимаю Вас.	I don't understand you.	aɪ dəʊnt ˌʌndəˈstænd juː. 
+Я понимаю Вас.	I understand you.	aɪ ˌʌndəˈstænd juː. 
+Я вполне понимаю Вас.	I quite understand you.	aɪ kwaɪt ˌʌndəˈstænd juː. 
+Я понимаю Вас вполне хорошо.	I understand you quite well.	aɪ ˌʌndəˈstænd juː kwaɪt wɛl. 
+Я понимаю каждое Ваше слово.	I understand every word you say.	aɪ ˌʌndəˈstænd ˈɛvri wɜːd juː seɪ. 
+Говорите громче, пожалуйста.	Speak loader, please.	spiːk ˈləʊdə, pliːz. 
+Говорите медленнее, пожалуйста.	Speak slower, please.	spiːk ˈsləʊə, pliːz. 
+Напишите пожалуйста.	Write it down, please.	raɪt ɪt daʊn, pliːz. 
+Переведите это.	Translate it.	trænsˈleɪt ɪt. 
+Повторите пожалуйста.	Please, say it again.	pliːz, seɪ ɪt əˈgɛn. 
+Нам нужен переводчик.	We need an interpreter.	wiː niːd ən ɪnˈtɜːprɪtə. 
+Извините, я не понял, что вы только что сказали.	Sorry, I didn’t understand what you just said.	ˈsɒri, aɪ dɪdnt ˌʌndəˈstænd wɒt juː ʤʌst sɛd. 
+Повторите, пожалуйста.	Could you repeat it please?	kʊd juː rɪˈpiːt ɪt pliːz? 
+У меня с английским плохо.	My English is very poor.	maɪ ˈɪŋglɪʃ ɪz ˈvɛri pʊə. 
+Вы хорошо говорите по-русски.	You speak good Russian.	juː spiːk gʊd ˈrʌʃ(ə)n. 
+Вы говорите по-английски с лёгким акцентом.	You speak English with a slight accent.	juː spiːk ˈɪŋglɪʃ wɪð ə slaɪt ˈæksənt. 
+Вы могли бы говорить чуть громче?	Would you mind speaking a bit louder?	wʊd juː maɪnd ˈspiːkɪŋ ə bɪt ˈlaʊdə? 
+...чуть тише?	...a bit softer?	...ə bɪt ˈsɒftə? 
+Не могли бы вы говорить немного медленнее?	Could you speak a little bit slower?	kʊd juː spiːk ə ˈlɪtl bɪt ˈsləʊə? 
+Вы могли бы повторить последнюю фразу?	Would you please repeat the last phrase?	wʊd juː pliːz rɪˈpiːt ðə lɑːst freɪz? 
+На каких языках вы говорите?	What languages can you speak?	wɒt ˈlæŋgwɪʤɪz kæn juː spiːk? 
+Я говорю по-русски, по-английски и по-немецки.	I speak Russian, English and German.	aɪ spiːk ˈrʌʃ(ə)n, ˈɪŋglɪʃ ænd ˈʤɜːmən. 
+Как сказать по-русски "дождь" (rain)?	What's the Russian word for "rain"?	wɒts ðə ˈrʌʃ(ə)n wɜːd fɔː "reɪn"? 
+Как это звучит на иврите?	What is it called in Hebrew?	wɒt ɪz ɪt kɔːld ɪn ˈhiːbruː? 
+Я никогда не учил итальянский.	I've never learnt Italian.	aɪv ˈnɛvə lɜːnt ɪˈtæliən. 
+Посмотри это слово по словарю.	Look up the word in a dictionary.	lʊk ʌp ðə wɜːd ɪn ə ˈdɪkʃ(ə)n(ə)ri. 
+Как оно пишется?	How do you spell it?	haʊ duː juː spɛl ɪt? 
+Извините, я не расслышал ваше имя.	Sorry, I didn't catch your name.	ˈsɒri, aɪ dɪdnt kæʧ jɔː neɪm. 
+Что означает это слово?	What does the word mean?	wɒt dʌz ðə wɜːd miːn? 
+Это плохое слово?	Is it a bad word?	ɪz ɪt ə bæd wɜːd? 
+</textarea>
+<textarea id="Взаимопонимание 2">
+Что вы имеете ввиду?	What do you mean?	wɒt duː juː miːn? 
+Как это будет по-английски?	What do you call it in English?	wɒt duː juː kɔːl ɪt ɪn ˈɪŋglɪʃ? 
+Вы говорите по-английски?	Do you speak English?	duː juː spiːk ˈɪŋglɪʃ? 
+Совсем чуть-чуть.	Just a little.	ʤʌst ə ˈlɪtl. 
+Я правильно это произношу?	Am I pronouncing it correctly?	æm aɪ prəˈnaʊnsɪŋ ɪt kəˈrɛktli? 
+Можете привести пример?	Can you give me an example?	kæn juː gɪv miː ən ɪgˈzɑːmpl? 
+Не могли бы вы перевести это для меня?	Could you translate this for me?	kʊd juː trænsˈleɪt ðɪs fɔː miː? 
+Кто-нибудь здесь говорит по-русски?	Does anyone here speak Russian?	dʌz ˈɛnɪwʌn hɪə spiːk ˈrʌʃ(ə)n? 
+Как это сказать?	How do you say it?	haʊ duː juː seɪ ɪt? 
+Как произносится это слово?	How do you say this word?	haʊ duː juː seɪ ðɪs wɜːd? 
+Как пишется ваша фамилия?	How do you spell your family name?	haʊ duː juː spɛl jɔː ˈfæmɪli neɪm? 
+С каждым днем я знаю английский лучше.	I am learning more English every day.	aɪ æm ˈlɜːnɪŋ mɔːr ˈɪŋglɪʃ ˈɛvri deɪ. 
+Я изучаю английский язык в школе.	I am studying English in school.	aɪ æm ˈstʌdiɪŋ ˈɪŋglɪʃ ɪn skuːl. 
+Я не знаю, как это сказать по-английски.	I do not know how to say it in English.	aɪ duː nɒt nəʊ haʊ tuː seɪ ɪt ɪn ˈɪŋglɪʃ. 
+Я не очень хорошо знаю английский.	I do not know very much English.	aɪ duː nɒt nəʊ ˈvɛri mʌʧ ˈɪŋglɪʃ. 
+Я не очень хорошо говорю по-английски.	I do not speak English very well.	aɪ duː nɒt spiːk ˈɪŋglɪʃ ˈvɛri wɛl. 
+Я не все понимаю.	I do not understand all of it.	aɪ duː nɒt ˌʌndəˈstænd ɔːl ɒv ɪt. 
+Я ничего не понимаю. / Я не понимаю ничего из этого.	I do not understand any of it.	aɪ duː nɒt ˌʌndəˈstænd ˈɛni ɒv ɪt. 
+Я не понимаю.	I do not understand.	aɪ duː nɒt ˌʌndəˈstænd. 
+Я все еще не понимаю. Пожалуйста, скажи это еще раз.	I still do not understand. Please say it again.	aɪ stɪl duː nɒt ˌʌndəˈstænd. pliːz seɪ ɪt əˈgɛn. 
+Я хочу лучше знать английский язык.	I want to learn more English.	aɪ wɒnt tuː lɜːn mɔːr ˈɪŋglɪʃ. 
+Здесь есть англо-русский словарь?	Is there an English Russian dictionary here?	ɪz ðeər ən ˈɪŋglɪʃ ˈrʌʃ(ə)n ˈdɪkʃ(ə)n(ə)ri hɪə? 
+Пожалуйста, говорите немного медленнее.	Please speak more slowly.	pliːz spiːk mɔː ˈsləʊli. 
+Спасибо, что помогли мне узнать больше об английском языке.	Thank you for helping me learn more about English.	θæŋk juː fɔː ˈhɛlpɪŋ miː lɜːn mɔːr əˈbaʊt ˈɪŋglɪʃ. 
+Как вы это называете?	What do you call this?	wɒt duː juː kɔːl ðɪs? 
+Что это предложение значит?	What does this sentence mean?	wɒt dʌz ðɪs ˈsɛntəns miːn? 
+Что значит это слово?	What does this word mean?	wɒt dʌz ðɪs wɜːd miːn? 
+Как это по-английский?	What is this in English?	wɒt ɪz ðɪs ɪn ˈɪŋglɪʃ? 
+</textarea>
+<textarea id="Повседневные фразы 1">
+Большое спасибо.	Thank you very much.	θæŋk juː ˈvɛri mʌʧ. 
+Пожалуйста (в ответ на "спасибо").	You're welcome.	jʊə ˈwɛlkəm. 
+Вот, пожалуйста (что-то даешь).	Here you are.	hɪə juː ɑː. 
+Понимаю.	I see.	aɪ siː. 
+Хорошо.	All right / OK.	ɔːl raɪt / ˈəʊˈkeɪ. 
+Ничего (страшного).	That's all right.	ðæts ɔːl raɪt. 
+Не бери в голову!	Never mind!	ˈnɛvə maɪnd! 
+Как далеко от города?	How far is it to the town?	haʊ fɑːr ɪz ɪt tuː ðə taʊn? 
+Сколько?	How many (much)?	haʊ ˈmɛni (mʌʧ)? 
+Сколько здесь книг?	How many books are here?	haʊ ˈmɛni bʊks ɑː hɪə? 
+Сколько это стоит?	How much does it cost?	haʊ mʌʧ dʌz ɪt kɒst? 
+Как долго?	How long?	haʊ lɒŋ? 
+Сюда, пожалуйста.	This way, please.	ðɪs weɪ, pliːz. 
+Кого спросить?	Whom should I ask?	huːm ʃʊd aɪ ɑːsk? 
+Извините, я не расслышал.	I'm sorry, I didn't catch you.	aɪm ˈsɒri, aɪ dɪdnt kæʧ juː. 
+После вас.	After you.	ˈɑːftə juː. 
+Здесь сильное движение.	There's a lot of traffic here.	ðeəz ə lɒt ɒv ˈtræfɪk hɪə. 
+Я заблудился.	I'm lost.	aɪm lɒst. 
+Вы говорите по-английски?	Do you speak English?	duː juː spiːk ˈɪŋglɪʃ? 
+Доброе утро!	Good morning!	gʊd ˈmɔːnɪŋ! 
+Добрый день!	Good afternoon!	gʊd ˈɑːftəˈnuːn! 
+Добрый вечер!	Good evening!	gʊd ˈiːvnɪŋ! 
+Спокойной ночи.	Good night.	gʊd naɪt. 
+Давайте встретимся в (фойе).	I'd like to meet you in the (lobby).	aɪd laɪk tuː miːt juː ɪn ðiː (ˈlɒbi). 
+Приятно познакомиться.	It's nice to meet you.	ɪts naɪs tuː miːt juː. 
+Рад Вас снова видеть.	I'm glad to see you again.	aɪm glæd tuː siː juː əˈgɛn. 
+Я женат (замужем).	I am married.	aɪ æm ˈmærɪd. 
+Я холост (не замужем).	I am single.	aɪ æm ˈsɪŋgl. 
+Как Ваши дела?	How are you?	haʊ ɑː juː? 
+Как успехи?	How are you getting along?	haʊ ɑː juː ˈgɛtɪŋ əˈlɒŋ? 
+Какие новости?	What's news?	wɒts njuːz? 
+Давненько вас не видел.	Long time to see.	lɒŋ taɪm tuː siː. 
+Можно узнать, как Вас зовут?	May I have your name?	meɪ aɪ hæv jɔː neɪm? 
+Вот моя визитная карточка.	This is my business card.	ðɪs ɪz maɪ ˈbɪznɪs kɑːd. 
+Позвольте представить Вас моему мужу (моей жене).	May I introduce you to my husband (wife)? / Let me introduce you to...	meɪ aɪ ˌɪntrəˈdjuːs juː tuː maɪ ˈhʌzbənd (waɪf)? / lɛt miːˌɪntrəˈdjuːs juː tuː... 
+Передавайте наилучшие пожелания от меня Вашей матери.	Please give my kind regards to your mother.	pliːz gɪv maɪ kaɪnd rɪˈgɑːdz tuː jɔː ˈmʌðə. 
+Передавай привет Николаю.	Say hallo to Nick for me.	seɪ həˈləʊ tuː nɪk fɔː miː. 
+Спасибо, с удовольствием.	I would like to do that, thank you. / With great pleasure, thank you.	aɪ wʊd laɪk tuː duː ðæt, θæŋk juː. / wɪð greɪt ˈplɛʒə, θæŋk juː. 
+С удовольствием.	I am pleased to do so.	aɪ æm pliːzd tuː duː səʊ. 
+До свидания.	Goodbye.	gʊdˈbaɪ. 
+До встречи.	See you later.	siː juː ˈleɪtə. 
+До скорой встречи.	See you soon.	siː juː suːn. 
+Счастливо.	Take care of yourself.	teɪk keər ɒv jɔːˈsɛlf.
+</textarea>
+<textarea id="Повседневные фразы 2">
+Не пропадайте.	Let's keep in touch.	lɛts kiːp ɪn tʌʧ. 
+С нетерпением жду нашей следующей встречи.	I'm looking forward to seeing you again.	aɪm ˈlʊkɪŋ ˈfɔːwəd tuː ˈsiːɪŋ juː əˈgɛn. 
+Вы завтра свободны?	Will you be free tomorrow?	wɪl juː biː friː təˈmɒrəʊ? 
+Хотите пойти со мной?	Would you like to come with me?	wʊd juː laɪk tuː kʌm wɪð miː? 
+Позвольте мне быть Вашим гидом.	Let me be your guide.	lɛt miː biː jɔː gaɪd. 
+Пойдете со мной за покупками?	Won't you go sopping with me?	wəʊnt juː gəʊ ˈsɒpɪŋ wɪð miː? 
+Пойдемте купаться.	Let's go swimming.	lɛts gəʊ ˈswɪmɪŋ. 
+Не хотите чего-нибудь поесть?	Would you care for something to eat?	wʊd juː keə fɔː ˈsʌmθɪŋ tuː iːt? 
+Звучит неплохо.	That sounds good.	ðæt saʊndz gʊd. 
+Позвольте предложить вам что-нибудь выпить.	May I offer you a drink?	meɪ aɪ ˈɒfə juː ə drɪŋk? 
+Хотите чего-нибудь выпить?	How about a drink?	haʊ əˈbaʊt ə drɪŋk? 
+Ваше здоровье!	Cheers!	ʧɪəz! 
+Не пора ли попить кофейку?	Let's take a coffee break.	lɛts teɪk ə ˈkɒfi breɪk. 
+Еще чашечку кофе, пожалуйста.	I'd like another cup of coffee.	aɪd laɪk əˈnʌðə kʌp ɒv ˈkɒfi. 
+Чувствуйте себя как дома.	Make yourself at home.	meɪk jɔːˈsɛlf æt həʊm. 
+Давайте платить пополам.	Let's go fifty-fifty on the bill.	lɛts gəʊ ˈfɪftɪˈfɪfti ɒn ðə bɪl. 
+Он платит счет.	He'll pay the bill.	hiːl peɪ ðə bɪl. 
+Мне нравится Ваша новая прическа.	Your new hairdo is not bad.	jɔː njuː ˈheəduː ɪz nɒt bæd. 
+У Вас великолепный вкус в одежде.	You have wonderful taste in clothes.	juː hæv ˈwʌndəfʊl teɪst ɪn kləʊðz. 
+Какая ты очаровательная девушка!	What a charming girl you are!	wɒt ə ˈʧɑːmɪŋ gɜːl juː ɑː! 
+Спасибо за комплимент.	Thank you for your compliment.	θæŋk juː fɔː jɔː ˈkɒmplɪmənt. 
+Спасибо за прекрасный день.	Thank you for a nice day.	θæŋk juː fɔːr ə naɪs deɪ. 
+Спасибо, что встретили меня (зашли за мной).	Thank you for picking me up.	θæŋk juː fɔː ˈpɪkɪŋ miː ʌp. 
+Очень любезно с Вашей стороны.	That's very kind of you.	ðæts ˈvɛri kaɪnd ɒv juː. 
+Вы очень добры.	You're very generous.	jʊə ˈvɛri ˈʤɛnərəs. 
+Я очень Вам благодарен.	I'm really grateful to you.	aɪm ˈrɪəli ˈgreɪtfʊl tuː juː. 
+Спасибо и извините за беспокойство.	Thank you for your trouble.	θæŋk juː fɔː jɔː ˈtrʌbl. 
+Весьма признателен.	Much obliged.	mʌʧ əˈblaɪʤd. 
+Я очень Вам обязан.	I'm very much obliged to you.	aɪm ˈvɛri mʌʧ əˈblaɪʤd tuː juː. 
+Извините (если привлекаешь внимание, прерываешь).	Excuse me.	ɪksˈkjuːs miː. 
+Извините (если извиняешься).	Sorry.	ˈsɒri. 
+Извините, я на секунду.	Excuse me a moment.	ɪksˈkjuːs miː ə ˈməʊmənt. 
+Подождите минуту, пожалуйста.	Just a minute please.	ʤʌst ə ˈmɪnɪt pliːz. 
+Это моя вина.	That's my fault.	ðæts maɪ fɔːlt. 
+Я был неосторожен.	It was careless of me.	ɪt wɒz ˈkeəlɪs ɒv miː. 
+Я не хотел Вас обидеть.	I didn't mean that.	aɪ dɪdnt miːn ðæt. 
+В следующий раз постараюсь.	Next time I'll get it right.	nɛkst taɪm aɪl gɛt ɪt raɪt. 
+Извините за опоздание.	Forgive me for being late.	fəˈgɪv miː fɔː ˈbiːɪŋ leɪt. 
+Извините, что заставил Вас ждать.	I'm sorry to have kept you waiting.	aɪm ˈsɒri tuː hæv kɛpt juː ˈweɪtɪŋ. 
+Я не помешаю?	Am I disturbing you?	æm aɪ dɪsˈtɜːbɪŋ juː? 
+Можно Вас побеспокоить на секунду?	May I bother you a moment?	meɪ aɪ ˈbɒðə juː ə ˈməʊmənt? 
+Нет, ничего.	Never mind.	ˈnɛvə maɪnd. 
+Ничего, пожалуйста.	Oh it's nothing.	əʊ ɪts ˈnʌθɪŋ. 
+Ничего.	Forget it.	fəˈgɛt ɪt. 
+Простите.	I beg your pardon.	aɪ bɛg jɔː ˈpɑːdn. 
+</textarea>
+<textarea id="Повседневные фразы 3">
+Повторите, пожалуйста.	Say it once more please.	seɪ ɪt wʌns mɔː pliːz. 
+Пожалуйста, говорите немного медленнее.	Please speak more slowly.	pliːz spiːk mɔː ˈsləʊli. 
+Напишите это здесь, пожалуйста.	Please write it here.	pliːz raɪt ɪt hɪə. 
+Пожалуйста, поторопитесь.	Please hurry up.	pliːz ˈhʌri ʌp. 
+Пойдемте со мной!	Come with me!	kʌm wɪð miː! 
+Пожалуйста, вызовите врача.	Please call a doctor.	pliːz kɔːl ə ˈdɒktə. 
+Не одолжите...?	Can you lend me...?	kæn juː lɛnd miː...? 
+Сделайте одолжение.	Will you do me a favor?	wɪl juː duː miː ə ˈfeɪvə? 
+Можно взглянуть?	May I take a look at it?	meɪ aɪ teɪk ə lʊk æt ɪt? 
+Можно одолжить Вашу ручку?	Can I borrow your pen?	kæn aɪ ˈbɒrəʊ jɔː pɛn? 
+Помогите донести, пожалуйста.	Would you please help me carry this?	wʊd juː pliːz hɛlp miː ˈkæri ðɪs? 
+Пожалуйста, помогите мне с этими пакетами.	Could you give me a hand with these parcels?	kʊd juː gɪv miː ə hænd wɪð ðiːz ˈpɑːslz? 
+Не отправите ли за меня письмо?	Will you please mail this letter for me?	wɪl juː pliːz meɪl ðɪs ˈlɛtə fɔː miː? 
+Помогите мне с этой проблемой.	Will you help me with this problem?	wɪl juː hɛlp miː wɪð ðɪs ˈprɒbləm? 
+Можно узнать Ваш адрес?	May I have your address?	meɪ aɪ hæv jɔːr əˈdrɛs? 
+Не подбросите до центра?	Could you drop me downtown, please?	kʊd juː drɒp miː ˈdaʊntaʊn, pliːz? 
+Что это?	What's this?	wɒts ðɪs? 
+Что это значит?	What does this mean?	wɒt dʌz ðɪs miːn? 
+Где туалет?	Where is the restroom?	weər ɪz ðə ˈrɛstrʊm? 
+Почему бы и нет?	Why not?	waɪ nɒt? 
+Чем скорее, тем лучше.	The sooner the better.	ðə ˈsuːnə ðə ˈbɛtə. 
+Я не уверен.	I'm not sure.	aɪm nɒt ʃʊə. 
+Не думаю.	I don't think so.	aɪ dəʊnt θɪŋk səʊ. 
+Боюсь, что нет.	I'm afraid not.	aɪm əˈfreɪd nɒt. 
+Невероятно.	It's incredible.	ɪts ɪnˈkrɛdəbl. 
+Боюсь, что Вы ошиблись.	I'm afraid you're mistaken.	aɪm əˈfreɪd jʊə mɪsˈteɪkən. 
+О, как жаль.	That's too bad.	ðæts tuː bæd. 
+У меня плохое настроение.	I feel blue.	aɪ fiːl bluː. 
+Это отвратительно.	It's disgusting.	ɪts dɪsˈgʌstɪŋ. 
+Меня от тебя тошнит.	You make me sick.	juː meɪk miː sɪk. 
+Успокойся, все будет в порядке.	Calm down, everything will be OK.	kɑːm daʊn, ˈɛvrɪθɪŋ wɪl biː ˈəʊˈkeɪ. 
+Не надо нервничать.	Don't be nervous. / Take it easy.	dəʊnt biː ˈnɜːvəs. / teɪk ɪt ˈiːzi. 
+Не торопитесь.	Take your time.	teɪk jɔː taɪm. 
+Не обращай(те) внимания на то, что он сказал.	Don't bother with what he said.	dəʊnt ˈbɒðə wɪð wɒt hiː sɛd. 
+Остыньте!	Cool it!	kuːl ɪt! 
+Не унывайте!	Cheer up!	ʧɪər ʌp! 
+Какая жалость!	What a pity!	wɒt ə ˈpɪti!
+</textarea>
+<textarea id="Повседневные фразы 4">
+Вот так сюрприз!	What a surprise!	wɒt ə səˈpraɪz! 
+Вы, должно быть, шутите!	You must be kidding!	juː mʌst biː ˈkɪdɪŋ! 
+О боже, какой кошмар!	Oh dear what a mess!	əʊ dɪə wɒt ə mɛs! 
+Который час?	What time is it?	wɒt taɪm ɪz ɪt? 
+Сколько времени?	What time do you have?	wɒt taɪm duː juː hæv? 
+Семь часов.	It's seven o'clock.	ɪts ˈsɛvn əˈklɒk. 
+Без четверти восемь.	It's a quarter to eight.	ɪts ə ˈkwɔːtə tuː eɪt. 
+Десять минут пятого.	It's ten minutes past four.	ɪts tɛn ˈmɪnɪts pɑːst fɔː. 
+Полдевятого.	It's half past eight.	ɪts hɑːf pɑːst eɪt. 
+Рано.	It's early.	ɪts ˈɜːli. 
+Уже поздно?	Is it late?	ɪz ɪt leɪt? 
+Сколько времени идти туда пешком?	How long will it take to wall over there?	haʊ lɒŋ wɪl ɪt teɪk tuː wɔːl ˈəʊvə ðeə? 
+Поздравляю!	Congratulations!	kənˌgrætjʊˈleɪʃənz! 
+Поздравляю с днем рождения!	Best wishes for your birthday!	bɛst ˈwɪʃɪz fɔː jɔː ˈbɜːθdeɪ! 
+С рождеством!	Merry Christmas!	ˈmɛri ˈkrɪsməs! 
+Наилучшие пожелания в новом году!	Best wishes for a Happy New Year!	bɛst ˈwɪʃɪz fɔːr ə ˈhæpi njuː jɪə! 
+Желаю счастья сегодня и всегда!	Happy many returns of the day!	ˈhæpi ˈmɛni rɪˈtɜːnz ɒv ðə deɪ! 
+Христос воскрес!	Happy Easter!	ˈhæpi ˈiːstə! 
+Желаю Вам счастья и многих лет жизни.	I wish you many years of happiness.	aɪ wɪʃ juː ˈmɛni jɪəz ɒv ˈhæpɪnɪs. 
+Поздравляю от всей души.	Heartiest congratulations.	ˈhɑːtɪɪst kənˌgrætjʊˈleɪʃənz. 
+Желаю Вам поскорее выздороветь.	I hope you'll get better soon.	aɪ həʊp juːl gɛt ˈbɛtə suːn. 
+Счастливой поездки!	Have a nice trip!	hæv ə naɪs trɪp! 
+Удачи!	Good luck.	gʊd lʌk. 
+Давай еще раз встретимся!	Let's meet again!	lɛts miːt əˈgɛn! 
+Какой чудесный день!	What a nice day!	wɒt ə naɪs deɪ! 
+Жарко.	It's hot.	ɪts hɒt. 
+Опускается туман.	It's getting foggy.	ɪts ˈgɛtɪŋ ˈfɒgi. 
+Небо расчищается.	The sky is clearing up.	ðə skaɪ ɪz ˈklɪərɪŋ ʌp. 
+Завтра будет солнечно.	It will be sunny tomorrow.	ɪt wɪl biː ˈsʌni təˈmɒrəʊ. 
+Какой ужасный день!	What a nasty day!	wɒt ə ˈnɑːsti deɪ! 
+Интересно, будет гроза?	I wonder if there will be a storm?	aɪ ˈwʌndər ɪf ðeə wɪl biː ə stɔːm? 
+Какая, по-вашему, будет погода?	What do you think the weather looks like?	wɒt duː juː θɪŋk ðə ˈwɛðə lʊks laɪk?
+</textarea>
+<textarea id="Путешествия 1">
+Это прямой рейс?	Is that a direct flight?	ɪz ðæt ə dɪˈrɛkt flaɪt? 
+В этом рейсе есть промежуточные посадки?	Does the flight land somewhere before the final destination?	dʌz ðə flaɪt lænd ˈsʌmweə bɪˈfɔː ðə ˈfaɪnl ˌdɛstɪˈneɪʃən? 
+Какие есть рейсы до Лондона?	What flights are there to London?	wɒt flaɪts ɑː ðeə tuː ˈlʌndən? 
+Пожалуйста, проверьте в других компаниях.	Please check other airlines.	pliːz ʧɛk ˈʌðər ˈeəlaɪnz. 
+Не могли бы Вы уточнить, есть ли билеты на этот рейс?	Would you please check whether there is room on the flight?	wʊd juː pliːz ʧɛk ˈwɛðə ðeər ɪz ruːm ɒn ðə flaɪt? 
+Сколько рейсов в день?	How frequent are the flights?	haʊ ˈfriːkwənt ɑː ðə flaɪts? 
+Когда мне нужно быть в аэропорту?	How early must I be at the airport?	haʊ ˈɜːli mʌst aɪ biː æt ði ˈeəpɔːt? 
+Сколько мне можно брать багажа?	How much luggage am I allowed to take?	haʊ mʌʧ ˈlʌgɪʤ æm aɪ əˈlaʊd tuː teɪk? 
+У меня нет багажа.	I don't have luggage.	aɪ dəʊnt hæv ˈlʌgɪʤ. 
+Сколько стоит билет?	How much is the ticket?	haʊ mʌʧ ɪz ðə ˈtɪkɪt? 
+Есть ли какие-нибудь скидки?	Is there any discount?	ɪz ðeər ˈɛni ˈdɪskaʊnt? 
+Забронируйте место на ближайший рейс до Лондона, пожалуйста.	Please reserve the next flight to London.	pliːz rɪˈzɜːv ðə nɛkst flaɪt tuː ˈlʌndən. 
+Один билет до Лондона, бизнес-класс.	One business class ticket to London.	wʌn ˈbɪznɪs klɑːs ˈtɪkɪt tuː ˈlʌndən. 
+Я хотел бы вернуть свой билет до Варшавы.	I would like to cancel my ticket to Warsaw.	aɪ wʊd laɪk tuː ˈkænsəl maɪ ˈtɪkɪt tuː ˈwɔːsɔː. 
+Снимите этот заказ, пожалуйста.	Cancel this reservation, please.	ˈkænsəl ðɪs ˌrɛzəˈveɪʃən, pliːz. 
+Я хотел бы подтвердить заказ.	I'd like to reconfirm a reservation.	aɪd laɪk tuː ˌriːkənˈfɜːm ə ˌrɛzəˈveɪʃən. 
+Я хочу изменить заказ.	I want to change my reservation.	aɪ wɒnt tuː ʧeɪnʤ maɪ ˌrɛzəˈveɪʃən. 
+Где стойка Финнэйр?	Where is the Finnair counter?	weər ɪz ðə Finnair ˈkaʊntə? 
+Где здание аэропорта?	Where is the airport terminal?	weər ɪz ði ˈeəpɔːt ˈtɜːmɪnl? 
+Где проходит регистрация?	Where do I check in?	weə duː aɪ ʧɛk ɪn? 
+Отправьте багаж в мою гостиницу.	Address the luggage to my hotel.	əˈdrɛs ðə ˈlʌgɪʤ tuː maɪ həʊˈtɛl. 
+Сколько нужно платить за лишний вес?	How much is the excess baggage charge?	haʊ mʌʧ ɪz ði ɪkˈsɛs ˈbægɪʤ ʧɑːʤ? 
+Я хотел бы отправить этот багаж в Париж.	I'd like to send this baggage to Paris.	aɪd laɪk tuː sɛnd ðɪs ˈbægɪʤ tuː ˈpærɪs. 
+Я транзитом до Лос-Анжелеса.	I'm in transit for Los Angeles.	aɪm ɪn ˈtrænsɪt fɔː Los ˈeɪnʤəlz. 
+Когда посадка?	When is boarding time?	wɛn ɪz ˈbɔːdɪŋ taɪm? 
+На какой выход?	What is the gate number?	wɒt ɪz ðə geɪt ˈnʌmbə? 
+Этот рейс отправится вовремя?	Will this flight leave on time?	wɪl ðɪs flaɪt liːv ɒn taɪm? 
+Я хотел бы забронировать место в салоне для некурящих.	I would like to reserve a seat in the non-smoking section.	aɪ wʊd laɪk tuː rɪˈzɜːv ə siːt ɪn ðə nɒn-ˈsməʊkɪŋ ˈsɛkʃən. 
+Место у окна, пожалуйста.	Window seat, please.	ˈwɪndəʊ siːt, pliːz. 
+Где это место?	Where is this seat?	weər ɪz ðɪs siːt? 
+Не могли бы Вы поменяться со мной местами?	Could I change seats with you?	kʊd aɪ ʧeɪnʤ siːts wɪð juː? 
+У Вас есть английская газета?	Do you have an English newspaper?	duː juː hæv ən ˈɪŋglɪʃ ˈnjuːzˌpeɪpə? 
+Не могли бы Вы принести мне одеяло?	Would you please get me a blanket?	wʊd juː pliːz gɛt miː ə ˈblæŋkɪt? 
+Принесите подушку, пожалуйста.	Could you give me a pillow, please?	kʊd juː gɪv miː ə ˈpɪləʊ, pliːz? 
+Можно еще один напиток?	Can I have another drink?	kæn aɪ hæv əˈnʌðə drɪŋk? 
+Можно еще орехов?	Can I have more nuts?	kæn aɪ hæv mɔː nʌts? 
+Я хотел бы заказать напитки.	I want to order some drinks.	aɪ wɒnt tuː ˈɔːdə sʌm drɪŋks. 
+Чай, пожалуйста.	Tea, please.	tiː, pliːz. 
+</textarea>
+<textarea id="Путешествия 2">
+Есть ли на борту стюардесса, говорящая по-французски?	Is there a French - speaking stewardess on board?	ɪz ðeər ə frɛnʧ - ˈspiːkɪŋ ˈstjʊədɪs ɒn bɔːd? 
+Есть ли на борту стюардесса, говорящая по-английски?	Is there a stewardess on board who can speak English?	ɪz ðeər ə ˈstjʊədɪs ɒn bɔːd huː kæn spiːk ˈɪŋglɪʃ? 
+Вы можете перевести это на английский?	Can you translate it into English?	kæn juː trænsˈleɪt ɪt ˈɪntuː ˈɪŋglɪʃ? 
+Пожалуйста, не курите здесь.	Please don't smoke here.	pliːz dəʊnt sməʊk hɪə. 
+На сколько отложен рейс?	How long will it be delayed?	haʊ lɒŋ wɪl ɪt biː dɪˈleɪd? 
+Надолго мы здесь остановились?	How long will we stop here?	haʊ lɒŋ wɪl wiː stɒp hɪə? 
+Мне плохо.	I feel sick.	aɪ fiːl sɪk. 
+Можно мне откинуть спинку?	May I recline my seat?	meɪ aɪ rɪˈklaɪn maɪ siːt? 
+Можно в самолете купить что-нибудь без пошлины?	Do they sell duty-free goods on board?	duː ðeɪ sɛl ˈdjuːtɪˈfriː gʊdz ɒn bɔːd? 
+Мне нужны для кино наушники.	I would like some earphones for the movie.	aɪ wʊd laɪk sʌm ˈɪəfəʊnz fɔː ðə ˈmuːvi. 
+Это не работает.	It doesn't work.	ɪt dʌznt wɜːk. 
+Когда мы прибываем?	What time do we arrive?	wɒt taɪm duː wiː əˈraɪv? 
+Дайте мне, пожалуйста, другой бланк декларации.	May I have another customs form?	meɪ aɪ hæv əˈnʌðə ˈkʌstəmz fɔːm? 
+Покажите, пожалуйста, как заполнять это форму.	Please show me how to fill in the form.	pliːz ʃəʊ miː haʊ tuː fɪl ɪn ðə fɔːm. 
+Вот мой паспорт.	Here's my passport.	hɪəz maɪ ˈpɑːspɔːt. 
+Поставьте мне, пожалуйста, штамп в паспорт.	Would you please stamp my passport?	wʊd juː pliːz stæmp maɪ ˈpɑːspɔːt? 
+Какова цель Вашей поездки?	What is the purpose of your visit?	wɒt ɪz ðə ˈpɜːpəs ɒv jɔː ˈvɪzɪt? 
+Я турист.	I'm a tourist.	aɪm ə ˈtʊərɪst. 
+Я в отпуске.	I am on vacation.	aɪ æm ɒn vəˈkeɪʃən. 
+Я в командировке.	I am on a business trip.	aɪ æm ɒn ə ˈbɪznɪs trɪp. 
+Это мой первый приезд.	This is my first visit.	ðɪs ɪz maɪ fɜːst ˈvɪzɪt. 
+Как долго Вы здесь пробудите?	How long will you stay here?	haʊ lɒŋ wɪl juː steɪ hɪə? 
+Я собираюсь пробыть здесь две недели.	I plan to stay two weeks.	aɪ plæn tuː steɪ tuː wiːks. 
+Вот моя транзитная виза.	This is my transit pass.	ðɪs ɪz maɪ ˈtrænsɪt pɑːs. 
+У меня только предметы личного пользования.	I only have articles for personal use.	aɪ ˈəʊnli hæv ˈɑːtɪklz fɔː ˈpɜːsnl juːz. 
+Это подарок для друга.	This is a gift for a friend.	ðɪs ɪz ə gɪft fɔːr ə frɛnd. 
+Эта видеокамера для моего личного пользования.	This video camera is for my personal use.	ðɪs ˈvɪdɪəʊ ˈkæmərə ɪz fɔː maɪ ˈpɜːsnl juːz. 
+Это стоит около …	It costs about....	ɪt kɒsts əˈbaʊt.... 
+Мне нечего декларировать.	I have nothing to declare.	aɪ hæv ˈnʌθɪŋ tuː dɪˈkleə. 
+Беспошлинный магазин.	Duty-free shop.	ˈdjuːtɪˈfriː ʃɒp. 
+Можно в этом аэропорту что-нибудь купить?	Can we do some shopping in this airport?	kæn wiː duː sʌm ˈʃɒpɪŋ ɪn ðɪs ˈeəpɔːt? 
+Мне нужно будет платить пошлину за камеру, которую я здесь купил?	Do I have to pay duty on the camera I bought here?	duː aɪ hæv tuː peɪ ˈdjuːti ɒn ðə ˈkæmərə aɪ bɔːt hɪə? 
+Можно попросить чек?	May I have a receipt?	meɪ aɪ hæv ə rɪˈsiːt? 
+Где можно получить багаж?	Where can I get my baggage?	weə kæn aɪ gɛt maɪ ˈbægɪʤ? 
+Вот моя багажная квитанция.	Here is my claim tag.	hɪər ɪz maɪ kleɪm tæg. 
+Я не могу найти свой багаж.	I can't find my baggage.	aɪ kɑːnt faɪnd maɪ ˈbægɪʤ. 
+Мне не выдали багажную квитанцию при регистрации.	I didn't receive the claim tag when I checked in.	aɪ dɪdnt rɪˈsiːv ðə kleɪm tæg wɛn aɪ ʧɛkt ɪn. 
+Мой багаж поврежден, и некоторых вещей не хватает.	My baggage is broken, and some things are missing.	maɪ ˈbægɪʤ ɪz ˈbrəʊkən, ænd sʌm θɪŋz ɑː ˈmɪsɪŋ. 
+Где можно найти носильщика?	Where can I find a porter?	weə kæn aɪ faɪnd ə ˈpɔːtə? 
+Это мой багаж.	This is my baggage.	ðɪs ɪz maɪ ˈbægɪʤ. 
+Пожалуйста, отнесите эти вещи к стоянке такси.	Please take this baggage to the taxi stand.	pliːz teɪk ðɪs ˈbægɪʤ tuː ðə ˈtæksi stænd. 
+В багаже есть хрупкие предметы.	It's fragile.	ɪts ˈfræʤaɪl. 
+Будьте осторожны, пожалуйста.	Please be careful carrying it.	pliːz biː ˈkeəfʊl ˈkæriɪŋ ɪt. 
+Можно взять эту багажную тележку.	May I use this baggage cart?	meɪ aɪ juːz ðɪs ˈbægɪʤ kɑːt? 
+Где находится информационное бюро?	Where is the tourist information office?	weər ɪz ðə ˈtʊərɪst ˌɪnfəˈmeɪʃən ˈɒfɪs? 
+Я транзитный пассажир до Сан–Франциско.	I am a transit passenger to San Francisco.	aɪ æm ə ˈtrænsɪt ˈpæsɪnʤə tuː sæn frɑːnˈsiːskəʊ. 
+Я успею сделать пересадку в тот же день?	Can I make a connection on the same day?	kæn aɪ meɪk ə kəˈnɛkʃən ɒn ðə seɪm deɪ? 
+Сколько нужно времени на пересадку?	How long does it take to make a connection?	haʊ lɒŋ dʌz ɪt teɪk tuː meɪk ə kəˈnɛkʃən? 
+Можно мне заказать номер в гостиницу?	Can I reserve a hotel room here?	kæn aɪ rɪˈzɜːv ə həʊˈtɛl ruːm hɪə?
+</textarea>
+<textarea id="Путешествия 3">
+Где я могу сесть на автобус в город?	Where can I catch the shuttle bus?	weə kæn aɪ kæʧ ðə ˈʃʌtl bʌs? 
+Я делал заказ.	I have made a reservation.	aɪ hæv meɪd ə ˌrɛzəˈveɪʃən. 
+Места были зарезервированы для меня и моей семьи.	Reservations have been made for me and my family.	ˌrɛzəˈveɪʃənz hæv biːn meɪd fɔː miː ænd maɪ ˈfæmɪli. 
+Заказ был подтвержден в Париже.	The reservation has been confirmed in Paris.	ðə ˌrɛzəˈveɪʃən hæz biːn kənˈfɜːmd ɪn ˈpærɪs. 
+У вас есть свободные места?	Do you have any vacancies?	duː juː hæv ˈɛni ˈveɪkənsiz? 
+Мне нужна комната.	I would like a room.	aɪ wʊd laɪk ə ruːm. 
+Я хотел бы одноместный номер.	I’d like a single room.	aɪd laɪk ə ˈsɪŋgl ruːm. 
+Я хотел бы номер с ванной.	I’d like a room with a bath.	aɪd laɪk ə ruːm wɪð ə bɑːθ. 
+Я хотел бы номер с двумя кроватями.	I would like a room with two beds.	aɪ wʊd laɪk ə ruːm wɪð tuː bɛdz. 
+Нам нужен двухместный номер с дополнительной кроватью.	We need one double room with an extra bed.	wiː niːd wʌn ˈdʌbl ruːm wɪð ən ˈɛkstrə bɛd. 
+Есть что-нибудь подешевле?	Is there anything cheaper?	ɪz ðeər ˈɛnɪθɪŋ ˈʧiːpə? 
+Не могли бы Вы показать мне комнату получше?	Would you please show me a better room?	wʊd juː pliːz ʃəʊ miː ə ˈbɛtə ruːm? 
+Не могли бы Вы показать мне комнату побольше (поменьше)?	Would you please show me a larger (smaller) room?	wʊd juː pliːz ʃəʊ miː ə ˈlɑːʤə (ˈsmɔːlə) ruːm? 
+Комнату, с видом на море.	A room facing the sea.	ə ruːm ˈfeɪsɪŋ ðə siː. 
+Какова плата за обслуживание и налог?	How much is the service charge and tax?	haʊ mʌʧ ɪz ðə ˈsɜːvɪs ʧɑːʤ ænd tæks? 
+Надбавка за обслуживание учтена?	is the service charge included?	ɪz ðə ˈsɜːvɪs ʧɑːʤ ɪnˈkluːdɪd? 
+Сколько стоит номер, включая завтрак?	How much for a room including breakfast?	haʊ mʌʧ fɔːr ə ruːm ɪnˈkluːdɪŋ ˈbrɛkfəst? 
+Завтрак включен?	Is breakfast included?	ɪz ˈbrɛkfəst ɪnˈkluːdɪd? 
+Сколько это стоит в день?	What is the rate?	wɒt ɪz ðə reɪt? 
+Вам нужен залог?	Do you need a deposit?	duː juː niːd ə dɪˈpɒzɪt? 
+Когда я должен освободить номер?	When is check-out time?	wɛn ɪz ʧɛk-aʊt taɪm? 
+Вам нужен мой паспорт?	Do you need my passport?	duː juː niːd maɪ ˈpɑːspɔːt? 
+Можете порекомендовать другую гостиницу?	Can you recommend another hotel?	kæn juː ˌrɛkəˈmɛnd əˈnʌðə həʊˈtɛl? 
+Я сниму этот номер на неделю (месяц).	I’ll take this room for a week (month).	aɪl teɪk ðɪs ruːm fɔːr ə wiːk (mʌnθ). 
+Я пробуду два дня.	I’ ll stay two nights.	aɪ ll steɪ tuː naɪts. 
+Меня зовут …	My name is…	maɪ neɪm ɪz… 
+Где мне расписаться?	Where do I sign?	weə duː aɪ saɪn? 
+Можно одолжить Вашу ручку?	Could I borrow your pen?	kʊd aɪ ˈbɒrəʊ jɔː pɛn? 
+Войдите.	Come in.	kʌm ɪn. 
+Я хотел бы сдать на хранение некоторые ценные вещи.	I would like to put some valuables in the safety-deposit box.	aɪ wʊd laɪk tuː pʊt sʌm ˈvæljʊəblz ɪn ðə ˈseɪfti-dɪˈpɒzɪt bɒks. 
+Я хотел бы забрать мои ценности.	I’d like my valuables back.	aɪd laɪk maɪ ˈvæljʊəblz bæk.
+</textarea>
+<textarea id="Путешествия 4">
+Пошлите, пожалуйста, багаж в мой номер.	Would you please send the luggage to my room?	wʊd juː pliːz sɛnd ðə ˈlʌgɪʤ tuː maɪ ruːm? 
+Пожалуйста, пошлите кого-нибудь за моим багажом.	Please send someone for my baggage.	pliːz sɛnd ˈsʌmwʌn fɔː maɪ ˈbægɪʤ. 
+Не могли бы Вы присмотреть за моим багажом?	Can you keep this baggage for me?	kæn juː kiːp ðɪs ˈbægɪʤ fɔː miː? 
+Я хотел бы забрать свой багаж.	May I have my baggage back?	meɪ aɪ hæv maɪ ˈbægɪʤ bæk? 
+В моей комнате есть розетка для электробритвы?	Is there a socket in my room for my electric shaver?	ɪz ðeər ə ˈsɒkɪt ɪn maɪ ruːm fɔː maɪ ɪˈlɛktrɪk ˈʃeɪvə? 
+Пожалуйста, принесите мне горячей воды.	Please bring me some hot water.	pliːz brɪŋ miː sʌm hɒt ˈwɔːtə. 
+Не могли бы Вы дать мне еще одно одеяло?	Would you give me another blanket?	wʊd juː gɪv miː əˈnʌðə ˈblæŋkɪt? 
+Как включать кабельное телевидение?	How do you use cable TV?	haʊ duː juː juːz ˈkeɪbl ˌtiːˈviː? 
+Вам известен код Вашей страны?	Do you know what your international code is?	duː juː nəʊ wɒt jɔːr ˌɪntə(ː)ˈnæʃənl kəʊd ɪz? 
+Какой код России?	What is the country code for Russia?	wɒt ɪz ðə ˈkʌntri kəʊd fɔː ˈrʌʃə? 
+В какое время работает ресторан?	At what time are meals served?	æt wɒt taɪm ɑː miːlz sɜːvd? 
+Можно заказать завтрак в номер?	Can I have breakfast in my room?	kæn aɪ hæv ˈbrɛkfəst ɪn maɪ ruːm? 
+В полвосьмого, пожалуйста.	I’d like it at 7.30 ( seven thirty ), please.	aɪd laɪk ɪt æt 7.30 ( ˈsɛvn ˈθɜːti ), pliːz. 
+Я хотел бы заказать завтрак на завтра.	I’d like to order breakfast for tomorrow.	aɪd laɪk tuː ˈɔːdə ˈbrɛkfəst fɔː təˈmɒrəʊ. 
+Вот мой заказ.	Here’s my order.	hɪəz maɪ ˈɔːdə. 
+Могу я идти пешком, или лучше взять такси?	Can I walk or should I take a taxi?	kæn aɪ wɔːk ɔː ʃʊd aɪ teɪk ə ˈtæksi? 
+Мне кто-нибудь звонил?	Is there a telephone massage for me?	ɪz ðeər ə ˈtɛlɪfəʊn ˈmæsɑːʒ fɔː miː? 
+Пожалуйста, дайте мне карточку с адресом этой гостиницы.	Please give me the card with this hotel’s address.	pliːz gɪv miː ðə kɑːd wɪð ðɪs həʊˈtɛlz əˈdrɛs. 
+Я хотел бы сдать это в стирку.	I would like to have this washed.	aɪ wʊd laɪk tuː hæv ðɪs wɒʃt. 
+Будьте осторожны, пожалуйста. Это чистый шелк.	Please be careful with it. It is pure silk.	pliːz biː ˈkeəfʊl wɪð ɪt. ɪt ɪz pjʊə sɪlk. 
+Отправьте, пожалуйста, эту одежду в стирку.	Would you please send this clothes to the laundry?	wʊd juː pliːz sɛnd ðɪs kləʊðz tuː ðə ˈlɔːndri? 
+Вы можете почистить и отгладить этот костюм?	Will you clean and press this suit?	wɪl juː kliːn ænd prɛs ðɪs sjuːt? 
+Можете пришить эти пуговицы?	Can you saw these buttons on?	kæn juː sɔː ðiːz ˈbʌtnz ɒn? 
+Можете удалить это пятно?	Can you remove this stain?	kæn juː rɪˈmuːv ðɪs steɪn? 
+Можете погладить эти брюки при мне?	Can you press these pants while I wait?	kæn juː prɛs ðiːz pænts waɪl aɪ weɪt? 
+Выгладите это, пожалуйста.	Please have this pressed.	pliːz hæv ðɪs prɛst. 
+Когда это будет готово?	When will it be ready?	wɛn wɪl ɪt biː ˈrɛdi? 
+Мне это нужно к десяти часам.	I need it by 10 (ten) o’clock.	aɪ niːd ɪt baɪ 10 (tɛn) əˈklɒk. 
+Будьте добры разбудите меня в семь часов.	Would you please wake me at 7 (seven) o’clock?	wʊd juː pliːz weɪk miː æt 7 (ˈsɛvn) əˈklɒk? 
+Пожалуйста, уберите в этой комнате.	Please make up this room.	pliːz meɪk ʌp ðɪs ruːm. 
+Принесите мне, пожалуйста, полотенце.	Please bring me a bath towel.	pliːz brɪŋ miː ə bɑːθ ˈtaʊəl. 
+Не могли бы Вы вызвать такси?	Would you please call a taxi?	wʊd juː pliːz kɔːl ə ˈtæksi? 
+Сколько времени ехать в аэропорт на такси?	How long does it take to go to the airport by taxi?	haʊ lɒŋ dʌz ɪt teɪk tuː gəʊ tuː ði ˈeəpɔːt baɪ ˈtæksi? 
+Телевизор не работает.	The TV doesn’t work.	ðə ˌtiːˈviː dʌznt wɜːk. 
+Нет туалетной бумаги.	There is no toilet paper.	ðeər ɪz nəʊ ˈtɔɪlɪt ˈpeɪpə. 
+Нет мыла.	There is no soap.	ðeər ɪz nəʊ səʊp. 
+Замок сломан.	The lock is broken.	ðə lɒk ɪz ˈbrəʊkən.
+</textarea>
+<textarea id="Путешествия 5">
+Раковина засорена.	The sink is clogged.	ðə sɪŋk ɪz klɒgd. 
+Нет горячей воды.	There’s no hot running water.	ðeəz nəʊ hɒt ˈrʌnɪŋ ˈwɔːtə. 
+Я хотел бы поменять комнату.	I’d like to change my room.	aɪd laɪk tuː ʧeɪnʤ maɪ ruːm. 
+Я до сих пор жду заказанный завтрак.	I’m still waiting for the breakfast I ordered.	aɪm stɪl ˈweɪtɪŋ fɔː ðə ˈbrɛkfəst aɪ ˈɔːdəd. 
+Тут, должно быть, ошибка. Это не мое.	There must be a mistake. These are not mine.	ðeə mʌst biː ə mɪsˈteɪk. ðiːz ɑː nɒt maɪn. 
+Пятна не удалили.	The stains have not been removed.	ðə steɪnz hæv nɒt biːn rɪˈmuːvd. 
+Это пятно от крови.	This stain is blood.	ðɪs steɪn ɪz blʌd. 
+Я заказывал кровать на двоих, а получил две односпальных.	I reserved a double bed, but I got a twin.	aɪ rɪˈzɜːvd ə ˈdʌbl bɛd, bʌt aɪ gɒt ə twɪn. 
+Эта комната слишком маленькая. У вас есть побольше?	This room is too small. Don’t you have a bigger one?	ðɪs ruːm ɪz tuː smɔːl. dəʊnt juː hæv ə ˈbɪgə wʌn? 
+Я выезжаю(из номера).	I’m checking out.	aɪm ˈʧɛkɪŋ aʊt. 
+Я уезжаю завтра.	I’m leaving tomorrow.	aɪm ˈliːvɪŋ təˈmɒrəʊ. 
+Я хотел бы уехать на день раньше.	I want to leave one day earlier.	aɪ wɒnt tuː liːv wʌn deɪ ˈɜːlɪə. 
+Когда мне нужно освободить комнату?	When do I have to vacate the room?	wɛn duː aɪ hæv tuː vəˈkeɪt ðə ruːm? 
+Я хотел бы продлить мое пребывание на несколько дней.	I’d like to extend my stay for a few days.	aɪd laɪk tuː ɪksˈtɛnd maɪ steɪ fɔːr ə fjuː deɪz. 
+Можно получить счет?	May I have the bill?	meɪ aɪ hæv ðə bɪl? 
+Можно взглянуть на счет?	Could I see the bill?	kʊd aɪ siː ðə bɪl? 
+За что этот счет?	What’s this bill for?	wɒts ðɪs bɪl fɔː? 
+По - моему, это дороговато.	I find it a little expensive.	aɪ faɪnd ɪt ə ˈlɪtl ɪksˈpɛnsɪv. 
+Извините, но это не моя подпись.	I’m sorry, this isn’t my signature.	aɪm ˈsɒri, ðɪs ˈɪznt maɪ ˈsɪgnɪʧə. 
+Вы принимаете кредитные карточки?	Will you accept a credit card?	wɪl juː əkˈsɛpt ə ˈkrɛdɪt kɑːd? 
+Вы берете дорожные чеки?	Do you take traveler’s checks?	duː juː teɪk ˈtrævləz ʧɛks? 
+Мне очень здесь понравилось.	I’ve enjoyed my stay.	aɪv ɪnˈʤɔɪd maɪ steɪ. 
+Где находится столовая?	Where is the dining room?	weər ɪz ðə ˈdaɪnɪŋ ruːm? 
+Здесь есть буфет?	Is there a snack bar here?	ɪz ðeər ə snæk bɑː hɪə? 
+В моей комнате есть мини-бар?	Is there a mini-bar in my room?	ɪz ðeər ə ˈmɪnɪ-bɑːr ɪn maɪ ruːm? 
+У вас есть гараж?	Do you have a garage?	duː juː hæv ə ˈgærɑːʒ? 
+Здесь есть бассейн ( сауна )	Is there a swimming pool (sauna)?	ɪz ðeər ə ˈswɪmɪŋ puːl (ˈsaʊnə)? 
+Здесь есть косметический салон?	Is there a beauty shop?	ɪz ðeər ə ˈbjuːti ʃɒp? 
+Где аварийный выход?	Where is the emergency exit?	weər ɪz ði ɪˈmɜːʤənsi ˈɛksɪt? 
+Я хочу снять квартиру.	I want to find an apartment for rent.	aɪ wɒnt tuː faɪnd ən əˈpɑːtmənt fɔː rɛnt. 
+Я хотел бы снять двухкомнатную квартиру.	I’d like to rent a two-room apartment.	aɪd laɪk tuː rɛnt ə tuː-ruːm əˈpɑːtmənt. 
+Я бы предпочел меблированную квартиру.	I would prefer a furnished apartment.	aɪ wʊd priˈfɜːr ə ˈfɜːnɪʃt əˈpɑːtmənt. 
+Сколько нужно заплатить сразу?	How much is the down payment?	haʊ mʌʧ ɪz ðə daʊn ˈpeɪmənt? 
+Сколько надо платить в месяц(месячный тариф)?	How much is the monthly rate?	haʊ mʌʧ ɪz ðə ˈmʌnθli reɪt? 
+Можно снять гараж?	Is it possible to rent a garage?	ɪz ɪt ˈpɒsəbl tuː rɛnt ə ˈgærɑːʒ?
+</textarea>
+<textarea id="В ресторане 1">
+Здесь есть поблизости хороший ресторан?	Are there any good restaurants around here?	ɑː ðeər ˈɛni gʊd ˈrɛstrɒnts əˈraʊnd hɪə? 
+Вы можете порекомендовать хороший ресторан?	Can you recommend a good place to eat?	kæn juː ˌrɛkəˈmɛnd ə gʊd pleɪs tuː iːt? 
+Где-нибудь, где не слишком дорого.	Some place not too expensive.	sʌm pleɪs nɒt tuː ɪksˈpɛnsɪv. 
+Здесь поблизости есть китайский ресторан?	Is there a Chinese restaurant near here?	ɪz ðeər ə ˌʧaɪˈniːz ˈrɛstrɒnt nɪə hɪə? 
+Я хотел бы пойти в китайский ресторан.	I'd like to go to a Chinese restaurant.	aɪd laɪk tuː gəʊ tuː ə ˌʧaɪˈniːz ˈrɛstrɒnt. 
+Я хотел бы попробовать лучшие местные блюда.	I want to eat the best local food.	aɪ wɒnt tuː iːt ðə bɛst ˈləʊkəl fuːd. 
+Нам нужно делать заказ заранее?	Do we have to make a reservation.	duː wiː hæv tuː meɪk ə ˌrɛzəˈveɪʃən. 
+Вы не могли бы принять мой заказ?	Can you make reservations for me?	kæn juː meɪk ˌrɛzəˈveɪʃənz fɔː miː? 
+Когда вы открываетесь на завтрак?	What time do you open for breakfast?	wɒt taɪm duː juː ˈəʊpən fɔː ˈbrɛkfəst? 
+Мне нужен стол на двоих.	I would like a table for two?	aɪ wʊd laɪk ə ˈteɪbl fɔː tuː? 
+У вас есть столик у окна?	Do you have a table by the window?	duː juː hæv ə ˈteɪbl baɪ ðə ˈwɪndəʊ? 
+Нас шесть человек.	We are a party of six.	wiː ɑːr ə ˈpɑːti ɒv sɪks. 
+У меня заказ.	I have a reservation.	aɪ hæv ə ˌrɛzəˈveɪʃən. 
+Я хотел бы сделать заказ.	I'd like to place an order.	aɪd laɪk tuː pleɪs ən ˈɔːdə. 
+Я хотел бы поужинать.	I would like supper.	aɪ wʊd laɪk ˈsʌpə. 
+Я бы предпочел легкий завтрак.	I would like a continental breakfast.	aɪ wʊd laɪk ə ˌkɒntɪˈnɛntl ˈbrɛkfəst. 
+Какой напиток Вы предпочитаете перед обедом?	What drink would you like before dinner?	wɒt drɪŋk wʊd juː laɪk bɪˈfɔː ˈdɪnə? 
+Я возьму то, что Вы посоветуете.	I'll have whatever you recommend.	aɪl hæv wɒtˈɛvə juː ˌrɛkəˈmɛnd. 
+Что бы Вы посоветовали?	What do you recommend?	wɒt duː juː ˌrɛkəˈmɛnd? 
+Какое в этом ресторане фирменное блюдо?	What is the specialty of the house.	wɒt ɪz ðə ˈspɛʃəlti ɒv ðə haʊs. 
+Меню, пожалуйста.	Menu, please.	ˈmɛnjuː, pliːz. 
+Можно попросить меню и карту вин, пожалуйста.	May I have the menu and the wine list, please?	meɪ aɪ hæv ðə ˈmɛnjuː ænd ðə waɪn lɪst, pliːz? 
+Вы подаете вегетарианское меню?	Do you serve vegetarian food?	duː juː sɜːv ˌvɛʤɪˈteərɪən fuːd? 
+У вас есть меню на английском?	Is there an English menu?	ɪz ðeər ən ˈɪŋglɪʃ ˈmɛnjuː? 
+Какой у вас сегодня суп?	What kind of soup are you serving today?	wɒt kaɪnd ɒv suːp ɑː juː ˈsɜːvɪŋ təˈdeɪ? 
+Какой сегодня фирменный коктейль?	What's the cocktail of the day?	wɒts ðə ˈkɒkteɪl ɒv ðə deɪ? 
+Что будете заказывать?	May I take your order?	meɪ aɪ teɪk jɔːr ˈɔːdə? 
+Я возьму то же самое.	I'll have the same thing.	aɪl hæv ðə seɪm θɪŋ. 
+Я возьму это.	I'll have this.	aɪl hæv ðɪs. 
+Сколько времени это займет?	How long will it take?	haʊ lɒŋ wɪl ɪt teɪk? 
+Яичницу (омлет).	Scrambled eggs.	ˈskræmbld ɛgz. 
+Я возьму только бутерброд с ветчиной.	I'll just have a ham sandwich.	aɪl ʤʌst hæv ə hæm ˈsænwɪʤ. 
+Бифштекс с жареным картофелем.	I'll have a T-bone steak with fried potatoes.	aɪl hæv ə tiː-bəʊn steɪk wɪð fraɪd pəˈteɪtəʊz. 
+Вам картофель жареный, запеченный или пюре?	Would you like fried, baked or mashed potatoes?	wʊd juː laɪk fraɪd, beɪkt ɔː mæʃt pəˈteɪtəʊz? 
+Как вам приготовить?	How would you like it?	haʊ wʊd juː laɪk ɪt? 
+Средне пожаренный, пожалуйста.	Medium rare, please.	ˈmiːdiəm reə, pliːz. 
+Хорошо пожаренный, пожалуйста.	Well-done, please.	wɛl-dʌn, pliːz. 
+Карту вин, пожалуйста.	Please show me the wine list.	pliːz ʃəʊ miː ðə waɪn lɪst. 
+Какие вина у вас есть?	What kind of wine do you have?	wɒt kaɪnd ɒv waɪn duː juː hæv? 
+Я бы хотел бутылку белого вина.	I would like a bottle of white wine.	aɪ wʊd laɪk ə ˈbɒtl ɒv waɪt waɪn. 
+Сколько стоит целая бутылка?	How much is a whole bottle?	haʊ mʌʧ ɪz ə həʊl ˈbɒtl? 
+Сколько стоит один бокал?	How much is a glass?	haʊ mʌʧ ɪz ə glɑːs? 
+Я бы хотел чашку кофе (чая)	I would like a cup of coffee (tea).	aɪ wʊd laɪk ə kʌp ɒv ˈkɒfi (tiː). 
+Можно попросить стакан воды?	May I have a glass of water?	meɪ aɪ hæv ə glɑːs ɒv ˈwɔːtə? 
+Апельсиновый или томатный сок?	Orange juice or tomato juice?	ˈɒrɪnʤ ʤuːs ɔː təˈmɑːtəʊ ʤuːs? 
+Как на счет чего-нибудь на десерт?	How about some dessert?	haʊ əˈbaʊt sʌm dɪˈzɜːt? 
+Блинчики и молочный коктейль, пожалуйста.	Pancakes and a milk shake, please.	ˈpænkeɪks ænd ə mɪlk ʃeɪk, pliːz. 
+Еще одну порцию риса, пожалуйста.	One more order of rice, please.	wʌn mɔːr ˈɔːdər ɒv raɪs, pliːz. 
+Два гамбургера с собой, пожалуйста.	Two hamburgers to go, please.	tuː ˈhæmbɜːgəz tuː gəʊ, pliːz.
+</textarea>
+<textarea id="В ресторане 2">
+С маслом.	With butter.	wɪð ˈbʌtə. 
+С лимоном.	With lemon.	wɪð ˈlɛmən. 
+Еще немного, пожалуйста.	A little more, please.	ə ˈlɪtl mɔː, pliːz. 
+Больше не надо, спасибо.	No more, thank you.	nəʊ mɔː, θæŋk juː. 
+Передайте, пожалуйста, соль.	Would you please pass the salt?	wʊd juː pliːz pɑːs ðə sɔːlt? 
+Это вкусно?	How does it taste?	haʊ dʌz ɪt teɪst? 
+Было очень вкусно.	It was delicious.	ɪt wɒz dɪˈlɪʃəs. 
+Я сыт.	It was more than I could eat.	ɪt wɒz mɔː ðæn aɪ kʊd iːt. 
+Можно мне получить это прямо сейчас?	Can I have it right away?	kæn aɪ hæv ɪt raɪt əˈweɪ? 
+Поторопитесь, пожалуйста.	Would you please hurry?	wʊd juː pliːz ˈhʌri? 
+Это не мой заказ.	This is not my order.	ðɪs ɪz nɒt maɪ ˈɔːdə. 
+Мой заказ еще не принесли.	My order hasn't come yet.	maɪ ˈɔːdə ˈhæznt kʌm jɛt. 
+Как это едят?	How do you eat this?	haʊ duː juː iːt ðɪs? 
+Оно холодное.	It is cold.	ɪt ɪz kəʊld. 
+Слишком много специй.	It is too spicy.	ɪt ɪz tuː ˈspaɪsi. 
+Не слишком сладко.	Not too sweet.	nɒt tuː swiːt. 
+Поменьше соли.	Not too salty.	nɒt tuː ˈsɔːlti. 
+Не слишком крепкий.	Not too strong.	nɒt tuː strɒŋ. 
+Это не проварено (не прожарено).	This is not cooked enough.	ðɪs ɪz nɒt kʊkt ɪˈnʌf. 
+Очень жесткое.	It is tough.	ɪt ɪz tʌf. 
+Это не совсем свежее.	This is not quite fresh.	ðɪs ɪz nɒt kwaɪt frɛʃ. 
+Это недостаточно чистое.	It is not clean enough.	ɪt ɪz nɒt kliːn ɪˈnʌf. 
+Счет, пожалуйста.	Bill, please.	bɪl, pliːz. 
+Чек, пожалуйста.	Check, please.	ʧɛk, pliːz. 
+Можно попросить счет?	Could I have the bill, please?	kʊd aɪ hæv ðə bɪl, pliːz? 
+Могу я взять чек?	Can I get the check, please?	kæn aɪ gɛt ðə ʧɛk, pliːz? 
+Я бы хотел рассчитаться сейчас.	I would like to pay now, please.	aɪ wʊd laɪk tuː peɪ naʊ, pliːz. 
+Сколько я Вам должен?	How much do I owe you?	haʊ mʌʧ duː aɪ əʊ juː? 
+Сколько всего?	How much is the total?	haʊ mʌʧ ɪz ðə ˈtəʊtl? 
+Плата за обслуживание включена в счет?	Does the bill include the service charge?	dʌz ðə bɪl ɪnˈkluːd ðə ˈsɜːvɪs ʧɑːʤ? 
+Мне кажется, в счете ошибка.	I believe the bill is added up wrong.	aɪ bɪˈliːv ðə bɪl ɪz ˈædɪd ʌp rɒŋ. 
+Я заплачу по счету.	The bill is on me.	ðə bɪl ɪz ɒn miː. 
+Сегодня вечером я угощаю.	I treat you to dinner this evening.	aɪ triːt juː tuː ˈdɪnə ðɪs ˈiːvnɪŋ. 
+Запишите это на мой счет, пожалуйста.	Put it on my bill, please.	pʊt ɪt ɒn maɪ bɪl, pliːz. 
+Я плачу за всех.	I am paying for everything.	aɪ æm ˈpeɪɪŋ fɔːr ˈɛvrɪθɪŋ. 
+Мы платим отдельно.	We are paying separately.	wiː ɑː ˈpeɪɪŋ ˈsɛprɪtli. 
+Давайте заплатим поровну.	Let's split the bill.	lɛts splɪt ðə bɪl. 
+Позвольте мне заплатить мою долю.	Let me pay my share.	lɛt miː peɪ maɪ ʃeə. 
+Сдачи не надо.	Keep the change, please.	kiːp ðə ʧeɪnʤ, pliːz.
+</textarea>
+<textarea id="Покупки 1">
+Когда вы закрываетесь?	When do you close ?	wɛn duː juː kləʊs ? 
+Когда закрывается этот магазин?	When does this store close?	wɛn dʌz ðɪs stɔː kləʊs? 
+До скольки вы открыты в рабочие дни?	How late are you opened on weekdays?	haʊ leɪt ɑː juː ˈəʊpənd ɒn ˈwiːkdeɪz? 
+Открыто с девяти до пяти.	Open from nine o’clock to five o’clock.	ˈəʊpən frɒm naɪn əˈklɒk tuː faɪv əˈklɒk. 
+Закрыто с двенадцати до двух.	Closed from twelve o’clock to two o’clock.	kləʊzd frɒm twɛlv əˈklɒk tuː tuː əˈklɒk. 
+Где здесь торговый центр ?	Where is the shopping area?	weər ɪz ðə ˈʃɒpɪŋ ˈeərɪə? 
+Там есть безналоговый магазин?	Is there a tax-free shop?	ɪz ðeər ə ˈtæksˈfriː ʃɒp? 
+Там есть универмаг ?	Is there a department store?	ɪz ðeər ə dɪˈpɑːtmənt stɔː? 
+На каком этаже продовольственный отдел?	On which floor is the food department?	ɒn wɪʧ flɔːr ɪz ðə fuːd dɪˈpɑːtmənt? 
+Какие оригинальные изделия есть в этом городе?	What are some special products of this town?	wɒt ɑː sʌm ˈspɛʃəl ˈprɒdʌkts ɒv ðɪs taʊn? 
+Где я могу это купить?	Where can I buy it?	weə kæn aɪ baɪ ɪt? 
+Я только смотрю.	I’m just looking around.	aɪm ʤʌst ˈlʊkɪŋ əˈraʊnd. 
+Это дорого ?	Is this expensive?	ɪz ðɪs ɪksˈpɛnsɪv? 
+Это неплохо, но дороговато.	It’s good, but it’s a little expensive.	ɪts gʊd, bʌt ɪts ə ˈlɪtl ɪksˈpɛnsɪv. 
+У вас есть такой же?	Do you have one like this?	duː juː hæv wʌn laɪk ðɪs? 
+У вас есть такой же другого цвета?	Do you have this in another colour?	duː juː hæv ðɪs ɪn əˈnʌðə ˈkʌlə? 
+У вас есть такое же лучшего качества.	Do you have one of better quality?	duː juː hæv wʌn ɒv ˈbɛtə ˈkwɒlɪti? 
+У вас есть побольше ?	Do you have a bigger one?	duː juː hæv ə ˈbɪgə wʌn? 
+У вас есть подешевле ?	Do you have a cheaper one?	duː juː hæv ə ˈʧiːpə wʌn? 
+Я хотел бы взглянуть на более светлый (темный) тон.	I would like to see a lighter (darker) shade.	aɪ wʊd laɪk tuː siː ə ˈlaɪtə (ˈdɑːkə) ʃeɪd. 
+Я беру это.	I’ll take this.	aɪl teɪk ðɪs. 
+Я могу купить это без налога?	Can I buy it tax-free?	kæn aɪ baɪ ɪt ˈtæksˈfriː? 
+Можно попросить подарочную упаковку?	Could I have a gift box?	kʊd aɪ hæv ə gɪft bɒks? 
+Я не могу себе позволить это купить.	I can’t afford to buy this.	aɪ kɑːnt əˈfɔːd tuː baɪ ðɪs. 
+Отошлите это, пожалуйста, в гостиницу с чеком.	Will you send it to the hotel with a receipt?	wɪl juː sɛnd ɪt tuː ðə həʊˈtɛl wɪð ə rɪˈsiːt? 
+Не могли бы Вы отправить это сегодня?	Would you please send it today?	wʊd juː pliːz sɛnd ɪt təˈdeɪ? 
+Могу я это забрать ?	May I pick it up?	meɪ aɪ pɪk ɪt ʌp? 
+Сколько времени займет ремонт ?	How long will it take to repair?	haʊ lɒŋ wɪl ɪt teɪk tuː rɪˈpeə? 
+Вы даете гарантию на ремонт?	Will you guarantee the repairs?	wɪl juː ˌgærənˈtiː ðə rɪˈpeəz? 
+Я зайду попозже.	I will come back later.	aɪ wɪl kʌm bæk ˈleɪtə. 
+Я хотел бы примерить.	I’d like to try it on.	aɪd laɪk tuː traɪ ɪt ɒn. 
+Я хотел бы примерить оба.	I would like to try both of them on.	aɪ wʊd laɪk tuː traɪ bəʊθ ɒv ðɛm ɒn. 
+Где примерочная ?	Where’s the fitting room?	weəz ðə ˈfɪtɪŋ ruːm? 
+Вы могли бы снять мерку на пиджак?	Will you take the measurements for a jacket?	wɪl juː teɪk ðə ˈmɛʒəmənts fɔːr ə ˈʤækɪt? 
+Можете снять с меня мерку?	Can you measure me?	kæn juː ˈmɛʒə miː? 
+Вы думаете, этот материал долговечный?	Do you think this material is durable?	duː juː θɪŋk ðɪs məˈtɪərɪəl ɪz ˈdjʊərəbl? 
+Мне нужен костюм на заказ.	I would like a custom-made suit.	aɪ wʊd laɪk ə ˈkʌstəm-meɪd sjuːt. 
+Я бы хотела юбку на заказ.	I would like to have a custom-made skirt.	aɪ wʊd laɪk tuː hæv ə ˈkʌstəm-meɪd skɜːt. 
+Я бы хотела взглянуть на хлопчатобумажную ночную рубашку.	I wish to look at a cotton nightdress.	aɪ wɪʃ tuː lʊk æt ə ˈkɒtn ˈnaɪtdrɛs. 
+Меня интересует приталенный смокинг.	I would like to have a fitted dinner jacket.	aɪ wʊd laɪk tuː hæv ə ˈfɪtɪd ˈdɪnə ˈʤækɪt. 
+Я хотел бы купить пижаму.	I would like a pair of pajamas.	aɪ wʊd laɪk ə peər ɒv pəˈʤɑːməz. 
+У вас есть пиджак к этим брюкам?	Do you have a jacket to match these pants?	duː juː hæv ə ˈʤækɪt tuː mæʧ ðiːz pænts? 
+Я бы хотела, чтобы здесь была складка спереди.	I would like to have a pleat in the front.	aɪ wʊd laɪk tuː hæv ə pliːt ɪn ðə frʌnt. 
+Когда можно будет прийти на примерку?	When can I have a fitting?	wɛn kæn aɪ hæv ə ˈfɪtɪŋ? 
+Вы подгоните это по длине?	Will you adjust the length?	wɪl juː əˈʤʌst ðə lɛŋθ? 
+В этом месте слишком тесно.	It’s too tight here.	ɪts tuː taɪt hɪə. 
+Вещи будут готовы до следующей пятницы?	Can clothes be finished before next Friday?	kæn kləʊðz biː ˈfɪnɪʃt bɪˈfɔː nɛkst ˈfraɪdeɪ? 
+На заказ.	Tailor-made.	ˈteɪləmeɪd.
+</textarea>
+<textarea id="Покупки 2">
+Не могли бы Вы показать мне ассортимент шелковых галстуков?	Could you show me a selection of silk ties?	kʊd juː ʃəʊ miː ə sɪˈlɛkʃən ɒv sɪlk taɪz? 
+У вас есть другие цвета?	Do you have it in different colours?	duː juː hæv ɪt ɪn ˈdɪfrənt ˈkʌləz? 
+Я бы хотела шелковый шарфик к этой блузке.	I would like a silk scarf to match this blouse.	aɪ wʊd laɪk ə sɪlk skɑːf tuː mæʧ ðɪs blaʊz. 
+Меня интересует коричневый пояс.	I would like to have a brown belt.	aɪ wʊd laɪk tuː hæv ə braʊn bɛlt. 
+Это натуральная кожа ?	Is this genuine leather?	ɪz ðɪs ˈʤɛnjʊɪn ˈlɛðə? 
+Покажите мне, пожалуйста, кожаное портмоне.	I’d like a leather wallet.	aɪd laɪk ə ˈlɛðə ˈwɒlɪt. 
+Мне нужен практичный багажный комплект.	I would like to see a practical set of luggage.	aɪ wʊd laɪk tuː siː ə ˈpræktɪkəl sɛt ɒv ˈlʌgɪʤ. 
+Покажите мне мягкий кожаный портфель.	I would like to see a soft leather portfolio.	aɪ wʊd laɪk tuː siː ə sɒft ˈlɛðə pɔːtˈfəʊliəʊ. 
+Я бы хотел приобрести мягкие контактные линзы.	I would like soft contact lenses.	aɪ wʊd laɪk sɒft ˈkɒntækt ˈlɛnzɪz. 
+Мне нужны солнцезащитные очки.	I would like a pair of sunglasses.	aɪ wʊd laɪk ə peər ɒv ˈsʌnˌglɑːsɪz. 
+Эти очки для меня слишком слабые.	These glasses are too weak for me.	ðiːz ˈglɑːsɪz ɑː tuː wiːk fɔː miː. 
+Я бы хотел примерить очки посильнее.	I would like to try some stronger glasses.	aɪ wʊd laɪk tuː traɪ sʌm ˈstrɒŋgə ˈglɑːsɪz. 
+У вас есть хлопчатобумажные (шерстяные, нейлоновые) носки?	Do you have cotton (wool, nylon) socks?	duː juː hæv ˈkɒtn (wʊl, ˈnaɪlən) sɒks? 
+Мне нужны две пары носков.	May I have two pairs of socks?	meɪ aɪ hæv tuː peəz ɒv sɒks? 
+Мне нужна пара легкой летней обуви.	I would like a pair of lightweight summer shoes.	aɪ wʊd laɪk ə peər ɒv ˈlaɪtweɪt ˈsʌmə ʃuːz. 
+У вас найдется пара спортивной обуви?	Do you have a pair of tennis shoes?	duː juː hæv ə peər ɒv ˈtɛnɪs ʃuːz? 
+Что Вы можете посоветовать при воспалении глаз?	Can you recommend something for irritated eyes?	kæn juː ˌrɛkəˈmɛnd ˈsʌmθɪŋ fɔːr ˈɪrɪteɪtɪd aɪz? 
+Мне нужно какое-нибудь средство от раздражения кожи.	I would like something for skin irritation.	aɪ wʊd laɪk ˈsʌmθɪŋ fɔː skɪn ˌɪrɪˈteɪʃən. 
+Покажите мне другой, пожалуйста.	Please show me another one.	pliːz ʃəʊ miː əˈnʌðə wʌn. 
+Из какого материала это сделано?	What material is it made of?	wɒt məˈtɪərɪəl ɪz ɪt meɪd ɒv? 
+Я хотел бы посмотреть камеру.	I would like to see a camera.	aɪ wʊd laɪk tuː siː ə ˈkæmərə. 
+Не могли бы вставить пленку в мой фотоаппарат?	Would you please put film in my camera?	wʊd juː pliːz pʊt fɪlm ɪn maɪ ˈkæmərə? 
+Мне нужна цветная пленка.	I would like colour film.	aɪ wʊd laɪk ˈkʌlə fɪlm. 
+Мне нужно по три отпечатка с каждого кадра.	I would like three prints of each.	aɪ wʊd laɪk θriː prɪnts ɒv iːʧ. 
+Не могли бы Вы увеличить эти фотографии?	I would like these photographs enlarged.	aɪ wʊd laɪk ðiːz ˈfəʊtəgrɑːfs ɪnˈlɑːʤd. 
+Я хочу купить компакт диск в подарок.	I would like to buy a CD for someone.	aɪ wʊd laɪk tuː baɪ ə siː-diː fɔː ˈsʌmwʌn. 
+У вас есть батарейки ?	Have you got any batteries?	hæv juː gɒt ˈɛni ˈbætəriz? 
+Мне нужны две лампочки на 60 ватт.	I would like to have two 60 (sixty) watt bulbs.	aɪ wʊd laɪk tuː hæv tuː 60 (ˈsɪksti) wɒt bʌlbz. 
+Покажите, как этим пользоваться.	Will you show me how to operate it?	wɪl juː ʃəʊ miː haʊ tuː ˈɒpəreɪt ɪt? 
+Когда они будут готовы ?	When will they be ready?	wɛn wɪl ðeɪ biː ˈrɛdi? 
+Думаете, это можно отремонтировать ?	Do you think you can repair it?	duː juː θɪŋk juː kæn rɪˈpeər ɪt? 
+Вы можете сделать ремонт при мне?	Can you repair this while I wait?	kæn juː rɪˈpeə ðɪs waɪl aɪ weɪt? 
+Я хотел бы купить сувенир на память об этом городе.	I would like to have a souvenir of the town.	aɪ wʊd laɪk tuː hæv ə ˈsuːvənɪər ɒv ðə taʊn. 
+У вас есть фотографии с видами этой местности?	Do you have pictures with scenes of this area?	duː juː hæv ˈpɪkʧəz wɪð siːnz ɒv ðɪs ˈeərɪə? 
+У вас есть открытка с видом города?	Do you have a postcard with a picture of the town?	duː juː hæv ə ˈpəʊstkɑːd wɪð ə ˈpɪkʧər ɒv ðə taʊn?
+</textarea>
+<textarea id="Покупки 3">
+Это хрусталь ?	Are these crystals?	ɑː ðiːz ˈkrɪstlz? 
+Я бы хотел букет красных роз.	I would like a bouquet of red roses.	aɪ wʊd laɪk ə bu(ː)ˈkeɪ ɒv rɛd ˈrəʊzɪz. 
+У вас есть почтовые марки?	Do you have stamps?	duː juː hæv stæmps? 
+Сколько шоколада можно вывести из страны?	How much chocolate can I take out of the country?	haʊ mʌʧ ˈʧɒkəlɪt kæn aɪ teɪk aʊt ɒv ðə ˈkʌntri? 
+Какая начинка у этих конфет?	What's in that chocolate?	wɒts ɪn ðæt ˈʧɒkəlɪt? 
+Две плитки горького шоколада.	I would like two bars of plain chocolate.	aɪ wʊd laɪk tuː bɑːz ɒv pleɪn ˈʧɒkəlɪt. 
+Можно просто посмотреть?	May I browse?	meɪ aɪ braʊz? 
+У вас есть какая-нибудь развлекательная книжка на английском?	Do yoy have an entertaining book in English?	duː yoy hæv ən ˌɛntəˈteɪnɪŋ bʊk ɪn ˈɪŋglɪʃ? 
+Я хотел бы детектив на английском.	I would like to have a mystery novel in English.	aɪ wʊd laɪk tuː hæv ə ˈmɪstəri ˈnɒvəl ɪn ˈɪŋglɪʃ. 
+Русскую газету, пожалуйста.	Please give me a Russian newspaper.	pliːz gɪv miː ə ˈrʌʃ(ə)n ˈnjuːzˌpeɪpə. 
+Мне нужен блокнот для заметок.	I would like a writing pad.	aɪ wʊd laɪk ə ˈraɪtɪŋ pæd. 
+Мне нужна подробная карта города.	I would like a clearly marked map of this town.	aɪ wʊd laɪk ə ˈklɪəli mɑːkt mæp ɒv ðɪs taʊn. 
+У вас есть поздравительные открытки?	Do you have any greeting cards?	duː juː hæv ˈɛni ˈgriːtɪŋ kɑːdz? 
+Где я могу заплатить?	Where do I pay?	weə duː aɪ peɪ? 
+Вы принимаете кредитные карточки?	Do you accept credit cards?	duː juː əkˈsɛpt ˈkrɛdɪt kɑːdz? 
+Можно заплатить персональным чеком?	Can I have a personal check?	kæn aɪ hæv ə ˈpɜːsnl ʧɛk? 
+Вы принимаете иностранную валюту?	Do you accept foreign currency?	duː juː əkˈsɛpt ˈfɒrɪn ˈkʌrənsi? 
+Это больше, чем я могу заплатить.	This is more than I can pay.	ðɪs ɪz mɔː ðæn aɪ kæn peɪ. 
+Цена неоправданно велика.	The price is not reasonable.	ðə praɪs ɪz nɒt ˈriːznəbl. 
+Цена больше, чем я рассчитывал.	The price is higher than what I had in mind.	ðə praɪs ɪz ˈhaɪə ðæn wɒt aɪ hæd ɪn maɪnd. 
+Можете предложить мне лучшую цену?	Can you give me a better price?	kæn juː gɪv miː ə ˈbɛtə praɪs? 
+Вы можете дать мне скидку за расчет наличными?	Can you give me a cash discount?	kæn juː gɪv miː ə kæʃ ˈdɪskaʊnt? 
+Можно купить это в рассрочку?	Can I buy it on installment?	kæn aɪ baɪ ɪt ɒn ɪnˈstɔːlmənt? 
+Здесь в счете нет ошибки?	Isn't there a mistake in the bill?	ˈɪznt ðeər ə mɪsˈteɪk ɪn ðə bɪl? 
+Проверьте еще раз.	Will you check it again?	wɪl juː ʧɛk ɪt əˈgɛn? 
+Вы неправильно дали мне сдачу.	You gave me the wrong change.	juː geɪv miː ðə rɒŋ ʧeɪnʤ. 
+Дайте мне, пожалуйста, чек.	Can you give me a receipt, please?	kæn juː gɪv miː ə rɪˈsiːt, pliːz? 
+Я уже заплатил.	I have already paid.	aɪ hæv ɔːlˈrɛdi peɪd. 
+Можете послать это по этому адресу?	Will you send it to this address?	wɪl juː sɛnd ɪt tuː ðɪs əˈdrɛs? 
+Я хотел бы получить это сегодня.	I'd like to have it today.	aɪd laɪk tuː hæv ɪt təˈdeɪ. 
+Я хотел бы это вернуть.	I'd like to return this.	aɪd laɪk tuː rɪˈtɜːn ðɪs. 
+Вот мой чек.	Here's my receipt.	hɪəz maɪ rɪˈsiːt. 
+Это сломано.	This is broken.	ðɪs ɪz ˈbrəʊkən.
+</textarea>
+<textarea id="Экскурсии, Развлечения 1">
+Я хотел бы поехать во Францию.	I want to go to France.	aɪ wɒnt tuː gəʊ tuː ˈfrɑːns. 
+Я собираюсь поехать во Францию.	I plan to go to France.	aɪ plæn tuː gəʊ tuː ˈfrɑːns. 
+Я улетаю в США на следующей неделе.	I'll leaving for the USA next week.	aɪl ˈliːvɪŋ fɔː ðə juː-ɛs-eɪ nɛkst wiːk. 
+Как долго Вы собираетесь пробыть в Париже?	How long do you intend to stay in Paris?	haʊ lɒŋ duː juː ɪnˈtɛnd tuː steɪ ɪn ˈpærɪs? 
+Я хотел бы путешествовать туристическим классом.	I would like to travel tourist class.	aɪ wʊd laɪk tuː ˈtrævl ˈtʊərɪst klɑːs. 
+Я предпочитаю путешествовать автобусом (поездом, самолетом)	I prefer to go by bus (train, plane).	aɪ priˈfɜː tuː gəʊ baɪ bʌs (treɪn, pleɪn). 
+Какие достопримечательности здесь есть?	What special sights are there?	wɒt ˈspɛʃəl saɪts ɑː ðeə? 
+Какие предлагаются экскурсии?	What sightseeing tours are available?	wɒt ˈsaɪtˌsiːɪŋ tʊəz ɑːr əˈveɪləbl? 
+Вы можете порекомендовать интересную экскурсию?	Can you recommend an interesting tour?	kæn juː ˌrɛkəˈmɛnd ən ˈɪntrɪstɪŋ tʊə? 
+Не могли бы Вы рассказать, какие здесь есть музеи?	Would you please tell me what museums there are here?	wʊd juː pliːz tɛl miː wɒt mju(ː)ˈzɪəmz ðeər ɑː hɪə? 
+Где находится театр?	Where is the theater?	weər ɪz ðə ˈθɪətə? 
+Где ближайшая станция метро?	Where is the nearest subway station?	weər ɪz ðə ˈnɪərɪst ˈsʌbweɪ ˈsteɪʃən? 
+Где стоянка такси?	Where is the taxi stand?	weər ɪz ðə ˈtæksi stænd? 
+Здесь есть поблизости туалет?	Is there a public restroom near here?	ɪz ðeər ə ˈpʌblɪk ˈrɛstrʊm nɪə hɪə? 
+Можно воспользоваться Вашим туалетом?	May I use your bathroom?	meɪ aɪ juːz jɔː ˈbɑːθru(ː)m? 
+В котором часу мы вернемся?	What time does it get back?	wɒt taɪm dʌz ɪt gɛt bæk? 
+Сколько стоит эта экскурсия?	How much is this tour?	haʊ mʌʧ ɪz ðɪs tʊə? 
+Во сколько начало?	What time does it start?	wɒt taɪm dʌz ɪt stɑːt? 
+Питание включено в стоимость?	Are any meals included?	ɑːr ˈɛni miːlz ɪnˈkluːdɪd? 
+Экскурсия по городу предусмотрена?	Is there a city tour here?	ɪz ðeər ə ˈsɪti tʊə hɪə? 
+Это однодневная экскурсия?	Is this an all-day tour?	ɪz ðɪs ən ɔːl-deɪ tʊə? 
+Дайте мне, пожалуйста, план города.	Please give me a map of the town.	pliːz gɪv miː ə mæp ɒv ðə taʊn. 
+Где я могу купить план города?	Where can I buy the map of the town/city.	weə kæn aɪ baɪ ðə mæp ɒv ðə taʊn/ˈsɪti. 
+У вас есть брошюра с описанием туров и экскурсий?	Do you have a brochure describing tours and excursions?	duː juː hæv ə ˈbrəʊʃjʊə dɪsˈkraɪbɪŋ tʊəz ænd ɪksˈkɜːʃənz? 
+Здесь есть театр?	Is there a theater here?	ɪz ðeər ə ˈθɪətə hɪə? 
+Когда и где мы можем встретиться?	When and where can we meet?	wɛn ænd weə kæn wiː miːt? 
+Где я могу купить билет?	Where can I buy a ticket?	weə kæn aɪ baɪ ə ˈtɪkɪt? 
+Сколько стоит входной билет?	How much is admission?	haʊ mʌʧ ɪz ədˈmɪʃ(ə)n? 
+Что интересного можно тут еще посмотреть?	What other interesting things are there to see?	wɒt ˈʌðər ˈɪntrɪstɪŋ θɪŋz ɑː ðeə tuː siː? 
+Это слишком далеко, чтобы идти пешком?	Is it too far to walk?	ɪz ɪt tuː fɑː tuː wɔːk? 
+У нас будет возможность сделать пару фотографий?	Will there be an opportunity to take some photographs?	wɪl ðeə biː ən ˌɒpəˈtjuːnɪti tuː teɪk sʌm ˈfəʊtəgrɑːfs? 
+Сколько времени это будет идти?	How long will it run?	haʊ lɒŋ wɪl ɪt rʌn? 
+Что идет сейчас?	What is showing now?	wɒt ɪz ˈʃəʊɪŋ naʊ? 
+Кто-нибудь здесь говорит по-английски?	Can anyone here speak English?	kæn ˈɛnɪwʌn hɪə spiːk ˈɪŋglɪʃ? 
+Мне нужен гид, говорящий по-английски.	I want an English-speaking guide.	aɪ wɒnt ən ˈɪŋglɪʃ-ˈspiːkɪŋ gaɪd. 
+Извините, как пройти к этому месту?	Excuse me. How can I get to this place?	ɪksˈkjuːs miː. haʊ kæn aɪ gɛt tuː ðɪs pleɪs? 
+Скажите, пожалуйста, как пройти к этой гостинице?	Would you tell me how to get to this hotel?	wʊd juː tɛl miː haʊ tuː gɛt tuː ðɪs həʊˈtɛl? 
+Гостиница далеко отсюда?	Is the hotel far from here?	ɪz ðə həʊˈtɛl fɑː frɒm hɪə? 
+Сколько это займет времени?	How long does it take?	haʊ lɒŋ dʌz ɪt teɪk? 
+Оно на этой стороне?	Is that on this side?	ɪz ðæt ɒn ðɪs saɪd? 
+Как мне пройти к почте?	Will you show me the way to the post office?	wɪl juː ʃəʊ miː ðə weɪ tuː ðə pəʊst ˈɒfɪs? 
+</textarea>
+<textarea id="Экскурсии, Развлечения 2">
+В какую сторону идти к центру?	Which way is downtown?	wɪʧ weɪ ɪz ˈdaʊntaʊn? 
+Покажите на плане, где мы сейчас находимся.	Please point out where I am on this map.	pliːz pɔɪnt aʊt weər aɪ æm ɒn ðɪs mæp. 
+Пожалуйста, набросайте здесь план.	Please draw a map here.	pliːz drɔː ə mæp hɪə. 
+Где мы сейчас?	Where are we now?	weər ɑː wiː naʊ? 
+Как называется эта улица?	What's the name of this street?	wɒts ðə neɪm ɒv ðɪs striːt? 
+По чему можно ориентироваться по пути?	What landmarks are on the way?	wɒt ˈlændmɑːks ɑːr ɒn ðə weɪ? 
+Мне идти прямо?	Should I go straight?	ʃʊd aɪ gəʊ streɪt? 
+По пути Вы увидите ресторан на другой стороне улицы.	On the way you’ll see a restaurant on the other side of the street.	ɒn ðə weɪ juːl siː ə ˈrɛstrɒnt ɒn ði ˈʌðə saɪd ɒv ðə striːt. 
+Это примерно десять минут ходьбы.	It’s about ten minutes of walk.	ɪts əˈbaʊt tɛn ˈmɪnɪts ɒv wɔːk. 
+Это совсем близко.	It’ s a short walk.	ɪt ɛs ə ʃɔːt wɔːk. 
+Это прямо через улицу.	It’s right across the street.	ɪts raɪt əˈkrɒs ðə striːt. 
+Это в конце коридора.	It’s at the end of this corridor.	ɪts æt ði ɛnd ɒv ðɪs ˈkɒrɪdɔː. 
+Это не очень далеко.	It’ s not so far.	ɪt ɛs nɒt səʊ fɑː. 
+Вы не можете его не заметить.	You can’ t miss it.	juː kæn tiː mɪs ɪt. 
+Подождите здесь минутку, пожалуйста.	Wait here a moment, please.	weɪt hɪər ə ˈməʊmənt, pliːz. 
+Я выхожу на следующей остановке.	I get off at the next stop.	aɪ gɛt ɒf æt ðə nɛkst stɒp. 
+Высадите меня здесь, пожалуйста.	Let me off here, please.	lɛt miː ɒf hɪə, pliːz. 
+Остановите здесь, пожалуйста.	Stop here, please.	stɒp hɪə, pliːz. 
+Я хотел бы поехать куда-нибудь отдохнуть.	I would like to go somewhere to relax.	aɪ wʊd laɪk tuː gəʊ ˈsʌmweə tuː rɪˈlæks. 
+Давайте сходим в какое-нибудь интересное место?	Shall we find a nice place to go?	ʃæl wiː faɪnd ə naɪs pleɪs tuː gəʊ? 
+В какой кинотеатр пойдем?	Which movie house will we go to?	wɪʧ ˈmuːvi haʊs wɪl wiː gəʊ tuː? 
+Хотите пойти со мной в оперу?	Would you like to go to the opera with me?	wʊd juː laɪk tuː gəʊ tuː ði ˈɒpərə wɪð miː? 
+Я куплю билеты.	I’ll get the tickets.	aɪl gɛt ðə ˈtɪkɪts. 
+Я зайду за Вами в семь часов.	I’ll pick you up at seven o’clock.	aɪl pɪk juː ʌp æt ˈsɛvn əˈklɒk. 
+Давайте сходим сегодня вечером в кино.	Let’s go to the movie tonight.	lɛts gəʊ tuː ðə ˈmuːvi təˈnaɪt. 
+Кто Ваши любимые артисты?	Who are your favorite movie stars?	huː ɑː jɔː ˈfeɪvərɪt ˈmuːvi stɑːz? 
+Когда начинается кино?	When does the movie start?	wɛn dʌz ðə ˈmuːvi stɑːt? 
+Покажите, где мое место, пожалуйста.	Will you take me to my seat, please?	wɪl juː teɪk miː tuː maɪ siːt, pliːz? 
+Когда заканчивается представление?	What time will the show be over?	wɒt taɪm wɪl ðə ʃəʊ biː ˈəʊvə? 
+Когда начинается представление?	How soon does the show begin?	haʊ suːn dʌz ðə ʃəʊ bɪˈgɪn? 
+Хотите пойти куда-нибудь потанцевать?	Would you like to go dancing?	wʊd juː laɪk tuː gəʊ ˈdɑːnsɪŋ? 
+Разрешите пригласить Вас на танец.	May I have this dance, please?	meɪ aɪ hæv ðɪs dɑːns, pliːz? 
+По телевизору будут интересные фильмы?	Are there any good movies on TV?	ɑː ðeər ˈɛni gʊd ˈmuːviz ɒn ˌtiːˈviː? 
+Сегодня вечером по телевизору будет что-нибудь интересное?	Are there any good programs on TV tonight?	ɑː ðeər ˈɛni gʊd ˈprəʊgræmz ɒn ˌtiːˈviː təˈnaɪt? 
+Здесь можно фотографировать?	May I take pictures here?	meɪ aɪ teɪk ˈpɪkʧəz hɪə? 
+Можно использовать вспышку?	May I use a flash?	meɪ aɪ juːz ə flæʃ? 
+Не могли бы Вы сфотографировать меня?	Would you mind taking a picture for me?	wʊd juː maɪnd ˈteɪkɪŋ ə ˈpɪkʧə fɔː miː? 
+Сфотографируйтесь со мной, пожалуйста.	Please pose with me.	pliːz pəʊz wɪð miː. 
+</textarea>
+<textarea id="Средства связи">
+Где находится почта?	Where is the post office?	weər ɪz ðə pəʊst ˈɒfɪs? 
+Не могли бы Вы объяснить, как пройти к почте?	Would you please direct me to the post office?	wʊd juː pliːz dɪˈrɛkt miː tuː ðə pəʊst ˈɒfɪs? 
+Я хочу послать это письмо заказным.	Please register this letter.	pliːz ˈrɛʤɪstə ðɪs ˈlɛtə. 
+Я хочу послать его экспресс-почтой.	I would like to send it by express.	aɪ wʊd laɪk tuː sɛnd ɪt baɪ ɪksˈprɛs. 
+Я хотел бы послать это письмо авиапочтой.	I’d like to send this letter by air mail.	aɪd laɪk tuː sɛnd ðɪs ˈlɛtə baɪ eə meɪl. 
+Пожалуйста, пошлите его спецдоставкой.	Please send it by special delivery.	pliːz sɛnd ɪt baɪ ˈspɛʃəl dɪˈlɪvəri. 
+Застрахуйте его, пожалуйста.	Insure it, please.	ɪnˈʃʊər ɪt, pliːz. 
+Это весит слишком много?	Does this weigh too much?	dʌz ðɪs weɪ tuː mʌʧ? 
+Сколько это стоит?	How much is it?	haʊ mʌʧ ɪz ɪt? 
+Сколько будет стоить пересылка этих писем?	How much will it cost to send these letters?	haʊ mʌʧ wɪl ɪt kɒst tuː sɛnd ðiːz ˈlɛtəz? 
+Вы не знаете, сколько стоит письмо а Россию?	Do you know what the postage is to Russia?	duː juː nəʊ wɒt ðə ˈpəʊstɪʤ ɪz tuː ˈrʌʃə? 
+Сколько стоит авиаписьмо в Россию?	How much does it cost to send an airmail to Russia?	haʊ mʌʧ dʌz ɪt kɒst tuː sɛnd ən ˈeəmeɪl tuː ˈrʌʃə? 
+Где я могу купить марки и открытки?	Where can I get stamps and postcards?	weə kæn aɪ gɛt stæmps ænd ˈpəʊstkɑːdz? 
+Я хотел бы отправить эту посылку в Варшаву.	I’d like to send this package to Warsaw.	aɪd laɪk tuː sɛnd ðɪs ˈpækɪʤ tuː ˈwɔːsɔː. 
+Взвесьте это письмо, пожалуйста.	Will you weigh this parcel, please?	wɪl juː weɪ ðɪs ˈpɑːsl, pliːz? 
+Отправьте, пожалуйста, эту посылку как можно скорее.	Would you please send this parcel as quickly as possible?	wʊd juː pliːz sɛnd ðɪs ˈpɑːsl æz ˈkwɪkli æz ˈpɒsəbl? 
+Я хотел бы отправить телеграмму.	I would like to send a telegram.	aɪ wʊd laɪk tuː sɛnd ə ˈtɛlɪgræm. 
+Можно попросить бланк телеграммы?	May I have a telegram form?	meɪ aɪ hæv ə ˈtɛlɪgræm fɔːm? 
+Когда телеграмма будет в Москве?	When will the telegram arrive in Moscow?	wɛn wɪl ðə ˈtɛlɪgræm əˈraɪv ɪn ˈmɒskəʊ? 
+Это очень долго. Вы не могли бы послать ее экспрессом?	That takes too long. Would you please do it by express?	ðæt teɪks tuː lɒŋ. wʊd juː pliːz duː ɪt baɪ ɪksˈprɛs? 
+Сколько стоит одно слово?	What is the charge per word?	wɒt ɪz ðə ʧɑːʤ pɜː wɜːd? 
+Сколько букв может быть в одном слове?	How many letters are allowed per word?	haʊ ˈmɛni ˈlɛtəz ɑːr əˈlaʊd pɜː wɜːd? 
+Местный звонок.	Local call.	ˈləʊkəl kɔːl. 
+Международный звонок.	International call.	ˌɪntə(ː)ˈnæʃənl kɔːl. 
+Я хотел бы сделать звонок в Москву за счет адресата.	I want to make a collect call to Moscow.	aɪ wɒnt tuː meɪk ə kəˈlɛkt kɔːl tuː ˈmɒskəʊ. 
+Я хотел бы позвонить за границу.	I’d like to make an overseas call.	aɪd laɪk tuː meɪk ən ˌəʊvəˈsiːz kɔːl. 
+Разговор с уведомлением, пожалуйста.	Make it a person-to-person call, please.	meɪk ɪt ə ˈpɜːsn-tuː-ˈpɜːsn kɔːl, pliːz. 
+Сколько стоит трехминутный разговор с Германией?	How much does it cost for three minutes to Germany?	haʊ mʌʧ dʌz ɪt kɒst fɔː θriː ˈmɪnɪts tuː ˈʤɜːməni? 
+Я хотел бы позвонить в Мюнхен.	I would like to make a call to Munich.	aɪ wʊd laɪk tuː meɪk ə kɔːl tuː ˈmjuːnɪk. 
+Где здесь поблизости телефон-автомат?	Where can I find a public phone around here?	weə kæn aɪ faɪnd ə ˈpʌblɪk fəʊn əˈraʊnd hɪə? 
+Линия занята.	The line is busy.	ðə laɪn ɪz ˈbɪzi. 
+Этого номера нет в справочнике.	The number is unlisted.	ðə ˈnʌmbər ɪz ˌʌnˈlɪstɪd. 
+Можно мне набирать напрямую?	Can I dial directly?	kæn aɪ ˈdaɪəl dɪˈrɛktli? 
+Извините, Вы ошиблись номером.	I’m sorry, you have the wrong number.	aɪm ˈsɒri, juː hæv ðə rɒŋ ˈnʌmbə. 
+Его сейчас нет.	He’s not in now.	hiːz nɒt ɪn naʊ. 
+Она сейчас говорит по другому телефону.	She’s on another line now.	ʃiːz ɒn əˈnʌðə laɪn naʊ. 
+Не кладите трубку, пожалуйста.	Hold the line, please.	həʊld ðə laɪn, pliːz. 
+Не кладите пока трубку, пожалуйста.	Don’t hang up yet, please.	dəʊnt hæŋ ʌp jɛt, pliːz. 
+Я перезвоню позже.	I’ll call again later.	aɪl kɔːl əˈgɛn ˈleɪtə. 
+Добавочный 212, пожалуйста.	Give me extension 212 (two-one-two), please.	gɪv miː ɪksˈtɛnʃən 212 (tuː-wʌn-tuː), pliːz. 
+Кто говорит?	Who is calling, please?	huː ɪz ˈkɔːlɪŋ, pliːz? 
+Как это пишется?	How do you spell that?	haʊ duː juː spɛl ðæt? 
+Я ошибся номером.	I got the wrong number.	aɪ gɒt ðə rɒŋ ˈnʌmbə. 
+Пожалуйста, попросите его мне позвонить.	Please ask him to call me.	pliːz ɑːsk hɪm tuː kɔːl miː. 
+Я слушаю.	Go ahead.	gəʊ əˈhɛd. 
+Вы можете ему кое-что передать?	Could you leave a message?	kʊd juː liːv ə ˈmɛsɪʤ? 
+Когда он вернется?	What time is he expected back?	wɒt taɪm ɪz hiː ɪksˈpɛktɪd bæk? 
+Спасибо за звонок.	Thank you for calling.	θæŋk juː fɔː ˈkɔːlɪŋ. 
+</textarea>
+<textarea id="В банке, Обмен валюты">
+До которого часа открыт банк?	How late is the bank open?	haʊ leɪt ɪz ðə bæŋk ˈəʊpən? 
+Я хотел бы открыть счет.	I would like to open an account.	aɪ wʊd laɪk tuː ˈəʊpən ən əˈkaʊnt. 
+Я хочу снять со счета …	I want to withdraw...	aɪ wɒnt tuː wɪðˈdrɔː... 
+Я хочу открыть сберегательный счет.	I’d like to open a saving account, please.	aɪd laɪk tuː ˈəʊpən ə ˈseɪvɪŋ əˈkaʊnt, pliːz. 
+Я хочу положить на счет немного денег.	I’d like to deposit some money.	aɪd laɪk tuː dɪˈpɒzɪt sʌm ˈmʌni. 
+Вот мое удостоверение.	This is my identification.	ðɪs ɪz maɪ aɪˌdɛntɪfɪˈkeɪʃən. 
+Как быстро можно это сделать?	How quickly can this be done?	haʊ ˈkwɪkli kæn ðɪs biː dʌn? 
+Где я могу обменять деньги?	Where can I change money?	weə kæn aɪ ʧeɪnʤ ˈmʌni? 
+Какой обменный курс доллара?	What is the exchange rate for dollars?	wɒt ɪz ði ɪksˈʧeɪnʤ reɪt fɔː ˈdɒləz? 
+Разменяйте мне, пожалуйста, пять фунтов.	Can you give me change for five pounds?	kæn juː gɪv miː ʧeɪnʤ fɔː faɪv paʊndz? 
+Я хотел бы обналичить дорожный чек.	I would like to cash this traveler’s check.	aɪ wʊd laɪk tuː kæʃ ðɪs ˈtrævləz ʧɛk. 
+Не могли бы Вы разменять 100-долларовую купюру?	Could you break this 100 (hundred) dollar bill?	kʊd juː breɪk ðɪs 100 (ˈhʌndrəd) ˈdɒlə bɪl? 
+Разменяйте, пожалуйста, эту купюру.	Could you give me change for this bill?	kʊd juː gɪv miː ʧeɪnʤ fɔː ðɪs bɪl? 
+Не могли бы Вы часть дать мелочью?	Could you include some small change too?	kʊd juː ɪnˈkluːd sʌm smɔːl ʧeɪnʤ tuː? 
+Мне нужна мелочь.	I’d like some change.	aɪd laɪk sʌm ʧeɪnʤ. 
+Мне нужны монеты всех достоинств.	I’d like coins of all sizes, please.	aɪd laɪk kɔɪnz ɒv ɔːl ˈsaɪzɪz, pliːz. 
+</textarea>
+<textarea id="В транспорте 1">
+Как мне добраться отсюда туда?	How can I get to this place from here?	haʊ kæn aɪ gɛt tuː ðɪs pleɪs frɒm hɪə? 
+Какие поезда идут в Чикаго?	Which line goes to Chicago?	wɪʧ laɪn gəʊz tuː ʃɪˈkɑːgəʊ? 
+Сколько стоит билет до Парижа?	How much for a ticket to Paris?	haʊ mʌʧ fɔːr ə ˈtɪkɪt tuː ˈpærɪs? 
+Сколько стоит билет до Рима?	What is the fare to Rome?	wɒt ɪz ðə feə tuː rəʊm? 
+Мне нужен билет до Лондона.	I would like a ticket to London.	aɪ wʊd laɪk ə ˈtɪkɪt tuː ˈlʌndən. 
+Два билета туристического класса.	I would like two tourist class tickets.	aɪ wʊd laɪk tuː ˈtʊərɪst klɑːs ˈtɪkɪts. 
+Я хотел бы забронировать место на этом поезде.	I’d like to reserve a seat on this train.	aɪd laɪk tuː rɪˈzɜːv ə siːt ɒn ðɪs treɪn. 
+Мне нужно делать пересадку?	Do I have to change trains?	duː aɪ hæv tuː ʧeɪnʤ treɪnz? 
+Где мне делать пересадку?	Where should I change trains?	weə ʃʊd aɪ ʧeɪnʤ treɪnz? 
+С какой платформы отправляется поезд?	Which platform does the train depart from?	wɪʧ ˈplætfɔːm dʌz ðə treɪn dɪˈpɑːt frɒm? 
+Я опоздал на поезд. Когда идет следующий?	I missed the train. When does the next one depart?	aɪ mɪst ðə treɪn. wɛn dʌz ðə nɛkst wʌn dɪˈpɑːt? 
+Это прямой поезд на Ганбург?	Is this a direct train to Humburg?	ɪz ðɪs ə dɪˈrɛkt treɪn tuː Humburg? 
+Этот поезд идет в Лондон?	This train goes to London, doesn’t it?	ðɪs treɪn gəʊz tuː ˈlʌndən, dʌznt ɪt? 
+Как долго будет задержка.	How long is the delay?	haʊ lɒŋ ɪz ðə dɪˈleɪ? 
+Это поезд скорый или пригородный?	Is this train an express or a local?	ɪz ðɪs treɪn ən ɪksˈprɛs ɔːr ə ˈləʊkəl? 
+Здесь есть вагон ресторан?	Is there a dining car?	ɪz ðeər ə ˈdaɪnɪŋ kɑː? 
+Вагон-ресторан в начале или в хвосте поезда?	Is the dining car at the front or rear of the train?	ɪz ðə ˈdaɪnɪŋ kɑːr æt ðə frʌnt ɔː rɪər ɒv ðə treɪn? 
+Это место занято?	Is this seat taken?	ɪz ðɪs siːt ˈteɪkən? 
+Я думаю, это место мое.	I think this is my seat.	aɪ θɪŋk ðɪs ɪz maɪ siːt. 
+Я предпочитаю место у окна.	I prefer a seat by the window.	aɪ priˈfɜːr ə siːt baɪ ðə ˈwɪndəʊ. 
+Здесь очень жарко ( холодно )	It is very hot (cold) here.	ɪt ɪz ˈvɛri hɒt (kəʊld) hɪə. 
+Можно открыть окно?	May I open the window?	meɪ aɪ ˈəʊpən ðə ˈwɪndəʊ? 
+Где мы сейчас проезжаем?	Where are we passing now?	weər ɑː wiː ˈpɑːsɪŋ naʊ? 
+Сколько времени поезд здесь стоит?	How long does the train stop here?	haʊ lɒŋ dʌz ðə treɪn stɒp hɪə? 
+Где следующая остановка?	Where is the next stop?	weər ɪz ðə nɛkst stɒp? 
+На какой остановке мне выходить?	Which stop should I get off at?	wɪʧ stɒp ʃʊd aɪ gɛt ɒf æt? 
+Сколько остановок отсюда?	How many stops from here?	haʊ ˈmɛni stɒps frɒm hɪə? 
+До скольких работает метро?	How late does the subway run?	haʊ leɪt dʌz ðə ˈsʌbweɪ rʌn? 
+Во сколько отплытие?	When does it sail?	wɛn dʌz ɪt seɪl? 
+Когда посадка?	What time do we board?	wɒt taɪm duː wiː bɔːd? 
+Где я могу сесть на корабль?	Where can I board the ship?	weə kæn aɪ bɔːd ðə ʃɪp? 
+Проводите меня, пожалуйста, до каюты.	Would you please show me to my cabin?	wʊd juː pliːz ʃəʊ miː tuː maɪ ˈkæbɪn? 
+Я бы хотел позавтракать в каюте (номере).	I would like to have breakfast in my cabin (room).	aɪ wʊd laɪk tuː hæv ˈbrɛkfəst ɪn maɪ ˈkæbɪn (ruːm). 
+Я хотел бы зарезервировать кресло на палубе.	I’d like to reserve a deck chair.	aɪd laɪk tuː rɪˈzɜːv ə dɛk ʧeə. 
+В какое время я могу пообедать?	What time can I dine?	wɒt taɪm kæn aɪ daɪn? 
+Билет туда и обратно, пожалуйста.	I would like a round-trip ticket, please.	aɪ wʊd laɪk ə raʊnd-trɪp ˈtɪkɪt, pliːz. 
+Этот автобус идет туда?	Does this bus go to that place?	dʌz ðɪs bʌs gəʊ tuː ðæt pleɪs? 
+Когда идет следующий автобус в аэропорт?	What time does the next bus for airport leave?	wɒt taɪm dʌz ðə nɛkst bʌs fɔːr ˈeəpɔːt liːv? 
+Это расписание еще действует?	Is this bus schedule current?	ɪz ðɪs bʌs ˈʃɛdjuːl ˈkʌrənt? 
+</textarea>
+<textarea id="В транспорте 2">
+Сколько стоит билет туда и обратно?	What’s the round-trip fare?	wɒts ðə raʊnd-trɪp feə? 
+Сколько времени действителен обратный билет?	How long is a round-trip good for?	haʊ lɒŋ ɪz ə raʊnd-trɪp gʊd fɔː? 
+Сколько стоит билет туда?	How much is the fare to this place?	haʊ mʌʧ ɪz ðə feə tuː ðɪs pleɪs? 
+Как долго ехать до центра?	How long will it take to go downtown?	haʊ lɒŋ wɪl ɪt teɪk tuː gəʊ ˈdaʊntaʊn? 
+Я хочу сдать билет.	I want to cancel this ticket.	aɪ wɒnt tuː ˈkænsəl ðɪs ˈtɪkɪt. 
+Вызовите для меня такси.	Would you call a taxi for me, please?	wʊd juː kɔːl ə ˈtæksi fɔː miː, pliːz? 
+Где мы можем взять такси?	Where can we get a taxi?	weə kæn wiː gɛt ə ˈtæksi? 
+Отвезите меня по этому адресу, пожалуйста.	Take me to this address, please.	teɪk miː tuː ðɪs əˈdrɛs, pliːz. 
+Я могу взять напрокат машину?	Can I rent a car?	kæn aɪ rɛnt ə kɑː? 
+Какие документы мне нужно иметь с собой?	What papers do I need with me?	wɒt ˈpeɪpəz duː aɪ niːd wɪð miː? 
+Вот мои международные водительские права.	This is my international driving permit (license).	ðɪs ɪz maɪ ˌɪntə(ː)ˈnæʃənl ˈdraɪvɪŋ ˈpɜːmɪt (ˈlaɪsəns). 
+Я хотел бы взять эту машину напрокат на два дня.	I’d like to rent this car for two days.	aɪd laɪk tuː rɛnt ðɪs kɑː fɔː tuː deɪz. 
+Сколько это стоит в неделю (в день)?	What does it cost per week (day)?	wɒt dʌz ɪt kɒst pɜː wiːk (deɪ)? 
+Цена включает страховку?	Does the price include insurance?	dʌz ðə praɪs ɪnˈkluːd ɪnˈʃʊərəns? 
+Мне нужно оставлять залог?	Do I need to pay a deposit?	duː aɪ niːd tuː peɪ ə dɪˈpɒzɪt? 
+Куда я могу позвонить, если что-нибудь случится?	Please give me some numbers to call in case of trouble.	pliːz gɪv miː sʌm ˈnʌmbəz tuː kɔːl ɪn keɪs ɒv ˈtrʌbl. 
+Покажите мне расценки, пожалуйста.	Show me a list of your rates, please.	ʃəʊ miː ə lɪst ɒv jɔː reɪts, pliːz. 
+Сколько нужно платить за дополнительный пробег?	How much does it cost for additional kilometers?	haʊ mʌʧ dʌz ɪt kɒst fɔːr əˈdɪʃənl ˈkɪləʊˌmiːtəz? 
+Я могу оставить машину в месте назначения?	May I drop the car off at destination?	meɪ aɪ drɒp ðə kɑːr ɒf æt ˌdɛstɪˈneɪʃən? 
+Где я могу вернуть ее?	Where can I return it?	weə kæn aɪ rɪˈtɜːn ɪt? 
+Пожалуйста, пошлите машину к моей гостинице завтра утром.	Please send a car to my hotel tomorrow morning.	pliːz sɛnd ə kɑː tuː maɪ həʊˈtɛl təˈmɒrəʊ ˈmɔːnɪŋ. 
+Я хочу подать заявление на возмещение ущерба по автомобильной страховке.	I’d like to make a car insurance claim.	aɪd laɪk tuː meɪk ə kɑːr ɪnˈʃʊərəns kleɪm. 
+Заполните это, пожалуйста.	Please fill it out.	pliːz fɪl ɪt aʊt. 
+Где можно припарковаться?	Where can I park?	weə kæn aɪ pɑːk? 
+В этом районе есть гостиница?	Is there a hotel in this area?	ɪz ðeər ə həʊˈtɛl ɪn ðɪs ˈeərɪə? 
+Где самый короткий путь на пляж?	Which is the shortest way to the beach?	wɪʧ ɪz ðə ˈʃɔːtɪst weɪ tuː ðə biːʧ? 
+Дорога до озера хорошая?	Is the road to the lake a good one?	ɪz ðə rəʊd tuː ðə leɪk ə gʊd wʌn? 
+Где ближайший гараж?	Where is the nearest garage?	weər ɪz ðə ˈnɪərɪst ˈgærɑːʒ? 
+Сколько километров (миль) до ближайшей заправочной станции?	How many kilometers (miles) is to the nearest gas station?	haʊ ˈmɛni ˈkɪləʊˌmiːtəz (maɪlz) ɪz tuː ðə ˈnɪərɪst gæsˈsteɪʃən? 
+Мне нужно сорок литров бензина.	I would like to have ten gallons of gas.	aɪ wʊd laɪk tuː hæv tɛn ˈgælənz ɒv gæs. 
+Я обычно использую бензин.	I usually use gasoline.	aɪ ˈjuːʒʊəli juːz ˈgæsəʊliːn. 
+Можете проверить?	Can you check it for me?	kæn juː ʧɛk ɪt fɔː miː? 
+У вас есть антифриз?	Do you have any antifreeze?	duː juː hæv ˈɛni ˈæntɪfriːz? 
+Проверьте давление в шинах.	Would you please check the tire pressure?	wʊd juː pliːz ʧɛk ðə ˈtaɪə ˈprɛʃə? 
+Долейте тормозной жидкости, пожалуйста.	Would you please top up the brake fluid?	wʊd juː pliːz tɒp ʌp ðə breɪk ˈflu(ː)ɪd? 
+Добавьте, пожалуйста, воды в радиатор.	Would you please add some water to the radiator?	wʊd juː pliːz æd sʌm ˈwɔːtə tuː ðə ˈreɪdɪeɪtə? 
+Помойте, пожалуйста, машину.	Can I have the car washed?	kæn aɪ hæv ðə kɑː wɒʃt? 
+Двигатель не заводится.	The engine won’t start.	ði ˈɛnʤɪn wəʊnt stɑːt. 
+Двигатель перегревается.	The engine gets very hot.	ði ˈɛnʤɪn gɛts ˈvɛri hɒt. 
+</textarea>
+<textarea id="В транспорте 3">
+Он очень шумит.	It is noisy.	ɪt ɪz ˈnɔɪzi. 
+Что - то шумит.	Something is making a noise.	ˈsʌmθɪŋ ɪz ˈmeɪkɪŋ ə nɔɪz. 
+Он стучит.	It makes a knocking noise.	ɪt meɪks ə ˈnɒkɪŋ nɔɪz. 
+Что-то не в порядке с давлением масла.	There is something wrong with the oil pressure.	ðeər ɪz ˈsʌmθɪŋ rɒŋ wɪð ði ɔɪl ˈprɛʃə. 
+Сигнал не работает.	The horn doesn’t work.	ðə hɔːn dʌznt wɜːk. 
+Подзарядите, пожалуйста, аккумулятор.	Would you please charge the battery?	wʊd juː pliːz ʧɑːʤ ðə ˈbætəri? 
+У вас есть запчасти?	Do you have spare parts?	duː juː hæv speə pɑːts? 
+У нас кончился бензин.	We’re out of gas.	wɪər aʊt ɒv gæs. 
+Машина сломалась. Пришлите кого-нибудь за ней.	The car broke down. Please send someone for it.	ðə kɑː brəʊk daʊn. pliːz sɛnd ˈsʌmwʌn fɔːr ɪt. 
+Вы можете починить машину?	Can you repair the car?	kæn juː rɪˈpeə ðə kɑː? 
+Сколько времени займет ремонт машины?	How long will it take to repair the car?	haʊ lɒŋ wɪl ɪt teɪk tuː rɪˈpeə ðə kɑː? 
+Сколько примерно будет стоить ремонт?	How much will the repairs cost, approximately?	haʊ mʌʧ wɪl ðə rɪˈpeəz kɒst, əˈprɒksɪmɪtli? 
+Ремонт покрывается моей страховкой?	Are the repairs covered by my insurance?	ɑː ðə rɪˈpeəz ˈkʌvəd baɪ maɪ ɪnˈʃʊərəns? 
+Позвони мне, когда машина будет готова.	Will you call me when the car is ready?	wɪl juː kɔːl miː wɛn ðə kɑːr ɪz ˈrɛdi? 
+Это была моя вина.	It is my fault.	ɪt ɪz maɪ fɔːlt. 
+Мне кажется, это Ваша вина.	I think it was your fault.	aɪ θɪŋk ɪt wɒz jɔː fɔːlt. 
+Не похоже, чтобы ущерб был большой.	There doesn’t seem to be much damage.	ðeə dʌznt siːm tuː biː mʌʧ ˈdæmɪʤ. 
+Давайте решим вопрос между нами.	Can we settle the matter between ourselves?	kæn wiː ˈsɛtl ðə ˈmætə bɪˈtwiːn ˌaʊəˈsɛlvz? 
+Пусть кто-нибудь вызовет полицию.	I would like somebody to call the police.	aɪ wʊd laɪk ˈsʌmbədi tuː kɔːl ðə pəˈliːs. 
+Я иностранец. Вот мои водительские права.	I’m a foreigner. Here’s my driver’s license.	aɪm ə ˈfɒrɪnə. hɪəz maɪ ˈdraɪvəz ˈlaɪsəns. 
+Назовите Вашу фамилию и адрес, пожалуйста.	may I have your name and address?	meɪ aɪ hæv jɔː neɪm ænd əˈdrɛs? 
+Можно попросить копию протокола происшествия?	May I have a copy of the accident report?	meɪ aɪ hæv ə ˈkɒpi ɒv ði ˈæksɪdənt rɪˈpɔːt? 
+Въезд запрещен.	No entry.	nəʊ ˈɛntri. 
+Движение запрещено.	No thoroughfare.	nəʊ ˈθʌrəfeə. 
+Обгон запрещен.	No passing.	nəʊ ˈpɑːsɪŋ. 
+Въезд запрещен — одностороннее движение.	Do not enter: one way.	duː nɒt ˈɛntə: wʌn weɪ. 
+Стоянка запрещена.	No parking.	nəʊ ˈpɑːkɪŋ. 
+Въезд бесплатный.	Free admission.	friː ədˈmɪʃ(ə)n. 
+Одностороннее движение.	One-way traffic.	wʌn-weɪ ˈtræfɪk. 
+Опасный поворот.	Dangerous bend.	ˈdeɪnʤrəs bɛnd. 
+Дорожные работы.	Men at work.	mɛn æt wɜːk. 
+Сужение дороги.	Road narrows.	rəʊd ˈnærəʊz. 
+</textarea>
+<textarea id="Здоровье">
+Я чувствую себя неважно.	I don’t feel well.	aɪ dəʊnt fiːl wɛl. 
+У меня болит спина.	I have pain in my back.	aɪ hæv peɪn ɪn maɪ bæk. 
+Меня знобит.	I have chills.	aɪ hæv ʧɪlz. 
+У меня кружится голова.	I feel dizzy.	aɪ fiːl ˈdɪzi. 
+У меня сильное головокружение.	My head is spinning.	maɪ hɛd ɪz ˈspɪnɪŋ. 
+Мне плохо.	I feel faint.	aɪ fiːl feɪnt. 
+У меня болит голова.	I have a headache.	aɪ hæv ə ˈhɛdeɪk. 
+У меня аллергия на пенициллин.	I’m allergic to penicillin.	aɪm əˈlɜːʤɪk tuː ˌpɛnɪˈsɪlɪn. 
+У меня высокое давление.	I have high blood pressure.	aɪ hæv haɪ blʌd ˈprɛʃə. 
+У меня болит здесь.	I have a pain here.	aɪ hæv ə peɪn hɪə. 
+У меня температура.	I have a fever.	aɪ hæv ə ˈfiːvə. 
+Я простыл (у меня насморк).	I have a cold.	aɪ hæv ə kəʊld. 
+У меня сильно болит зуб.	I have a severe toothache.	aɪ hæv ə sɪˈvɪə ˈtuːθeɪk. 
+Что-то попало в глаз.	I have something in my eye.	aɪ hæv ˈsʌmθɪŋ ɪn maɪ aɪ. 
+Меня тошнит.	I feel like throwing up.	aɪ fiːl laɪk ˈθrəʊɪŋ ʌp. 
+Мне плохо.	I feel sick.	aɪ fiːl sɪk. 
+У меня проблемы с сердцем.	I’ve got a heart problem.	aɪv gɒt ə hɑːt ˈprɒbləm. 
+Я растянул связки на ноге.	My ankle is sprained.	maɪ ˈæŋkl ɪz spreɪnd. 
+У меня болит горло.	I’ve got a sore throat.	aɪv gɒt ə sɔː θrəʊt. 
+Я страдаю от бессонницы.	I’m suffering from insomnia.	aɪm ˈsʌfərɪŋ frɒm ɪnˈsɒmnɪə. 
+У меня заложен нос.	I have a stuffy nose.	aɪ hæv ə ˈstʌfi nəʊz. 
+Я чувствую себя немного лучше.	I fell a little better.	aɪ fɛl ə ˈlɪtl ˈbɛtə. 
+У меня насморк	My nose is running.	maɪ nəʊz ɪz ˈrʌnɪŋ. 
+Я хотел бы попасть на прием завтра в...	I’d like an appointment for 10 (ten) a.m. tomorrow.	aɪd laɪk ən əˈpɔɪntmənt fɔː 10 (tɛn) eɪ.ɛm. təˈmɒrəʊ. 
+У меня сильный приступ морской болезни.	I’ m very seasick.	aɪ ɛm ˈvɛri ˈsiːsɪk. 
+Вызовите врача, пожалуйста.	Can you get a doctor, please?	kæn juː gɛt ə ˈdɒktə, pliːz? 
+Вызовите скорую помощь.	Would you please call an ambulance?	wʊd juː pliːz kɔːl ən ˈæmbjʊləns? 
+Отвезите меня в больницу, пожалуйста.	Please take me to the hospital.	pliːz teɪk miː tuː ðə ˈhɒspɪtl. 
+Это срочно.	It’s urgent.	ɪts ˈɜːʤənt. 
+Я должен остаться в больнице?	Do I have to stay in the hospital?	duː aɪ hæv tuː steɪ ɪn ðə ˈhɒspɪtl? 
+Думаете это надолго?	Do you think it will be prolonged?	duː juː θɪŋk ɪt wɪl biː prəʊˈlɒŋd? 
+Как это случилось?	How did that happen?	haʊ dɪd ðæt ˈhæpən? 
+Я споткнулся на лестнице.	I tripped on the stairs.	aɪ trɪpt ɒn ðə steəz. 
+Вы считает это серьезно?	Do you think it is serious?	duː juː θɪŋk ɪt ɪz ˈsɪərɪəs? 
+Это заразно?	Is it contagious?	ɪz ɪt kənˈteɪʤəs? 
+Можете дать мне что-нибудь болеутоляющее?	Can you give me something to stop the pain?	kæn juː gɪv miː ˈsʌmθɪŋ tuː stɒp ðə peɪn? 
+Мне нужна операция?	Do I need an operation?	duː aɪ niːd ən ˌɒpəˈreɪʃən? 
+У меня первая группа крови, резус положительный.	My blood type is A positive.	maɪ blʌd taɪp ɪz ə ˈpɒzətɪv. 
+Какая у меня температура?	What’s my temperature?	wɒts maɪ ˈtɛmprɪʧə? 
+Сколько мне нужно отдыхать?	How long must I rest?	haʊ lɒŋ mʌst aɪ rɛst? 
+Долго я буду выздоравливать?	How long will it take to recover?	haʊ lɒŋ wɪl ɪt teɪk tuː rɪˈkʌvə? 
+Сколько времени займет лечение?	How long will the treatment take?	haʊ lɒŋ wɪl ðə ˈtriːtmənt teɪk? 
+Мне можно продолжать путешествие?	Can I continue my trip?	kæn aɪ kənˈtɪnju(ː) maɪ trɪp? 
+Сообщите моей семье, пожалуйста.	Would you inform my family, please?	wʊd juː ɪnˈfɔːm maɪ ˈfæmɪli, pliːz? 
+Сколько раз в день мне принимать это лекарство?	How often do I take this medicine?	haʊ ˈɒf(ə)n duː aɪ teɪk ðɪs ˈmɛdsɪn? 
+Можно попросить что-нибудь от кашля?	can I have something for a cough?	kæn aɪ hæv ˈsʌmθɪŋ fɔːr ə kɒf? 
+Я хотел бы запломбировать зуб.	I would like to have a tooth filled.	aɪ wʊd laɪk tuː hæv ə tuːθ fɪld. 
+Нужно удалять?	Is it necessary to pull it out?	ɪz ɪt ˈnɛsɪsəri tuː pʊl ɪt aʊt? 
+</textarea>
+<textarea id="Спорт, Салон красоты, Вызов полиции">
+Тут есть поблизости кемпинг?	Is there a camp site nearby?	ɪz ðeər ə kæmp saɪt ˈnɪəbaɪ? 
+Мы можем расположиться здесь?	May we camp here?	meɪ wiː kæmp hɪə? 
+Мы можем остаться здесь на ночь?	Can we spend the night here?	kæn wiː spɛnd ðə naɪt hɪə? 
+Город далеко отсюда?	Is the town far from here?	ɪz ðə taʊn fɑː frɒm hɪə? 
+Где можно набрать воды?	Is there a place where we can get water?	ɪz ðeər ə pleɪs weə wiː kæn gɛt ˈwɔːtə? 
+Я хотел бы половить рыбу.	I am interested in fishing.	aɪ æm ˈɪntrɪstɪd ɪn ˈfɪʃɪŋ. 
+Можно здесь ловить рыбу?	Is fishing allowed here?	ɪz ˈfɪʃɪŋ əˈlaʊd hɪə? 
+Могу я здесь покататься на водных лыжах?	Can I go water-skiing there?	kæn aɪ gəʊ ˈwɔːtə-ˈskiːɪŋ ðeə? 
+Я бы хотел постричься.	I would like to have a haircut.	aɪ wʊd laɪk tuː hæv ə ˈheəkʌt. 
+Стригите покороче, пожалуйста.	Cut it short, please.	kʌt ɪt ʃɔːt, pliːz. 
+Только подровняйте, пожалуйста.	Just trim it, please.	ʤʌst trɪm ɪt, pliːz. 
+Не слишком коротко.	Not too short.	nɒt tuː ʃɔːt. 
+Я хотел бы побриться.	I would like to have a shave.	aɪ wʊd laɪk tuː hæv ə ʃeɪv. 
+Постригите и побрейте, пожалуйста.	Haircut and shave, please.	ˈheəkʌt ænd ʃeɪv, pliːz. 
+Я бы хотела помыть голову.	I would like to have a shampoo.	aɪ wʊd laɪk tuː hæv ə ʃæmˈpuː. 
+Я бы хотела покрасить волосы.	I would like to have my hair colored.	aɪ wʊd laɪk tuː hæv maɪ heə ˈkʌləd. 
+Сделайте мне пробор на левой (правой) стороне.	Would you please part my hair on the left (right) side?	wʊd juː pliːz pɑːt maɪ heər ɒn ðə lɛft (raɪt) saɪd? 
+Зачешите мне волосы назад.	Would you please comb my hair back from the forehead?	wʊd juː pliːz kəʊm maɪ heə bæk frɒm ðə ˈfɒrɪd? 
+Я хотела бы сделать маникюр.	I would like to have a manicure.	aɪ wʊd laɪk tuː hæv ə ˈmænɪkjʊə. 
+Здесь можно где-нибудь отдохнуть?	Is there a place to rest?	ɪz ðeər ə pleɪs tuː rɛst? 
+Это срочно !	It’s an emergency!	ɪts ən ɪˈmɜːʤənsi! 
+Немедленно вызовите полицию.	Please call the police immediately.	pliːz kɔːl ðə pəˈliːs ɪˈmiːdiətli. 
+Пожалуйста, заполните протокол о краже.	Please make out a theft report.	pliːz meɪk aʊt ə θɛft rɪˈpɔːt. 
+Я потерял паспорт.	I lost my passport.	aɪ lɒst maɪ ˈpɑːspɔːt. 
+Мой паспорт пропал.	My passport is missing.	maɪ ˈpɑːspɔːt ɪz ˈmɪsɪŋ. 
+У меня украли бумажник.	My wallet was stolen.	maɪ ˈwɒlɪt wɒz ˈstəʊlən. 
+У меня украли бумажник в метро.	I was robbed of my wallet on the subway.	aɪ wɒz rɒbd ɒv maɪ ˈwɒlɪt ɒn ðə ˈsʌbweɪ. 
+Кому я должен сообщить?	Whom should I inform?	huːm ʃʊd aɪ ɪnˈfɔːm? 
+</textarea>
+<textarea id="Бизнес">
+Нам нужен настоящий профессионал с высокой квалификацией.	We need a real professional with high qualifications.	wiː niːd ə rɪəl prəˈfɛʃənl wɪð haɪ ˌkwɒlɪfɪˈkeɪʃənz. 
+Нам нужен специалист с опытом работы не менее года.	We need a specialist with at least a year's experience.	wiː niːd ə ˈspɛʃəlɪst wɪð æt liːst ə jɪəz ɪksˈpɪərɪəns. 
+Нужно ли предоставлять статистические данные?	Do I need to provide statistics?	duː aɪ niːd tuː prəˈvaɪd stəˈtɪstɪks? 
+Вы подготовили резюме (доклад / презентацию)?	Did you prepare a summary (report / presentation)?	dɪd juː prɪˈpeər ə ˈsʌməri (rɪˈpɔːt / ˌprɛzɛnˈteɪʃən)? 
+Её наняли в качестве переводчика (консультанта / посредника).	She was hired as an interpreter (consultant / intermediary).	ʃiː wɒz ˈhaɪəd æz ən ɪnˈtɜːprɪtə (kənˈsʌltənt / ˌɪntəˈmiːdiəri). 
+Заполните эту форму. Я сообщу вам, если что-нибудь появится.	Fill out this form. I'll let you know if anything happens.	fɪl aʊt ðɪs fɔːm. aɪl lɛt juː nəʊ ɪf ˈɛnɪθɪŋ ˈhæpənz. 
+Каковы требования к опыту работы для бухгалтера?	What are the requirements for work experience for an accountant?	wɒt ɑː ðə rɪˈkwaɪəmənts fɔː wɜːk ɪksˈpɪərɪəns fɔːr ənəˈkaʊntənt? 
+Какое минимальное образование должно быть у адвоката?	What minimum education should a lawyer have?	wɒt ˈmɪnɪməm ˌɛdju(ː)ˈkeɪʃən ʃʊd ə ˈlɔːjə hæv? 
+Какой должна быть физическая подготовка на этой работе?	What should be the physical preparation in this work?	wɒt ʃʊd biː ðə ˈfɪzɪkəl ˌprɛpəˈreɪʃən ɪn ðɪs wɜːk? 
+Каким образом я должен платить налоги?	How should I pay taxes?	haʊ ʃʊd aɪ peɪ ˈtæksɪz? 
+Какова стоимость доставки?	What is the cost of delivery?	wɒt ɪz ðə kɒst ɒv dɪˈlɪvəri? 
+Какова приблизительная стоимость этого проекта?	What is the approximate cost of this project?	wɒt ɪz ði əˈprɒksɪmɪt kɒst ɒv ðɪs ˈprɒʤɛkt? 
+Надо ли нам платить НДС (Налог на Добавленную Стоимость)?	Do we have to pay VAT (Value Added Tax)?	duː wiː hæv tuː peɪ væt (ˈvæljuː ˈædɪd tæks)? 
+Нам может понадобиться рекламная кампания.	We may need an advertising campaign.	wiː meɪ niːd ən ˈædvətaɪzɪŋ kæmˈpeɪn. 
+Пожалуйста, выпишите счёт. Мы внесем оплату.	Please, write out the bill. We will pay you.	pliːz, raɪt aʊt ðə bɪl. wiː wɪl peɪ juː. 
+Предприятие признано банкротом.	The enterprise is declared bankrupt.	ði ˈɛntəpraɪz ɪz dɪˈkleəd ˈbæŋkrʌpt. 
+Сколько времени уйдет на транспортировку?	How long will it take to transport?	haʊ lɒŋ wɪl ɪt teɪk tuː ˈtrænspɔːt? 
+Требования к образованию кандидата на эту должность очень высоки.	The requirements for the formation of a candidate for this position are very high.	ðə rɪˈkwaɪəmənts fɔː ðə fɔːˈmeɪʃən ɒv ə ˈkændɪdɪt fɔː ðɪspəˈzɪʃən ɑː ˈvɛri haɪ. 
+Этот заказ для нас очень важен.	This order is very important for us.	ðɪs ˈɔːdər ɪz ˈvɛri ɪmˈpɔːtənt fɔːr ʌs. 
+Когда будет выполнен наш заказ?	When will our order be completed?	wɛn wɪl ˈaʊər ˈɔːdə biː kəmˈpliːtɪd? 
+Вы внесли предоплату?	Have you made an advance payment?	hæv juː meɪd ən ədˈvɑːns ˈpeɪmənt? 
+Вам надо внимательно ознакомиться с договором.	You should carefully read the contract.	juː ʃʊd ˈkeəfli riːd ðə ˈkɒntrækt. 
+Вы нарушили условие договора.	You have violated the terms of the contract.	juː hæv ˈvaɪəleɪtɪd ðə tɜːmz ɒv ðə ˈkɒntrækt. 
+Нам очень приятно, что все условия соблюдены.	We are very pleased that all the conditions are met.	wiː ɑː ˈvɛri pliːzd ðæt ɔːl ðə kənˈdɪʃənz ɑː mɛt. 
+Нам принадлежит сорок три процента (43%) рынка.	We own forty-three percent (43%) of the market.	wiː əʊn ˈfɔːti-θriː pəˈsɛnt (43%) ɒv ðə ˈmɑːkɪt. 
+Доходы в этом году заметно снизились (повысились).	Income this year markedly decreased (increased).	ˈɪnkʌm ðɪs jɪə ˈmɑːkɪdli diːˈkriːst (ɪnˈkriːst). 
+Инвестор был доволен. / Инвестор был недоволен.	The investor was pleased. / The investor was unhappy.	ði ɪnˈvɛstə wɒz pliːzd. / ði ɪnˈvɛstə wɒz ʌnˈhæpi. 
+Нас интересуют исключительно информационные технологии / каналы связи / перспективные идеи.	We are interested only in information technologies / communication channels / promising ideas.	wiː ɑːr ˈɪntrɪstɪd ˈəʊnli ɪn ˌɪnfəˈmeɪʃəntɛkˈnɒləʤiz / kəˌmjuːnɪˈkeɪʃən ˈʧænlz / ˈprɒmɪsɪŋ aɪˈdɪəz. 
+Ваши прогнозы оправдались полностью.	Your forecasts were fully justified.	jɔː ˈfɔːkɑːsts wɜː ˈfʊli ˈʤʌstɪfaɪd. 
+Для такой ситуации мы подготовили другой вариант схемы процесса.	For this situation, we have prepared another version of the process scheme.	fɔː ðɪs ˌsɪtjʊˈeɪʃən, wiː hæv prɪˈpeəd əˈnʌðə ˈvɜːʃən ɒv ðəˈprəʊsɛs skiːm. 
+Нам нужны три предложения от трех разных поставщиков.	We need three offers from three different suppliers.	wiː niːd θriː ˈɒfəz frɒm θriː ˈdɪfrənt səˈplaɪəz. 
+По этому поводу вечером устроим банкет!	On this occasion we will arrange a banquet!	ɒn ðɪs əˈkeɪʒən wiː wɪl əˈreɪnʤ ə ˈbæŋkwɪt! 
+Мы не можем принять такое условие. Это коррупция!	We can not accept such condition. This is corruption!	wiː kæn nɒt əkˈsɛpt sʌʧ kənˈdɪʃən. ðɪs ɪz kəˈrʌpʃən! 
+</textarea>
+<textarea id="Карьера, профессия, работа, зарплата 1">
+Где вы работаете?	Where do you work?	weə duː juː wɜːk? 
+Он работает поваром в местном ресторане.	He works as a cook in a local restaurant.	hiː wɜːks æz ə kʊk ɪn ə ˈləʊkəl ˈrɛstrɒnt. 
+Она работает в Facebook	She works at Facebook.	ʃiː wɜːks æt ˈfeɪsˌbʊk. 
+Барбара работает на большую IT компанию в Германии.	Barbara works for a big IT company in Germany.	ˈbɑːb(ə)rə wɜːks fɔːr ə bɪg ɪt ˈkʌmpəni ɪn ˈʤɜːməni. 
+Я работаю в офисе.	I work in an office.	aɪ wɜːk ɪn ən ˈɒfɪs. 
+Я менеджер по кадрам (начальник отдела кадров).	I am a human resources manager (HR manager).	aɪ æm ə ˈhjuːmən rɪˈsɔːsɪz ˈmænɪʤə (eɪʧ-ɑː ˈmænɪʤə). 
+Я отвечаю за подбор (найм) новых сотрудников.	I'm responsible for hiring new employees (new staff).	aɪm rɪsˈpɒnsəbl fɔː ˈhaɪərɪŋ njuː ˌɛmplɔɪˈiːz (njuː stɑːf). 
+Джош сидит за столом (который стоит) рядом с твоим.	Josh sits at the desk next to yours.	ʤɒʃ sɪts æt ðə dɛsk nɛkst tuː jɔːz. 
+Он веб-дизайнер.	He is a web designer.	hiː ɪz ə wɛb dɪˈzaɪnə. 
+Она моя коллега.	She is my colleague.	ʃiː ɪz maɪ ˈkɒliːg. 
+Я частный (индивидуальный) предприниматель.	I am self employed.	aɪ æm sɛlf ɪmˈplɔɪd. 
+Он безработный.	He is unemployed.	hiː ɪz ˌʌnɪmˈplɔɪd. 
+Я фрилансер.	I am a freelancer.	aɪ æm ə ˈfriːˌlɑːnsə. 
+Хотел(а) бы я знать, на кого он работает.	I wonder who he works for.	aɪ ˈwʌndə huː hiː wɜːks fɔː. 
+Я собираюсь уйти со своей работы (уволиться).	I'm going to quit my job.	aɪm ˈgəʊɪŋ tuː kwɪt maɪ ʤɒb. 
+Чем вы зарабатываете на жизнь?	What do you do for a living?	wɒt duː juː duː fɔːr ə ˈlɪvɪŋ? 
+Кем Вы работаете?	What is your occupation?	wɒt ɪz jɔːr ˌɒkjʊˈpeɪʃən? 
+Я художник.	I am an artist.	aɪ æm ən ˈɑːtɪst. 
+Я каменщик.	I am a mason. (a bricklayer)	aɪ æm ə ˈmeɪsn. (ə ˈbrɪkˌleɪə) 
+Я преподаватель английского.	I am an English teacher.	aɪ æm ən ˈɪŋglɪʃ ˈtiːʧə. 
+Я парикмахер.	I am a barber.	aɪ æm ə ˈbɑːbə. 
+Он строительный инженер.	He is a civil engineer.	hiː ɪz ə ˈsɪvl ˌɛnʤɪˈnɪə. 
+Он программист.	He is a software developer. (programmer)	hiː ɪz ə ˈsɒftweə dɪˈvɛləpə. (ˈprəʊgræmə) 
+Он инженер электронщик.	He is an electronic engineer.	hiː ɪz ən ɪlɛkˈtrɒnɪk ˌɛnʤɪˈnɪə. 
+Я строю карьеру в информационном бизнесе.	I am building my career in IT.	aɪ æm ˈbɪldɪŋ maɪ kəˈrɪər ɪn ɪt. 
+Вот моя визитка.	Here is my business card.	hɪər ɪz maɪ ˈbɪznɪs kɑːd. 
+Я менеджер в небольшой компании.	I am a small business manager.	aɪ æm ə smɔːl ˈbɪznɪs ˈmænɪʤə. 
+Он трудоголик. (разг.)	He is a workaholic.	hiː ɪz ə ˌwɜːkəˈhɒlɪk. 
+Она трудяга.	She is hard-working.	ʃiː ɪz ˈhɑːdˌwɜːkɪŋ. 
+Салли часто работает сверхурочно.	Salli often works overtime (after-hours).	Salli ˈɒf(ə)n wɜːks ˈəʊvətaɪm (ˈɑːftər-ˈaʊəz). 
+Я хочу стать лётчиком.	I'd like to become a pilot.	aɪd laɪk tuː bɪˈkʌm ə ˈpaɪlət. 
+Это работа моей мечты.	This is my dream job.	ðɪs ɪz maɪ driːm ʤɒb. 
+Какой должна быть физическая подготовка на этой работе?	What are the physical requirements for this job?	wɒt ɑː ðə ˈfɪzɪkəl rɪˈkwaɪəmənts fɔː ðɪs ʤɒb? 
+Какое минимальное образование должно быть у адвоката?	What are the minimum education requirements for a lawyer?	wɒt ɑː ðə ˈmɪnɪməm ˌɛdju(ː)ˈkeɪʃən rɪˈkwaɪəmənts fɔːr əˈlɔːjə? 
+Каковы требования к опыту работы для бухгалтера?	What are the experience requirements for an accountant?	wɒt ɑː ði ɪksˈpɪərɪəns rɪˈkwaɪəmənts fɔːr ən əˈkaʊntənt? 
+</textarea>
+<textarea id="Карьера, профессия, работа, зарплата 2">
+Нам нужен программист PHP с опытом работы не менее года.	We need a PHP programmer with at least one year of experience.	wiː niːd ə piː-eɪʧ-piː ˈprəʊgræmə wɪð æt liːst wʌn jɪər ɒvɪksˈpɪərɪəns. 
+Эта работа на полный рабочий день.	This is a full time position (job).	ðɪs ɪz ə fʊl taɪm pəˈzɪʃən (ʤɒb). 
+Эта работа на неполный рабочий день.	This is a part time job.	ðɪs ɪz ə pɑːt taɪm ʤɒb. 
+Нам нужен настоящий профессионал со следующей квалификацией...	We are looking for a real professional with the following skills...	wiː ɑː ˈlʊkɪŋ fɔːr ə rɪəl prəˈfɛʃənl wɪð ðə ˈfɒləʊɪŋ skɪlz... 
+Как ты получил эту работу?	How did you acquire this job?	haʊ dɪd juː əˈkwaɪə ðɪs ʤɒb? 
+Как мне поступить в полицейскую академию?	How do I join the police academy?	haʊ duː aɪ ʤɔɪn ðə pəˈliːs əˈkædəmi? 
+Должен ли я предоставлять сведения о предыдущей работе (биографические данные )?	Do I need to have a background check?	duː aɪ niːd tuː hæv ə ˈbækgraʊnd ʧɛk? 
+Требования к образованию на этой работе очень высоки.	Education requirements for this job are very high.	ˌɛdju(ː)ˈkeɪʃən rɪˈkwaɪəmənts fɔː ðɪs ʤɒb ɑː ˈvɛri haɪ. 
+От вас потребуется пройти медицинское освидетельствование.	You will be required to have a medical clearance.	juː wɪl biː rɪˈkwaɪəd tuː hæv ə ˈmɛdɪkəl ˈklɪərəns. 
+Вы подготовили резюме?	Have you prepared your curriculum vitae (CV)?	hæv juː prɪˈpeəd jɔː kəˈrɪkjʊləm ˈviːtaɪ (siː-viː)? 
+Нам нужно ваше резюме по-английски и заверенные копии ваших дипломов об окончании колледжа и университета.	We need your curriculum vitae in English and certified copies of your college and university diplomas.	wiː niːd jɔː kəˈrɪkjʊləm ˈviːtaɪ ɪn ˈɪŋglɪʃ ænd ˈsɜːtɪfaɪd ˈkɒpiz ɒvjɔː ˈkɒlɪʤ ænd ˌjuːnɪˈvɜːsɪti dɪˈpləʊməz. 
+Вот моё портфолио.	Here is my portfolio.	hɪər ɪz maɪ pɔːtˈfəʊliəʊ. 
+Я мечтаю о собственном модельном бизнесе.	I wish I had my own fashion design business.	aɪ wɪʃ aɪ hæd maɪ əʊn ˈfæʃən dɪˈzaɪn ˈbɪznɪs. 
+У него проблемы на работе.	He has trouble at work.	hiː hæz ˈtrʌbl æt wɜːk. 
+Её наняли в качестве репетитора.	She is hired as a tutor.	ʃiː ɪz ˈhaɪəd æz ə ˈtjuːtə. 
+Моя зарплата повысилась до 60 тысяч в год.	My salary increased to sixty thousand ($60k) a year.	maɪ ˈsæləri ɪnˈkriːst tuː ˈsɪksti ˈθaʊzənd ($60keɪ) ə jɪə. 
+Моя зарплата упала до 7 долларов в час.	My salary dropped to $7 an hour.	maɪ ˈsæləri drɒpt tuː $7 ən ˈaʊə. 
+Я хочу, чтобы мне подняли зарплату.	I want my salary to be increased.	aɪ wɒnt maɪ ˈsæləri tuː biː ɪnˈkriːst. 
+Попробуй попросить босса о повышении зарплаты.	Try to ask your boss for a pay raise.	traɪ tuː ɑːsk jɔː bɒs fɔːr ə peɪ reɪz. 
+Каким образом я должен платить налоги?	How do I pay my taxes.	haʊ duː aɪ peɪ maɪ ˈtæksɪz. 
+Вам нужно обратится в налоговую службу.	You have to apply to the IRS (Internal Revenue Service) (в США).	juː hæv tuː əˈplaɪ tuː ði aɪ-ɑːr-ɛs (ɪnˈtɜːnl ˈrɛvɪnjuː ˈsɜːvɪs) (в США). 
+Нам может понадобиться рекламная кампания.	We may need an advertising campaign.	wiː meɪ niːd ən ˈædvətaɪzɪŋ kæmˈpeɪn. 
+Сколько времени уйдет на транспортировку?	How long will the shipping take?	haʊ lɒŋ wɪl ðə ˈʃɪpɪŋ teɪk? 
+Какова стоимость доставки?	What is the shipment cost?	wɒt ɪz ðə ˈʃɪpmənt kɒst? 
+Надо ли нам платить НДС (Налог на Добавленную Стоимость)?	Do we have to pay VAT (Value Added Tax)?	duː wiː hæv tuː peɪ væt (ˈvæljuː ˈædɪd tæks)? 
+Счёт фактура, накладная, инвойс.	Invoice	ˈɪnvɔɪs 
+Кому мы должны выставить счёт?	Who should we send the invoice to? (Who should we invoice?)	huː ʃʊd wiː sɛnd ði ˈɪnvɔɪs tuː? (huː ʃʊd wiː ˈɪnvɔɪs?) 
+Пожалуйста выпишите счёт моему работодателю, он согласился внести оплату.	Please invoice my employer, who has agreed to pay the fee.	pliːz ˈɪnvɔɪs maɪ ɪmˈplɔɪə, huː hæz əˈgriːd tuː peɪ ðə fiː. 
+Вам надо будет платить твёрдую ставку — 25 долларов в месяц.	You have to pay a flat rate of twenty five dollars a month.	juː hæv tuː peɪ ə flæt reɪt ɒv ˈtwɛnti faɪv ˈdɒləz ə mʌnθ. 
+На этом рынке очень большая конкуренция.	It's a very competitive market.	ɪts ə ˈvɛri kəmˈpɛtɪtɪv ˈmɑːkɪt. 
+Мой отец ушел на пенсию после 25-и лет в компании.	My father retired after 25 years in the company.	maɪ ˈfɑːðə rɪˈtaɪəd ˈɑːftə 25 jɪəz ɪn ðə ˈkʌmpəni. 
+Мои родители пенсионеры.	My parents are retired persons (retirees).	maɪ ˈpeərənts ɑː rɪˈtaɪəd ˈpɜːsnz (rɪˌtaɪəˈriːz). 
+Моя тетя живет в Англии и она пенсионерка.	My aunt lives in England and she is a pensioner.	maɪ ɑːnt lɪvz ɪn ˈɪŋglənd ænd ʃiː ɪz ə ˈpɛnʃənə.
+</textarea>
+</div>
+<textarea id="Результаты поиска"></textarea>
+<textarea id="Mix"></textarea>
+<!--textarea id="Карьера, профессия(тест)">
+He is a software developer.	Он программист.	hiː ɪz ə ˈsɒftweə dɪˈvɛləpə. (ˈprəʊgræmə) 
+Где вы работаете?	Where do you work?
+Он работает поваром в местном ресторане.	He works as a cook in a local restaurant.
+</textarea-->
+<!--textarea id="пусто"></textarea-->
+
+<div class="contentPanel">
+	<select id="lessonCombo"></select>
+	<div id="swMesure" style="border: 1px solid green;box-sizing: border-box;position: relative;" title="">
+		<!--div id="swmPosition" style="height: 90%; border: 1px solid red; position: absolute; background-color: red; left: 89%;"></div-->
+		<div id="swmIndicator" style="background-color: green; text-align: center; color: white; width: 0%;"></div>
+	</div>
+	<div id="phraseOutput"></div>
+</div>
+<div class="butPanel">
+	<button id="buttonGooTr" class="but">▲Google...</button>
+	<button id="buttonNextPhrase" class="but">►Next...</button>
+	<button id="buttonEngPhrase" class="but green">▼Hint...</button>
+	<button id="buttonLearnedPhrase" class="but">◄Learned!</button>
+	<button id="buttonfindByWord" onclick="trainer.utils.findByWord('phraseOutput')" class="but">🔎Find...</button>
+	<!--button onclick="window.open('http://denisorlovmusic.ru/');" class="but">@Author...</button-->
+	<button onclick="infoWrapToggle('infoSetting')" class="but">☭Setting</button>
+</div>
+
+<div style="clear:both"></div>
+<script type="text/javascript">
+function infoWrapToggle(infoContentId){
+	var i, elems = document.querySelectorAll('.infoContent');
+	for(i=0;i<elems.length;i++){
+		var infoContId = elems[i].id;
+		document.getElementById(infoContId).style.display = infoContId===infoContentId ? 'block' : 'none'
+	}
+
+	document.getElementById('infoWrap').style.display = infoContentId ? 'block' : 'none';
+
+}
+function changeTheme(night){
+	document.body.style.backgroundColor = night ? 'black' : 'white';
+    document.body.style.color = night ? 'white' : 'black';
+}
+</script>
+<div  id="infoWrap" style="">
+	<div id="infoPanel">
+        <input class="ipBut" title="Закрыть" type="button" value="&#215;" style="color: red;" onclick="infoWrapToggle();"/>
+		<input class="ipBut" title="Настройки" type="button" value="☭" style="" onclick="infoWrapToggle('infoSetting')">
+		<input class="ipBut" title="Помощь" type="button" value="&#9786;" style="" onclick="infoWrapToggle('infoHelp')">
+        <!-- $('.ipBut').height(Math.floor(100/($('.ipBut').length+1))+'%')// автоподгон высоты -->
+    </div>
+	<div class="infoContent" id="infoHelp" style=""><h3>&#9786; Help</h3><hr/>
+		<p>
+			Веб-приложение "Разговорник - тренажер" для изучения/повторения иностранных фраз, адаптировано под мобильные устройства.
+		</p>
+		<h4>Режимы обучения:</h4>
+		<ul>
+			<li>По темам - наборам в списке</li>
+			<li>По фразам результатам поиска - "Find", "Результаты поиска"</li>
+			<li>По случайным фразам - "Mix"</li>
+			<li>От простых к сложным - "Pаge"</li>
+		</ul>
+		<h4>Как учить:</h4>
+		<ol>
+			<li>►Next... - смотреть фразу и переводить</li>
+			<li>▼Hint...  - при затруднении использовать подсказку</li>
+			<li>◄Learned! - выученную фразу метить "Выучено!"</li>
+		</ol>
+		<h4>Кнопки и настройки:</h4>
+		<ul>
+			<li><i>▲Google...</i>: гор.клавиша ▲, открыть окно переводчика Google</li>
+			<li><i>►Next...</i>: гор.клавиша ►, перейти к следующей фразе урока</li>
+			<li><i>▼Hint...</i>: гор.клавиша ▼, подсказать, первый клик "прикрытая" подсказка, второй - открытая</li>
+			<li><i>◄Learned!</i>: гор.клавиша ◄, пометить фразу выученной в рамках данного урока</li>
+			<li><i>🔎Find...</i>: гор.клавиша F3, искать фразы по выражению(принимает regex), составить урок из найденных фраз в пункт "Результаты поиска"</li>
+			<li><i>☭Setting</i>: настройки приложения
+				<ul>
+					<li><i>Interchange native-foreign</i>: поменять языки местами</li>
+					<li><i>Show transription (or show on click)</i>: показывать транскрипцию автоматически, или только по клику по фразе</li>
+					<li><i>Night theme</i>: ночной режим</li>
+					<li><i>Make mixed lesson</i>: создать случайный микс фраз в пункт списка "Mix"</li>
+					<li><i>Load paged lesson</i>: загрузить "страницу" урока в пункт списка "Pаge". Все фразы группируются в страницы-уроки по принципу от простых коротких к сложным длинным, но примерно равного количества. Т.е. первые "страницы" содержат больше, но коротких фраз, последние - меньше, но длинных. (искл.: самая последняя страница может быть неполной)</li>
+				</ul>
+			</li>
+		</ul>
+
+        <script type="text/javascript" src="pluso.js"></script>
+			<p>
+				&#174; Денис Орлов <img style="height: 0.8em;" src="http://denisorlovmusic.ru/favicon.ico"> <a href="http://denisorlovmusic.ru/" title="Электронная музыка - Денис Орлов">HOME</a>
+			</p>
+	</div>
+	<div class="infoContent" id="infoSetting" style=""><h3>☭ Settings</h3><hr/>
+		<label><input type="checkbox" onclick="trainer.interchange = this.checked"/>
+		Interchange native-foreign</label><br/>
+		<label><input type="checkbox" onclick="trainer.showTransription = this.checked" checked="checked"/>
+		Show transription (or show on click)</label><br/>
+		<label><input type="checkbox" onclick="changeTheme(this.checked)"/>
+		Night theme</label><br/>
+		<label><input type="button" value="Mix!" onclick="trainer.utils.makeMix(33)">
+		Make mixed lesson</label><br/>
+		<label><input type="text" value="1" onclick="trainer.utils.setNextPage(this)" id="InpPageId"><input type="button" value="Page" onclick="trainer.utils.loadPage(this.previousSibling.value)">
+		Load paged lesson</label><br/>
+	</div>
+</div>
+<script type="text/javascript">
+var trainer = new Trainer(
+	'lessonCombo', 
+	'buttonNextPhrase', 'buttonEngPhrase', 'buttonLearnedPhrase', 
+	'buttonGooTr',
+	'phraseOutput',
+	function(learned){ // setIndicatorFunction
+		var swmIndicator = document.getElementById("swmIndicator");
+		swmIndicator.style.width = swmIndicator.innerHTML = learned+'%';
+		swmIndicator.parentNode.title = 'Выучено ' + learned+'%';
+	}
+);
+
+function Trainer(
+	lessonComboId,
+	buttonNextPhraseId, buttonEngPhraseId, buttonLearnedPhraseId, 
+	buttonGooTranslateId,
+	phraseOutputId,
+	setIndicatorFunction
+){
+
+	this.setIndicator = setIndicatorFunction || function(){};
+	
+	// private
+	var _this = this,
+		currentIndex = null,
+		currentLessons = null,
+		currentLessonId = null,
+		currentLessonsOrigLength = null,
+		msg_EmptyLesson = 'Текущий урок пройден или пуст. Выберите новый...'
+	;
+		
+	this.isCurrentLessonNotFinished = function(id){
+		return currentLessons!==null && currentLessons.length>0 && currentLessons.length!==currentLessonsOrigLength;
+	}
+	this.getRandomInt = (function randomInt(){
+		var last, rand;
+		return function(min, max, norepeat){
+			if(max-min>1 && norepeat){
+				do{
+					rand = Math.round( min +Math.random()*(max-min)); //mylog([last, rand]);
+				}while( rand == last )
+				last = rand;
+			}else{
+				rand = Math.round( min +Math.random()*(max-min));
+			}
+			return  rand ;
+		};
+	}())
+	/** interchange native and foreign */
+	this.interchange = false;
+	this.showTransription = true;
+	this.transriptionClass = 'transription';
+	function viewKey(){
+		return _this.interchange ? 'en' : 'ru';
+	}
+	function hintKey(){
+		return _this.interchange ? 'ru' : 'en';
+	}
+	var _showNextPhrase = function(){
+		if(currentLessons.length<1){
+			_initAndStart(currentLessonId);
+			return;
+		}
+		currentIndex = _this.getRandomInt(0, currentLessons.length-1, true);
+		document.getElementById(phraseOutputId).innerHTML = currentLessons[currentIndex][viewKey()];
+		
+		_enableButtonLearnedPhrase();
+	};
+	function _enableButtonLearnedPhrase(){
+		document.getElementById(buttonLearnedPhraseId).removeAttribute('disabled');
+		document.getElementById(buttonLearnedPhraseId).style.opacity = 1;
+	};
+	function checkEmptyOrNext(){
+		if(currentLessons.length<1){
+			document.getElementById(phraseOutputId).innerHTML = '(урок окончен, выберите новый...)';
+		}else{
+			_showNextPhrase();
+		}
+	}
+	var _showEngPhrase = function(){
+		if(currentLessons.length<1){
+			alert(msg_EmptyLesson); return;
+		}
+		document.getElementById(phraseOutputId).innerHTML = 
+			'<pre style="white-space: normal;margin: 0">'+
+			( currentLessons[currentIndex].prompted % 2 == 0 ? // first and even
+			currentLessons[currentIndex][hintKey()].split("").reverse().join("").replace(/[\w\u0400-\u04FF](?=[\w\u0400-\u04FF])/g, 'ˍ').split("").reverse().join("") : 
+			('<span onclick="Trainer.prototype.toggle(\'.'+_this.transriptionClass+'\')">'+currentLessons[currentIndex][hintKey()]+'</span>'+
+			'<div style="word-break:break-word; '+(_this.showTransription?'':'display:none')+'" class="'+_this.transriptionClass+'">'+currentLessons[currentIndex].tr+'</div>'))+
+			'</pre>'+
+			currentLessons[currentIndex][viewKey()]
+			;
+		
+		if(currentLessons[currentIndex].prompted == 1){
+			document.getElementById(buttonLearnedPhraseId).setAttribute('disabled', 'disabled');
+			document.getElementById(buttonLearnedPhraseId).style.opacity = 0.5;
+		}
+		
+		currentLessons[currentIndex].prompted = currentLessons[currentIndex].prompted + 1;	
+	};
+	var _markLearnedPhrase = function(){
+		currentLessons.splice(currentIndex, 1); // remove learned
+		_this.setIndicator( 100 - Math.round( currentLessons.length*100/currentLessonsOrigLength ) );
+		checkEmptyOrNext();
+	};
+	function _openGooTr(event, top, left, width,height){
+		if(currentLessons.length<1){
+			alert(msg_EmptyLesson); return;
+		}
+		var enText = currentLessons[currentIndex].en,
+			newWin = window.open(
+			"https://translate.google.ru/#en/ru/"+encodeURIComponent(enText),
+			"GooTrWin",
+			"top="+(top||0)+",left="+(left||document.body.offsetWidth)+
+			",width="+(width||420)+",height="+(height||500)+
+			",resizable=yes,scrollbars=yes"
+		);
+		newWin.focus();
+	}
+	function _initAndStart(id){
+		currentLessonId = id;
+		currentLessons = _this.getLessonArray(id);
+		currentLessonsOrigLength = currentLessons.length;
+		_this.setIndicator(0);
+		checkEmptyOrNext();
+	}
+	this.getLessonArray = function(id){
+		if(!id) return;
+		var lesson = document.getElementById(id).value;
+		var aLessons = [], aPhrase, 
+			ru, en, tr,
+			aLesson = lesson.split('\n');
+		for(var i=0; i<aLesson.length; i++){
+			aPhrase = aLesson[i].split('\t');
+			if(aPhrase.length<2) continue;
+			var firstRu = /[А-яЁ-ё]+/.test(aPhrase[0]);
+			ru = aPhrase[firstRu ? 0 : 1];
+			en = aPhrase[firstRu ? 1 : 0];
+			tr = aPhrase.length>2 ? aPhrase[2] : '';
+			aLessons.push({
+				ru: ru, 
+				en: en,
+				tr: tr,
+				prompted: 0
+			});
+		}
+		return aLessons;
+	};
+	var _initLessonCombo = (function(){
+		var select = document.getElementById(lessonComboId), tasLen,
+			tas = document.getElementsByTagName('textarea');
+		for(i=0;i<tas.length;i++){
+			tasLen = tas[i].value.split('\n').length-1; // -1 last \n
+			select.appendChild( new Option(tas[i].id+' ('+tasLen+')', tas[i].id,  false, false) );
+		}
+		_initAndStart(tas[0].id); // first
+
+		select.onchange = function(e){
+		  _initAndStart(this.value);
+		};
+	}());
+	var _initButtons = (function(){
+		document.getElementById(buttonNextPhraseId).onclick = _showNextPhrase;
+		document.getElementById(buttonEngPhraseId).onclick = _showEngPhrase;
+		document.getElementById(buttonLearnedPhraseId).onclick = _markLearnedPhrase;
+		document.getElementById(buttonGooTranslateId).onclick = _openGooTr;
+	}());
+};
+Trainer.prototype.toggle = function(selector){
+	var i, elems = document.querySelectorAll(selector);
+	for(i=0;i<elems.length;i++){
+		elems[i].style.display = elems[i].style.display=='none' ? '' : 'none';
+	}
+}
+
+trainer.utils = {
+	initKeydown: function(){
+		document.onkeydown = function(event){
+			var id;
+			switch(event.keyCode) {
+			  case 37:
+				id = 'buttonLearnedPhrase';
+				break;
+			  case 38:
+				id = 'buttonGooTr';
+				break;
+			  case 39:
+				id = 'buttonNextPhrase';
+				break;
+			  case 40:
+				id = 'buttonEngPhrase';
+				break;
+			  case 114: // F3
+				id = 'buttonfindByWord';
+				break;
+			}
+			let el = document.getElementById(id);
+			if(el) el.click();
+		}
+	}, 
+	
+	lastFindedByWord: (function(){
+		var ind, arr = ['would you please', 'can (you|i|we)', 'could (you|i|we)', '^do (you|i|we)', 
+			'does', 'is there'
+		];
+		ind = trainer.getRandomInt(0, arr.length-1, true);
+		return arr[ind];
+	}()),
+	findResultId: 'Результаты поиска',
+	mixId: 'Mix',
+	getSkipIds: function(){
+		return [this.findResultId, this.mixId];
+	},
+	findByWord: function(phraseOutputId){
+		var w = prompt('Find by word', this.lastFindedByWord);
+		if(w==='' || w==null) return;
+
+		this.lastFindedByWord = w;	
+		var result = [], res = [], resLesson = [],
+			skipId = this.getSkipIds(),		
+			i, q, aLessons, oLesson, reg = new RegExp( '([^\\u0400-\\u04FF\\w]|^)('+w+')', "ig"),
+			tas = document.getElementsByTagName('textarea');
+		for(i=0;i<tas.length;i++){
+			if(skipId.indexOf(tas[i].id)>-1) continue; // skip
+			aLessons = trainer.getLessonArray(tas[i].id);
+			res = [];
+			for(q=0;q<aLessons.length;q++){
+				oLesson = aLessons[q];
+				if(reg.test(oLesson.ru) || reg.test(oLesson.en)){
+					res.push(
+					'<span onclick="Trainer.prototype.toggle(\'.'+trainer.transriptionClass+'\')">'+
+					(oLesson.en+' - '+oLesson.ru).replace(reg, '$1<b class="blue">$2</b>')+'</span>'+
+					'<span class="'+trainer.transriptionClass+'" style="'+(trainer.showTransription?'':'display:none')+'"> - '+oLesson.tr+'</span>'
+					);
+					this._resLessonPush(resLesson, oLesson);
+				}
+			}
+			if(res.length>0){
+				result = result.concat('<h4>'+tas[i].id+'</h4>', res);
+			}
+		}
+		if(result.length>0){
+			var resMess = this.findResultId+' ('+resLesson.length+')';
+			document.getElementById(phraseOutputId).innerHTML = resMess+':<br/>'+result.join('<br/>\n');
+			document.getElementById(this.findResultId).value = resLesson.join('\n');
+			document.querySelector('option[value="'+this.findResultId+'"]').innerHTML = resMess+': '+w;
+		}
+	},
+	/** начальный размер страницы, коэффициент повышения */
+	initPages: function(pageL, koeff){
+		var all = this._getAll(),
+			i,
+			ind = [];
+		for(i=0;i<all.length;i++){
+			if(!ind[all[i].en.length])
+				ind[all[i].en.length] = []
+			ind[all[i].en.length].push(all[i]);
+		}
+		
+		var res = [],
+			//pageL = 1000,
+			page = 1,
+			totallen = 0;
+		ind.forEach(function(item, i, arr) {
+			item.forEach(function(_item, _i, _arr) {
+				res[page] = res[page] || [];
+			   res[page].push(_item); 
+			   totallen+=_item.en.length;
+				if(totallen>=page*pageL) {
+					page++;
+					pageL = (pageL*koeff).toFixed(0);
+				}
+			});
+		});
+		
+		this.pages = res;
+	},
+	setNextPage: function(input){
+		let next=parseInt(input.value)+1;
+		if(next>this.pages.length-1) next = 1;
+		input.value = next;
+	},
+	loadPage: function(page){
+		if(!this.pages[1]){
+			alert("No data for pages");
+			return;
+		}
+		if(!this.pages[page]){
+			alert("Not exists page №"+page+". Select from 1 to "+(this.pages.length-1)+".");
+			return;
+		}
+		
+		let resLesson = [], oLesson,
+			pageArr = this.pages[page];
+		for(i=0; i<pageArr.length; i++){
+			oLesson = pageArr[i];
+			this._resLessonPush(resLesson, oLesson);
+		}
+		if(resLesson.length>0){
+			document.getElementById(this.mixId).value = resLesson.join('\n');
+			document.querySelector('option[value="'+this.mixId+'"]').innerHTML = "Pаge "+page+' ('+resLesson.length+')';
+		}
+	},
+	_resLessonPush: function(resLesson, oLesson){
+		resLesson.push(oLesson.en+'\t'+oLesson.ru+'\t'+oLesson.tr);
+	},
+	_getAll: function(){
+		var all = [], i, q, 
+			skipId = this.getSkipIds(),		
+			tas = document.getElementsByTagName('textarea');
+		for(i=0;i<tas.length;i++){
+			if(skipId.indexOf(tas[i].id)>-1) continue; // skip
+			aLessons = trainer.getLessonArray(tas[i].id);
+			res = [];
+			for(q=0;q<aLessons.length;q++){
+				all.push(aLessons[q]);
+			}
+		}
+		return all;
+	},
+	makeMix: function(count){
+		var resLesson = [], 
+			all = this._getAll(), 
+			i, 
+			ind, oLesson;
+
+		for(i=0; i<count; i++){
+			if(all.length<1) break; 
+			ind = trainer.getRandomInt(0, all.length-1, true);
+			oLesson = all.splice(ind, 1).pop();
+			this._resLessonPush(resLesson, oLesson);
+		}
+		if(resLesson.length>0){
+			document.getElementById(this.mixId).value = resLesson.join('\n');
+			document.querySelector('option[value="'+this.mixId+'"]').innerHTML = this.mixId+' ('+count+')';
+		}
+	}
+};
+trainer.utils.initKeydown();
+trainer.utils.initPages(450, 1.02);
+window.onbeforeunload = function() {
+	if(trainer.isCurrentLessonNotFinished()){
+		return 'The lesson is not finished, are you sure you want to exit this page?';
+	}
+};
+
+</script>
+</body>
+</html>
