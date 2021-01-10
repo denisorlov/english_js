@@ -1387,7 +1387,7 @@ function wrapDictLink(word, value){
     return '<a href="javascript:void(0)" onclick="showA(\''+value+'\')">'+word+'</a>';
 }
 
-function initA(word, navigation){
+function initA(word){
     if( !window.dict || ! dict[ word ] ) return null;
 
     var tr = getTranscription(word);
@@ -1418,21 +1418,24 @@ function showInitARes(initAResult){
     if(window.infoWinShow instanceof Function) infoWinShow('infoDict');
 }
 
-function showA(word, navigation){
-    var initAResult = initA(word, navigation);
+function showA(word){
+    var initAResult = initA(word);
     if(initAResult!=null){
-        treatHistoryNavigator(word, navigation);
+        treatHistoryNavigator(word);
         showInitARes(initAResult);
     }
 
     return initAResult;
 }
 
-function treatHistoryNavigator(word, navigation){
-    // если не навигация по истории и не повтор рядом стоящих то вставляем в историю
-    if(!navigation && dh.current()!=word && dh.getNext()!=word) {
-        dh.insert(word);
-    }
+function showHistoryList(){
+    let hList = dh.getArray();//.filter(function(item, pos, a) {return a.indexOf(item) === pos;});
+    if(hList.length>1)
+        getElem('infoDictContent').innerHTML = getStylizated(' '+hList.join(' <br/> '), true); //.sort()
+}
+
+function treatHistoryNavigator(word){
+    dh.getArray().indexOf(word)<0 ? dh.insert(word) : dh.setTo(word);
     var dictPrevBut = getElem('dictPrevBut'),
         dictNextBut = getElem('dictNextBut');
     if(dh.hasPrevious()){
@@ -1461,6 +1464,9 @@ function HistoryNavigator(){
     this.insert=function(newEl){
         array.splice(index+1,0,newEl);
         index++;
+    };
+    this.setTo=function(el){
+        index = dh.getArray().indexOf(el);
     };
     this.hasNext=function(){
         return index<array.length-1;

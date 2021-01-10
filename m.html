@@ -207,8 +207,8 @@
     width:9%;
 }
 </style>
-
-
+</head>
+<body>
 
 <div style="display:none">
 	<textarea id="inTextarea" rows="10" cols="97"></textarea>
@@ -249,7 +249,7 @@
                 <!--input type="checkbox" id="swLearnedChBox" value="appear" onclick="checkLearned(this.value, this.checked);">
                 <label for="swLearnedChBox">Выучено</label-->
             </div>
-            <img id="swImage" src="http://www.jellymuffin.com/images/hello/images/pic47.jpg" onload="getElem('swChangeImage').value='*'" onerror="getGoogleImg( this.getAttribute('data-word'), +(this.getAttribute('data-start'))+1 )" title="a_ _ _ _ r" data-word="appear" data-start="1">
+            <img id="swImage" src="i/hello.jpg" onload="getElem('swChangeImage').value='*'" onerror="getGoogleImg( this.getAttribute('data-word'), +(this.getAttribute('data-start'))+1 )" title="a_ _ _ _ r" data-word="appear" data-start="1">
             <div id="swImageFind" style="position: absolute; bottom: 0px; display: none; text-align: left;" onclick="event.stopPropagation();">
                 <input type="text" id="swTheme"><br>
                 <input type="text" id="swfWord">
@@ -545,5 +545,6 @@
         )
     }
 </script>
+<script type="text/javascript" src="donateInfo.js"></script><script>donateInfoInit()</script>
 </body>
 </html>

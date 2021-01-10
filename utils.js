@@ -217,6 +217,14 @@ function reAppendElem( parent, opts, tagName  ){
     parent.appendChild(el);
 }
 
+function extend(Child, Parent) {
+	let F = function() {};
+	F.prototype = Parent.prototype;
+	Child.prototype = new F();
+	Child.prototype.constructor = Child;
+	Child.superclass = Parent.prototype;
+}
+
 /**
  * Добавляет элементу полосу прокрутки в режиме auto.
  * Возможные форматы height и width: 50, '50', '50px', '50pt' и т.д.
