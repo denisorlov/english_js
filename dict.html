@@ -194,7 +194,7 @@ function InputSelectDict(){
 					selectDiv.style.display='none';
 					input.value = this._value;
 					input._value = this._value;
-					showA(this._value.toLowerCase());
+					showA(this._value);//.toLowerCase()
 				};
 				fnd=true;
 			}
@@ -213,7 +213,7 @@ function infoWinShow( id ){
 
 function showAByHash(){
     var w = document.location.hash.split('#').pop();
-    if( w!=null && w!='' ) showA(w.toLowerCase());
+    if( w!=null && w!='' ) showA(w);//.toLowerCase()
     if(getElem('checkboxWordAutoPlaying').checked){
         playWord( w.toLowerCase() );
     }
