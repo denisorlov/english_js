@@ -49,60 +49,11 @@ body {
 <select id="speechSynthesisVoicesEn"></select>
 <select id="speechSynthesisVoicesRu"></select>
 <button id="speechSynthesisVoicesInitBut" class="red" onclick="speechSynthesisVoicesInit(this);">Активировать голосовые движки</button>
+<script type="text/javascript" src="speechUtils.js"></script>
 <script type="text/javascript">
-let speechUtils = {
-	voicesInited: false,
-	utteranceEn: (function(){
-		let utterance = new SpeechSynthesisUtterance();
-		utterance.onend = function(){ playNext(); };
-		return utterance;
-	}()),
-	utteranceRu: (function(){
-		let utterance = new SpeechSynthesisUtterance();
-		return utterance;
-	}()),
-	initVoicesSelect: function(selectId, utterance, valueName){
-		let voices = window.speechSynthesis.getVoices(),
-				sel = document.querySelector('#'+selectId);
-		voices.forEach(function(c) {
-			sel.appendChild(new Option(c.name, c.name,  false, false)); // Добавляем в селект
-		});
-		if(voices.length>0){
-			sel.onchange = function(){
-				let this_value = this.value;
-				utterance.voice = window.speechSynthesis.getVoices().filter(function(v){return v.name===this_value})[0];
-			};
-			valueName ? sel.value = valueName : 0;
-			sel.onchange();
-		}
-		return voices.length>0;
-	},
-	// более мягкое условие, применяется рандомно
-	humaniteRegExpLight: new RegExp( '([a-z])( (when|where|until|till) |:)', "g"),
-	humaniteRegExp:   new RegExp( '([a-z])( (or|when|where|until|till) |:)', "g"), //and|like|
-	/* "очеловечивание" доп. паузами */
-	humaniteText: function(txt){
-		let reg = getRandomInt(1,4,true)<3 ? speechUtils.humaniteRegExp : speechUtils.humaniteRegExpLight; // utils.js
-		return txt.replace(reg, '$1, $2')
-	},
-	play: function(text, utterance){
-		utterance = utterance || speechUtils.utteranceEn;
-		if(!speechUtils.voicesInited){
-			alert('требуется: '+'Активировать голосовые движки');
-			return;
-		}
-		utterance.text = speechUtils.humaniteText(text);
-		window.speechSynthesis.cancel();
-		window.speechSynthesis.speak(utterance);
-	}
-};
-/** humanite test
- // speechUtils.humaniteRegExp = new RegExp( '([a-z])( (like|when|where|and|until)|:)', "g");
- text = 'he was like to the ladies:«I like to keep.';
- console.log(speechUtils.humaniteText(text));
- speechUtils.play(text, speechUtils.utteranceEn);
-*/
-
+speechUtils.utteranceEn = new SpeechSynthesisUtterance();
+speechUtils.utteranceEn.onend = function(){ playNext(); };
+speechUtils.utteranceRu = new SpeechSynthesisUtterance();
 function speechSynthesisVoicesInit(button){
 	if(speechUtils.initVoicesSelect('speechSynthesisVoicesEn', speechUtils.utteranceEn, 'Google UK English Male')) {
 		speechUtils.initVoicesSelect('speechSynthesisVoicesRu', speechUtils.utteranceRu, 'Google русский');
