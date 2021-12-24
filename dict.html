@@ -226,6 +226,9 @@ jQuery(document).ready(function(){
         showAByHash();
     });
 });
+window.onbeforeunload = function() {
+  return false; // Закрыть сайт? Возможно, внесенные изменения не сохранятся.
+};
 </script>
 
 <script type="text/javascript" src="interface.js"></script>
