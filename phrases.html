@@ -1228,7 +1228,7 @@ He is a software developer.	Он программист.	hiː ɪz ə ˈsɒftw
 </div>
 <div class="butPanel">
 	<button id="buttonGooTr" class="but" style="display: none;">▲Google...</button><!-- hidden -->
-	<button id="buttonRead" onclick="speechUtils.play(trainer.getCurrentHintPhrase(), speechUtils.utteranceEn, 'see Settings: Activate Speech Voices')" class="but">▲Read...</button>
+	<button id="buttonRead" onclick="speechUtils.play(trainer.getCurrentHintPhrase(), speechUtils.utteranceEn, 'see Settings: Activate Speech Voices')" class="but speechUtils">▲Read...</button>
 	<button id="buttonNextPhrase" class="but">►Next...</button>
 	<button id="buttonEngPhrase" class="but green">▼Hint...</button>
 	<button id="buttonLearnedPhrase" class="but">◄Learned!</button>
@@ -1314,20 +1314,20 @@ function changeTheme(night){
 		<label><input type="text" value="1" onclick="trainer.utils.setNextPage(this)" id="InpPageId"><input type="button" value="Page" onclick="trainer.utils.loadPage(this.previousSibling.value)">
 		Load paged lesson</label><br/>
 	<!-- speechSynthesis -->
-		<label><select id="speechSynthesisVoicesEn"></select>
+		<label class="speechUtils"><select id="speechSynthesisVoicesEn"></select>
 		<input type="button" id="speechSynthesisVoicesInitBut" class="red" value="Activate" onclick="speechSynthesisVoicesInit(this);"> Speech Voices</label><br/>
-		<script type="text/javascript" src="speechUtils.js"></script>
-		<script type="text/javascript">
-		speechUtils.utteranceEn = new SpeechSynthesisUtterance();
-		function speechSynthesisVoicesInit(button){
-			if(speechUtils.initVoicesSelect('speechSynthesisVoicesEn', speechUtils.utteranceEn, 'Google UK English Male')) {
-				speechUtils.voicesInited = true;
-				button.remove();
-				showStatus('Активировано!');
-			}else{
-				showStatus('Не удалось, попробуйте еще раз...');
+		<script type="text/javascript" src="speechUtils.js" onerror="document.querySelectorAll('.speechUtils').forEach(function(i){i.remove()})"></script>
+		<script>
+			function speechSynthesisVoicesInit(button){
+				speechUtils.utteranceEn = new SpeechSynthesisUtterance();
+				if(speechUtils.initVoicesSelect('speechSynthesisVoicesEn', speechUtils.utteranceEn, 'Google UK English Male')) {
+					speechUtils.voicesInited = true;
+					button.remove();
+					showStatus('Activated!');
+				}else{
+					showStatus('Activation failed, try once more...');
+				}
 			}
-		}
 		</script>
 	<!-- /speechSynthesis -->
 	</div>
@@ -1684,6 +1684,8 @@ window.onbeforeunload = function() {
 };
 
 </script>
+
+<script>showStatus = function(m){alert(m)};</script><!-- dumb -->
 <script type="text/javascript" src="statusPanel.js"></script>
 </body>
 </html>
