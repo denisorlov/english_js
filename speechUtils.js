@@ -5,13 +5,13 @@ let speechUtils = {
 				sel = document.querySelector('#'+selectId);
 		voices.forEach(function(c) {
 			sel.appendChild(new Option(c.name, c.name,  false, false)); // Добавляем в селект
+			valueName && new RegExp(valueName, 'i').test(c.name) ? sel.value = c.name : 0; // выбор по RegExp
 		});
 		if(voices.length>0){
 			sel.onchange = function(){
 				let this_value = this.value;
 				utterance.voice = window.speechSynthesis.getVoices().filter(function(v){return v.name===this_value})[0];
 			};
-			valueName ? sel.value = valueName : 0;
 			sel.onchange();
 		}
 		return voices.length>0;
