@@ -41,6 +41,11 @@ body {
 	left: 2%;
 	font-size: 2em;
 }
+
+.nightTheme{
+    background-color: black;
+    color: cadetblue;
+}
 </style>
 </head>
 <body>
@@ -72,6 +77,7 @@ function speechSynthesisVoicesInit(button){
 </script>
 <!-- /speechSynthesis -->
 <input type="text" id="minRandom" value="0"/>-<input type="text" id="maxRandom" value="0"/>
+<input type="button" value="Ночь/День" onclick="document.body.classList.toggle('nightTheme')"/>
 <br/>
 <select id="lessonCombo"></select>
 <input type="button" value="Загрузить..." id="loadForEditButton" onclick="loadForEdit()"/>

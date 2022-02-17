@@ -1428,6 +1428,16 @@ function showA(word){
     return initAResult;
 }
 
+
+function storeHistoryList(){ localStorage.setItem("_dictHistoryList", JSON.stringify(dh.getArray())) }
+function restoreHistoryList(){
+	let lst = localStorage.getItem("_dictHistoryList");
+	if(lst==null) return;
+	let arr = JSON.parse(lst);
+	dh.resetArray();
+	arr.forEach(function(it){ dh.insert(it) });
+	if(dh.current()!=null) showA(dh.current());
+}
 function showHistoryList(){
     let hList = dh.getArray();//.filter(function(item, pos, a) {return a.indexOf(item) === pos;});
     if(hList.length>1)
@@ -1496,6 +1506,7 @@ function HistoryNavigator(){
     };
     this.getArray=function(){ return array; };
     this.getIndex=function(){ return index; };
+    this.resetArray=function(){ array=[]; index=-1; };
 }
 
 function openDictWin(word, top, left, width,height){

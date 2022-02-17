@@ -23,6 +23,7 @@
 </style>
 <style type="text/css">
 body{
+    background-color: darkgray;
     font-size: 1.5em;
 }
 
@@ -113,6 +114,8 @@ body{
 	<div>
 		<input type="button" class="dcBut" id="dictPrevBut" disabled="disabled" value="&#8666;" onclick="showA(dh.previous(), true)">
 		<input type="button" class="dcBut"  value="list..." title="show history list..." onclick="showHistoryList()">
+		<input type="button" class="dcBut"  value="store" title="store history list in local storage..." onclick="storeHistoryList()">
+		<input type="button" class="dcBut"  value="restore" title="restore history list from local storage..." onclick="restoreHistoryList()">
 		<input type="button" class="dcBut" style="float:right" id="dictNextBut" disabled="disabled" value="&#8667;" onclick="showA(dh.next(), true)">
 	</div>
 	<button id="playInfoDict" onclick="playWord( getElem('infoDictHead').innerHTML );">
