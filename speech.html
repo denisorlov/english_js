@@ -225,6 +225,7 @@ function speechSynthesisVoicesInit(button){
 var currInd=0, // индекс текущей позиции
 	cookieCurrIndName = 'speechCurrInd',
 	//minRandom = 0, maxRandom = 1500,
+	readByWord = false,
 	toNext = false; // движение дальше
 function setCurrInd(val){
 	currInd=val;
@@ -233,7 +234,8 @@ function setCurrInd(val){
 
 // HOT KEYS
 (function(){
-	let singleWordInd = 0;
+	let treatText = function(t){return readByWord ? t.trim().split(/\s/).join('. ') : t}, // readByWord
+		singleWordInd = 0;
 	document.onkeydown = function(event){
 		if(hotKeysOff.checked) return;
 		var id, wordCol, key = event.keyCode,
@@ -251,7 +253,7 @@ function setCurrInd(val){
 					setCurrInd( getRandomInt(Math.max(0, minRandom.value), Math.min(trs.length-1, maxRandom.value), true )); // Random row
 				}
 				toNext = key>=39 && key<111;
-				playPosInTable(currInd, trs[currInd]._en);
+				playPosInTable(currInd, treatText(trs[currInd]._en) );
 				showStatus('current row = '+(currInd+1), 1000);
 				prev = true; break;
 			case 38: // up narrow
@@ -301,15 +303,22 @@ function setCurrInd(val){
 				// window.speechSynthesis.paused ? window.speechSynthesis.resume() : window.speechSynthesis.pause();
 				prev = true; break;
 			case 96: // 0
+				/* // reduce speed
 				let cRate = speechUtils.utteranceEn.rate;
 				speechUtils.utteranceEn.rate = cRate === 1 ? 0.7.toFixed(1) : 1;
 				showStatus('playback rate = '+speechUtils.utteranceEn.rate);
+				*/
+				// read by word
+				toNext = false;
+				readByWord = !readByWord;// .trim().split(/\s/).join('. ')
+				showStatus('speaking by word = '+readByWord);
+				window.speechSynthesis.cancel();
 				prev = true; break;
 		}
 
 		if(key>=97 && key<=105){ // 1-9
 			let pl = key-96, sliceText, arrsl,
-				arr = trs[currInd]._en.trim().split(/\s/),
+				arr = treatText(trs[currInd]._en).trim().split(/\s/),
 				from = Math.ceil(arr.length/10*pl);
 			// для целостности фрагмента дополняем из начала часть от запятой и т.п.
 			if(arr[from-3] && /[,;:]$/.test(arr[from-3]) && !/[,;:]$/.test(arr[from-2])){

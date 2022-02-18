@@ -1408,7 +1408,7 @@ function initInfoDictElements(initAResult) {
     if(window.dictMnemonic){
         var mnem = dictMnemonic[initAResult.word];
         if(mnem){
-            getElem('infoDictContent').innerHTML = initAResult.as +'<h4>мнемоника:</h4>'+getStylizated(mnem, true).replace(/\n/, '</br>');//mnem.replace(/\n/, '</br>');
+            getElem('infoDictContent').innerHTML = initAResult.as +'<h4>мнемоника:</h4>'+getStylizated(mnem, true).replace(/\n/g, '</br>');//mnem.replace(/\n/, '</br>');
         }
     }
 }
