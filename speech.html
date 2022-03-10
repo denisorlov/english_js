@@ -46,85 +46,92 @@ body {
     background-color: black;
     color: cadetblue;
 }
+.fixedTop{
+    position: fixed;
+    top: 0;
+}
 </style>
 </head>
 <body>
-
-<!-- speechSynthesis -->
-<select id="speechSynthesisVoicesEn"></select>
-<select id="speechSynthesisVoicesRu"></select>
-<button id="speechSynthesisVoicesInitBut" class="red" onclick="speechSynthesisVoicesInit(this);">Активировать голосовые движки</button>
-<script type="text/javascript" src="speechUtils.js"></script>
-<script type="text/javascript">
-speechUtils.utteranceEn = new SpeechSynthesisUtterance();
-speechUtils.utteranceEn.onend = function(){ playNext(); };
-speechUtils.utteranceRu = new SpeechSynthesisUtterance();
-function speechSynthesisVoicesInit(button){
-	if(speechUtils.initVoicesSelect('speechSynthesisVoicesEn', speechUtils.utteranceEn, 'Google UK English Male')) {
-		speechUtils.initVoicesSelect('speechSynthesisVoicesRu', speechUtils.utteranceRu, 'Google русский');
-		speechUtils.voicesInited = true;
-		button.remove();
-		showStatus('Активировано!');
-	}else{
-		showStatus('Не удалось, попробуйте еще раз...');
+<div id="toolDiv" style="background-color: whitesmoke;">
+	<!-- speechSynthesis -->
+	<select id="speechSynthesisVoicesEn"></select>
+	<select id="speechSynthesisVoicesRu"></select>
+	<button id="speechSynthesisVoicesInitBut" class="red" onclick="speechSynthesisVoicesInit(this);">Активировать голосовые движки</button>
+	<script type="text/javascript" src="speechUtils.js"></script>
+	<script type="text/javascript">
+	speechUtils.utteranceEn = new SpeechSynthesisUtterance();
+	speechUtils.utteranceEn.onend = function(){ playNext(); };
+	speechUtils.utteranceRu = new SpeechSynthesisUtterance();
+	function speechSynthesisVoicesInit(button){
+		if(speechUtils.initVoicesSelect('speechSynthesisVoicesEn', speechUtils.utteranceEn, 'Google UK English Male')) {
+			speechUtils.initVoicesSelect('speechSynthesisVoicesRu', speechUtils.utteranceRu, 'Google русский');
+			speechUtils.voicesInited = true;
+			button.remove();
+			showStatus('Активировано!');
+		}else{
+			showStatus('Не удалось, попробуйте еще раз...');
+		}
 	}
-}
 
-// document.addEventListener("DOMContentLoaded", function () {
-// 	//console.log(window.speechSynthesis.getVoices());
-// });
+	// document.addEventListener("DOMContentLoaded", function () {
+	// 	//console.log(window.speechSynthesis.getVoices());
+	// });
 
-</script>
-<!-- /speechSynthesis -->
-<input type="text" id="minRandom" value="0"/>-<input type="text" id="maxRandom" value="0"/>
-<input type="button" value="Ночь/День" onclick="document.body.classList.toggle('nightTheme')"/>
-<br/>
-<select id="lessonCombo"></select>
-<input type="button" value="Загрузить..." id="loadForEditButton" onclick="loadForEdit()"/>
-<input type="button" value="Очистить..." onclick="resetForEdit()"/>&nbsp;
-<select id="selTextEdit" style="width: 100px;">
-	<option value="">править тексты...</option>
-</select>
-<!--input type="button" value="Построить..." onclick="buildTable()"/-->
-<select onchange="buildTableSelect(this)">
-	<option value="none" class="gray">построить таблицу:...</option>
-	<option>По фразам</option>
-	<option>По строкам</option>
-</select>
-<input type="button" value="Завернуть..."  onclick="wrapToObj()"/>
-<input type="checkbox" id="hotKeysOff"> <label for="hotKeysOff">Отключить горячие клавиши</label>
-<br/>
-<a href="https://reallanguage.club/anglijskie-teksty-s-audio/" target=_blank>reallanguage</a>
-<a href="https://ouenglish.ru/english-story-audio" target=_blank>ouenglish</a>
-<a href="https://tophonetics.com/" target=_blank>tophonetics</a>
-<a href="http://englishfox.ru/" target=_blank>englishfox</a>
-<a href="https://madbook.org/" target=_blank>madbook</a>
-<a href="https://english-e-reader.net/level/advanced" target=_blank>english-e-reader</a>
-<a href="https://e-libra.me/read/432477-garri-potter-i-filosofskiy-kamen.html" target=_blank>e-libra</a>
-<br/>
+	</script>
+	<!-- /speechSynthesis -->
+	<input type="text" id="minRandom" value="0"/>-<input type="text" id="maxRandom" value="0"/>
+	<input type="button" value="Ночь/День" onclick="document.body.classList.toggle('nightTheme')"/>
+	<input type="button" value="Fix" onclick="document.getElementById('toolDiv').classList.toggle('fixedTop')"/>
+	<br/>
+	<select id="lessonCombo"></select>
+	<input type="button" value="Загрузить..." id="loadForEditButton" onclick="loadForEdit()"/>
+	<input type="button" value="Очистить..." onclick="resetForEdit()"/>&nbsp;
+	<select id="selTextEdit" style="width: 100px;">
+		<option value="">править тексты...</option>
+	</select>
+	<!--input type="button" value="Построить..." onclick="buildTable()"/-->
+	<select onchange="buildTableSelect(this)">
+		<option value="none" class="gray">построить таблицу:...</option>
+		<option>По фразам</option>
+		<option>По строкам</option>
+	</select>
+	<input type="button" value="Завернуть..."  onclick="wrapToObj()"/>
+	<input type="checkbox" id="hotKeysOff"> <label for="hotKeysOff">Отключить горячие клавиши</label>
+	<br/>
+	<a href="https://reallanguage.club/anglijskie-teksty-s-audio/" target=_blank>reallanguage</a>
+	<a href="https://ouenglish.ru/english-story-audio" target=_blank>ouenglish</a>
+	<a href="https://tophonetics.com/" target=_blank>tophonetics</a>
+	<a href="http://englishfox.ru/" target=_blank>englishfox</a>
+	<a href="https://madbook.org/" target=_blank>madbook</a>
+	<a href="https://english-e-reader.net/level/advanced" target=_blank>english-e-reader</a>
+	<a href="https://e-libra.me/read/432477-garri-potter-i-filosofskiy-kamen.html" target=_blank>e-libra</a>
+	<br/>
 
-<!-- taEn -->
-<!--style>
-#taEn{
-    width: 100%;
-    height: 20em;
-    font-size: 36px;
-}
-</style>
-<textarea id="taEn">
+	<!-- taEn -->
+	<!--style>
+	#taEn{
+		width: 100%;
+		height: 20em;
+		font-size: 36px;
+	}
+	</style>
+	<textarea id="taEn">
 
-</textarea-->
-название <input type="text" id="inTitle"/>
-уровень <select id="selLevel">
-	<option value="">не выбран</option>
-	<option value="A">A (начальный)</option>
-	<option value="B">B (средний)</option>
-	<option value="C">C (продвинутый)</option>
-</select>
-<br/>
-<textarea id="taEn" style="height: 100px; width: 48%;" onmouseup="let s = getSelected();if(s.length>0) showStatus('selected = '+s.length);"></textarea>
-<textarea id="taRu" style="height: 100px; width: 48%;"></textarea>
-<textarea id="taTr" style="height: 10px; width: 98%;"></textarea>
+	</textarea-->
+	название <input type="text" id="inTitle"/>
+	уровень <select id="selLevel">
+		<option value="">не выбран</option>
+		<option value="A">A (начальный)</option>
+		<option value="B">B (средний)</option>
+		<option value="C">C (продвинутый)</option>
+	</select>
+	<br/>
+	<textarea id="taEn" style="height: 100px; width: 48%;" onmouseup="let s = getSelected();if(s.length>0) showStatus('selected = '+s.length);"></textarea>
+	<textarea id="taRu" style="height: 100px; width: 48%;"></textarea>
+	<textarea id="taTr" style="height: 10px; width: 98%;"></textarea>
+</div><!-- toolDiv -->
+
 <table id="posTable" border="1" style="font-size: 2em">
 	<tbody style="vertical-align: baseline"></tbody>
 </table>
