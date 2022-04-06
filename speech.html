@@ -237,6 +237,7 @@ var currInd=0, // индекс текущей позиции
 function setCurrInd(val){
 	currInd=val;
 	cookieLib.set(cookieCurrIndName, currInd, 3600*24*365);
+	window.localStorage.setItem(cookieCurrIndName, currInd);
 }
 
 // HOT KEYS
@@ -496,8 +497,9 @@ function highlightPosInTable(ind) {
 	});
 }
 
-function initCookieCurrInd(len){
+function initStoredCurrInd(len){
 	let ind = cookieLib.get(cookieCurrIndName);
+	if(!ind) ind = window.localStorage.getItem(cookieCurrIndName)
 	if(!ind) return;
 	ind = parseInt(ind);
 	if(len>=ind){
@@ -555,7 +557,7 @@ function buildTable(){
 	let enArr = splitText(taEn.value),
 		ruArr = splitText(taRu.value);
 	buildPosTable(enArr, ruArr, []);
-	initCookieCurrInd(enArr.length);
+	initStoredCurrInd(enArr.length);
 }
 function resetPosTable(){
 	document.querySelectorAll("#posTable tbody tr").forEach(function(e){e.remove()});
@@ -634,9 +636,9 @@ dictUtils = {
 		let newWin = window.open(
 				"dict.html#"+encodeURIComponent(word),
 				"DictWin",
-				"top="+(top||0)+",left="+(left||document.body.offsetWidth)+
+				"top="+(top||0)+",left="+(left||window.screen.width-700)+
 				",width="+(width||700)+
-				",height="+(height||document.documentElement.clientHeight)+
+				",height="+(height||window.screen.height)+
 				",resizable=yes,scrollbars=yes"
 		);
 		// setTimeout(function(){
