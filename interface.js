@@ -1404,6 +1404,9 @@ function initInfoDictElements(initAResult) {
 
     getElem('infoDictContent').innerHTML = initAResult.as;// article stylizated
     getElem('infoDictTranscription').innerHTML = initAResult.tr ;
+	if(getElem('checkboxWordAutoPlaying').checked){
+        playWord( initAResult.word.toLowerCase() );
+    }
 
     if(window.dictMnemonic){
         var mnem = dictMnemonic[initAResult.word];

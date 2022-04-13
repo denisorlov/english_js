@@ -217,9 +217,6 @@ function infoWinShow( id ){
 function showAByHash(){
     var w = document.location.hash.split('#').pop();
     if( w!=null && w!='' ) showA(w);//.toLowerCase()
-    if(getElem('checkboxWordAutoPlaying').checked){
-        playWord( w.toLowerCase() );
-    }
 }
 
 jQuery(document).ready(function(){
