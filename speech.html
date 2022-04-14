@@ -574,6 +574,19 @@ function buildPosTable(enArr, ruArr, trArr){
 		newRow._ru = ruArr[i];
 		newRow._tr = trArr[i];
 
+		let cellEn = newRow.insertCell(), enId = 'en_'+i, togglerId = enId+'Toggler';
+			//cellRu = newRow.insertCell();
+		cellEn.innerHTML='<div id="'+(i+1)+'">'
+					+'<b id="'+togglerId+'" title="toggle visibility... (hot key: Delete)" onclick="toggleCollVisibility(\'#'+enId+' span.word\', \''+togglerId+'\')">&#128161;</b>'
+					+'<span class="en" id="'+enId+'">'+dictUtils.wrapInClass(item, dictUtils.WORD_CLASS)+'</span>'
+					+'<div class="ru">'+ruArr[i]+'</div>'
+				+'</div>';
+		if(foundErr<8 && ruArr[i] && (item.length*2<ruArr[i].length || ruArr[i].length*2<item.length)){
+			console.warn('Line '+(i+1)+'\n'+item+'\n'+ruArr[i]);
+			foundErr++;
+		}
+		//cellRu.innerHTML=ruArr[i];
+
 		let cellPos = newRow.insertCell();
 		cellPos.style.textAlign = 'center';
 		cellPos.innerHTML= '►<br/><i class="gray">'+(i+1)+'</i>';
@@ -590,19 +603,6 @@ function buildPosTable(enArr, ruArr, trArr){
 			}
 		}(i, item));
 		//cellPos.width="50";
-
-		let cellEn = newRow.insertCell(), enId = 'en_'+i, togglerId = enId+'Toggler';
-			//cellRu = newRow.insertCell();
-		cellEn.innerHTML='<div id="'+(i+1)+'">'
-					+'<b id="'+togglerId+'" title="toggle visibility... (hot key: Delete)" onclick="toggleCollVisibility(\'#'+enId+' span.word\', \''+togglerId+'\')">&#128161;</b>'
-					+'<span class="en" id="'+enId+'">'+dictUtils.wrapInClass(item, dictUtils.WORD_CLASS)+'</span>'
-					+'<div class="ru">'+ruArr[i]+'</div>'
-				+'</div>';
-		if(foundErr<8 && ruArr[i] && (item.length*2<ruArr[i].length || ruArr[i].length*2<item.length)){
-			console.warn('Line '+(i+1)+'\n'+item+'\n'+ruArr[i]);
-			foundErr++;
-		}
-		//cellRu.innerHTML=ruArr[i];
 	});
 	showStatus('en/rus: '+enArr.length+'/'+ruArr.length);
 
