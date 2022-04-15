@@ -260,7 +260,7 @@ function setCurrInd(val){
 				if(key===111){
 					setCurrInd( getRandomInt(Math.max(0, minRandom.value), Math.min(trs.length-1, maxRandom.value), true )); // Random row
 				}
-				toNext = key>=39 && key<111;
+				toNext = false; // key>=39 && key<111;
 				playPosInTable(currInd, treatText(trs[currInd]._en) );
 				showStatus('current row = '+(currInd+1), 1000);
 				prev = true; break;
@@ -596,7 +596,7 @@ function buildPosTable(enArr, ruArr, trArr){
 					toNext = false;
 					window.speechSynthesis.cancel();
 				}else{
-					toNext = true;
+					toNext = false; // true;
 					setCurrInd(ind);
 					playPosInTable(ind, text);
 				}
