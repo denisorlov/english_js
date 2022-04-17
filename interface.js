@@ -1442,7 +1442,10 @@ function restoreHistoryList(){
 	if(dh.current()!=null) showA(dh.current());
 }
 function showHistoryList(){
-    let hList = dh.getArray();//.filter(function(item, pos, a) {return a.indexOf(item) === pos;});
+    let hList = [], orig = dh.getArray();//.filter(function(item, pos, a) {return a.indexOf(item) === pos;});
+    orig.forEach(function(it, idx){
+        hList.push("<button onClick='dh.remove("+idx+");showHistoryList()'>&#10060;</button> "+orig[idx])
+    });
     if(hList.length>1)
         getElem('infoDictContent').innerHTML = getStylizated(' '+hList.join(' <br/> '), true); //.sort()
 }
@@ -1510,6 +1513,7 @@ function HistoryNavigator(){
     this.getArray=function(){ return array; };
     this.getIndex=function(){ return index; };
     this.resetArray=function(){ array=[]; index=-1; };
+    this.remove=function(idx){ array.splice(idx, 1); index = Math.min(array.length-1, index);};
 }
 
 function openDictWin(word, top, left, width,height){
