@@ -1439,7 +1439,7 @@ function restoreHistoryList(){
 	let arr = JSON.parse(lst);
 	dh.resetArray();
 	arr.forEach(function(it){ dh.insert(it) });
-	if(dh.current()!=null) showA(dh.current());
+	if(dh.getArray().length>1) showHistoryList();
 }
 function showHistoryList(){
     let hList = [], orig = dh.getArray();//.filter(function(item, pos, a) {return a.indexOf(item) === pos;});
