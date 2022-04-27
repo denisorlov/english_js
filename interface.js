@@ -1381,10 +1381,16 @@ function getStylizated(a, forHtml){
             br+'$1');//'<br />$1')
 }
 
+/** try to make & show title for element */
+function tryTitle(el){
+	var w=dictFind(dictSmall, el.innerHTML);
+	if(w!=null) el.title = w.fw+': '+w.a;
+}
+
 /** обертка в словарную ссылку */
 function wrapDictLink(word, value){
     value = value || word;
-    return '<a href="javascript:void(0)" onclick="showA(\''+value+'\')">'+word+'</a>';
+    return '<a href="javascript:void(0)" onmouseover="tryTitle(this)" onclick="showA(\''+value+'\')">'+word+'</a>';
 }
 
 function initA(word){
