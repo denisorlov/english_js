@@ -112,15 +112,15 @@ body{
 	</div>
 	<script>document.getElementById('infoDictInput')._value="input the word...";</script>
 	<div>
-		<input type="button" class="dcBut" id="dictPrevBut" disabled="disabled" value="&#8666;" onclick="showA(dh.previous(), true)">
+		<input type="button" class="dcBut" id="dictPrevBut" disabled="disabled" value="&#8666;" onclick="showA(dh.previous())">
 		<input type="button" class="dcBut"  value="list..." title="show history list..." onclick="showHistoryList()">
 		<input type="button" class="dcBut"  value="store" title="store history list to local storage..." onclick="storeHistoryList()">
 		<input type="button" class="dcBut"  value="restore" title="restore history list from local storage..." onclick="restoreHistoryList()">
-		<input type="button" class="dcBut" style="float:right" id="dictNextBut" disabled="disabled" value="&#8667;" onclick="showA(dh.next(), true)">
+		<input type="button" class="dcBut" style="float:right" id="dictNextBut" disabled="disabled" value="&#8667;" onclick="showA(dh.next())">
 	</div>
 	<button id="playInfoDict" onclick="playWord( getElem('infoDictHead').innerHTML );">
 		<div id="swPlayer" style="height:0"></div><audio id="swHtml5Player" src=""></audio>
-        <input type="checkbox" onclick="event.stopPropagation();" id="checkboxWordAutoPlaying" title="Word Auto Playing"/>
+        <input type="checkbox" checked="checked" onclick="event.stopPropagation();" id="checkboxWordAutoPlaying" title="Word Auto Playing"/>
 		&#9654;
 		<span id="infoDictTranscription" class="transcription">[ˈdɪkʃənrɪ]</span>
 	</button>
@@ -225,6 +225,22 @@ jQuery(document).ready(function(){
     $( window ).bind( 'popstate', function( e ){
         showAByHash();
     });
+
+	document.onkeydown = function(event){
+		let prev = false, key = event.keyCode;
+		switch(key) {
+			case 37: // <-
+				dictPrevBut.click();
+				prev = true; break;
+			case 39: // ->
+				dictNextBut.click();
+				prev = true; break;
+			case 40: // down narrow
+				playInfoDict.click();
+				prev = true; break;
+		}
+		prev === true ? event.preventDefault() : 0;
+	}
 });
 window.onbeforeunload = function() {
   return false; // Закрыть сайт? Возможно, внесенные изменения не сохранятся.

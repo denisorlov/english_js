@@ -1428,6 +1428,7 @@ function showInitARes(initAResult){
 }
 
 function showA(word){
+    if(word==null) return null;
     var initAResult = initA(word);
     if(initAResult!=null){
         treatHistoryNavigator(word);

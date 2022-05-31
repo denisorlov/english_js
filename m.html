@@ -537,10 +537,12 @@
 
     for(var i=0;i<SYSTEM.TENSES.length;i++){
         mylog(
-                SYSTEM.TENSES[i]+':'+
+                SYSTEM.TENSES[i]+':\n'+
                         'He '+verbToTense('close', SYSTEM.TENSES[i], 3,1, 0)+' the door. '+
-                        'The door '+verbToTense('be', SYSTEM.TENSES[i], 3,1, 0)+' closed. '+
-                        askInTense('close', SYSTEM.TENSES[i], getPronoun(3,1,'m'), 1)+' the door? '+
+                        'The door '+verbToTense('be', SYSTEM.TENSES[i], 3,1, 0)+' closed. \n'+
+						askInTense('close', SYSTEM.TENSES[i], getPronoun(3,1,'m'), 0)+' the door? '+
+                        askInTense('close', SYSTEM.TENSES[i], getPronoun(3,1,'m'), 1)+' the door? \n'+
+                        askInTense('be', SYSTEM.TENSES[i], 'the door', 0)+' closed? '+
                         askInTense('be', SYSTEM.TENSES[i], 'the door', 1)+' closed? '
         )
     }
