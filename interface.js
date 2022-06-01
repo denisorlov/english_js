@@ -1445,8 +1445,9 @@ function restoreHistoryList(){
 	if(lst==null) return;
 	let arr = JSON.parse(lst);
 	if(arr.length < 1 && dh.getArray().length > 0) return;
-	dh.resetArray();
-	arr.forEach(function(it){ dh.insert(it) });
+	arr.forEach(function(it){
+		if(dh.getArray().indexOf(it)<0) dh.insert(it);
+	});
 	if(dh.getArray().length>1) showHistoryList();
 }
 function showHistoryList(){
