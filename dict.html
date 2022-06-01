@@ -238,6 +238,9 @@ jQuery(document).ready(function(){
 			case 40: // down narrow
 				playInfoDict.click();
 				prev = true; break;
+			case 38: // up narrow
+				showA(dh.getArray()._rand());
+				prev = true; break;
 		}
 		prev === true ? event.preventDefault() : 0;
 	}
