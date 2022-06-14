@@ -1451,18 +1451,19 @@ function restoreHistoryList(){
 	if(dh.getArray().length>1) showHistoryList();
 }
 function showHistoryList(){
-    let hList = [], orig = dh.getArray();//.filter(function(item, pos, a) {return a.indexOf(item) === pos;});
+    let hList = [], currIdx = dh.getIndex(), orig = dh.getArray();
     orig.forEach(function(it, idx){
         hList.push(
         "<button title=\"delete\" onClick='dh.remove("+idx+");showHistoryList()'>&#10060;</button> "+
         "<button title=\"to top\" onClick='dh.moveTop("+idx+");showHistoryList()'>&#11165;</button> "+
         "<button title=\"to bottom\" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
         orig[idx]+
-        (idx==19 ? ' <hr title="'+(idx+1)+' words" style="background-color: orange;height: 2px;border: none;"> ' : ' <br/> ')
+        (idx==currIdx ? ' &#8666;' : ' ' )+
+        (idx==19 ? '<hr title="'+(idx+1)+' words" style="background-color: orange;height: 2px;border: none;">' : '<br/>')
 		);
     });
     if(hList.length>1)
-        getElem('infoDictContent').innerHTML = getStylizated(' '+hList.join(''), true); //.sort()
+        getElem('infoDictContent').innerHTML = getStylizated(' '+hList.join(' '), true); //.sort()
 }
 
 function treatHistoryNavigator(word){
