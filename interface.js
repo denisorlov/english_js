@@ -1410,7 +1410,8 @@ function initInfoDictElements(initAResult) {
 
     getElem('infoDictContent').innerHTML = initAResult.as;// article stylizated
     getElem('infoDictTranscription').innerHTML = initAResult.tr ;
-	if(getElem('checkboxWordAutoPlaying').checked){
+	let autoPlay = getElem('checkboxWordAutoPlaying');
+	if(autoPlay!=null && autoPlay.checked){
         playWord( initAResult.word.toLowerCase() );
     }
 
@@ -1459,7 +1460,7 @@ function showHistoryList(){
         "<button title=\"to bottom\" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
         orig[idx]+
         (idx==currIdx ? ' &#8666;' : ' ' )+
-        (idx==19 ? '<hr title="'+(idx+1)+' words" style="background-color: orange;height: 2px;border: none;">' : '<br/>')
+        (idx==19 ? '<hr title="'+(idx+1)+' words" style="background-color: white;height: 2px;border: none;">' : '<br/>')
 		);
     });
     if(hList.length>1)

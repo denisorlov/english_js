@@ -359,6 +359,7 @@
     font-size: 100%;
     width: 20%;
     margin: 0.2em 0.2em 0 0;
+    box-sizing: border-box;
 }
 
 </style>
@@ -381,6 +382,8 @@
         <div id="infoDictContent">&#9997; Здесь будут отображаться словарные статьи. Щелкните по заголовку если хотите найти произвольную статью.</div>
     </div>
     <div class="infoContent" id="infoSetting"><h3>&#9773; Настройки</h3>
+        <input id="inputCardSize" value="100" type="text" onchange="coChange(this);fillSelect('swBeginEnglishBaseFreq', beginEnglishBase, 'карточки:', this.value);"/><label for="inputCardSize">Размер карточки</label>
+        <br/>
         <select id="ImageH" onchange="changeImageH(this)">
             <script>writeOptions(5, 80, '%', '50%', 5);</script>
         </select>Высота изображения
@@ -406,6 +409,7 @@
         <p>
             Веб-приложение "4000 слов" поможет весело и непринужденно освоить 4000 английских слов за 2 месяца!<br/>
             Выбирайте набор карточек. После загрузки картинок, набором можно пользоваться off-line.<br/> 
+            Размер карточки (по умолчанию 100 слов) можно изменить в разделе <b>&#9773; Настройки</b>.<br/>
             Вводите слово и нажимайте "Enter". Забыли? Тоже - "Enter"!<br/>
             Нажатие на 0 - открывает/закрывает словарь. Учите вглубь!<br/>
             Нажатие на 9 - озвучивает слово. Про-из-но-си-те!
@@ -461,7 +465,7 @@
     }
 
     function initCookieElemValue(){
-        var k, cookieEls = ["ImageH","autoEnterNoWrong","playWordOnEnter","playWordOnHelp","selectVKeyBrd", "selectMInfoWrapHeight"];
+        var k, cookieEls = ["inputCardSize", "ImageH","autoEnterNoWrong","playWordOnEnter","playWordOnHelp","selectVKeyBrd", "selectMInfoWrapHeight"];
         for(k in cookieEls)
             cookieLib.initElemValue(getElem(cookieEls[k]));
 
@@ -516,24 +520,22 @@
 <script>
     document.body.children[0].style.right = '100%';
 
-    (function(){
-        function fillSelect(select, arr, label){
-            var step = 100, last;
-            select=getElem( select );
-            clearOptions( select );
-            addAnyOption( select, label );
-            for(var i=0;i<arr.length;i+=step){
-                last = i+step-1;
-                if(last>arr.length) last=arr.length-1;
-                op = new Option( (i+1)+' - '+(last+1) + ': '+arr[i]+' ... '+arr[last], i+'-'+last , false, false);
-                op.title = arr[i]+' ... '+arr[last];
-                select.appendChild( op );
-            }
-        };
+    function fillSelect(select, arr, label, step){
+		var last, step = step ? parseInt(step) : 100;
+		select=getElem( select );
+		clearOptions( select );
+		addAnyOption( select, label );
+		for(var i=0;i<arr.length;i+=step){
+			last = i+step-1;
+			if(last>arr.length) last=arr.length-1;
+			op = new Option( (i+1)+' - '+(last+1) + ': '+arr[i]+' ... '+arr[last], i+'-'+last , false, false);
+			op.title = arr[i]+' ... '+arr[last];
+			select.appendChild( op );
+		}
+	};
 
-        //fillSelect('swBeginEnglishBase', beginEnglishBase, 'по алфавиту:');
-        fillSelect('swBeginEnglishBaseFreq', beginEnglishBase, 'карточки:');//по частоте:
-    }());
+    //fillSelect('swBeginEnglishBase', beginEnglishBase, 'по алфавиту:');
+    fillSelect('swBeginEnglishBaseFreq', beginEnglishBase, 'карточки:', getElem('inputCardSize').value);//по частоте:
 
     for(var i=0;i<SYSTEM.TENSES.length;i++){
         mylog(
