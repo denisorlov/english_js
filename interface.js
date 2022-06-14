@@ -1453,10 +1453,16 @@ function restoreHistoryList(){
 function showHistoryList(){
     let hList = [], orig = dh.getArray();//.filter(function(item, pos, a) {return a.indexOf(item) === pos;});
     orig.forEach(function(it, idx){
-        hList.push("<button onClick='dh.remove("+idx+");showHistoryList()'>&#10060;</button> "+orig[idx])
+        hList.push(
+        "<button title=\"delete\" onClick='dh.remove("+idx+");showHistoryList()'>&#10060;</button> "+
+        "<button title=\"to top\" onClick='dh.moveTop("+idx+");showHistoryList()'>&#11165;</button> "+
+        "<button title=\"to bottom\" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
+        orig[idx]+
+        (idx==19 ? ' <hr title="'+(idx+1)+' words" style="background-color: orange;height: 2px;border: none;"> ' : ' <br/> ')
+		);
     });
     if(hList.length>1)
-        getElem('infoDictContent').innerHTML = getStylizated(' '+hList.join(' <br/> '), true); //.sort()
+        getElem('infoDictContent').innerHTML = getStylizated(' '+hList.join(''), true); //.sort()
 }
 
 function treatHistoryNavigator(word){
@@ -1487,8 +1493,16 @@ function HistoryNavigator(){
     var index=-1,
         array=[];
     this.insert=function(newEl){
-        array.splice(index+1,0,newEl);
+        this.insertTo(index+1, newEl);
         index++;
+    };
+	this.insertTo=function(idx, newEl){
+        array.splice(idx,0,newEl);
+    };
+	this.move=function(oldIdx, newIdx){
+        let el = array[oldIdx];
+        this.remove(oldIdx);
+        this.insertTo(newIdx, el);
     };
     this.setTo=function(el){
         index = dh.getArray().indexOf(el);
@@ -1523,6 +1537,8 @@ function HistoryNavigator(){
     this.getIndex=function(){ return index; };
     this.resetArray=function(){ array=[]; index=-1; };
     this.remove=function(idx){ array.splice(idx, 1); index = Math.min(array.length-1, index);};
+    this.moveTop=function(idx){this.move(idx, 0);};
+    this.moveBtm=function(idx){this.move(idx, array.length-1);};
 }
 
 function openDictWin(word, top, left, width,height){

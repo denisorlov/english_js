@@ -227,6 +227,7 @@ jQuery(document).ready(function(){
     });
 
 	document.onkeydown = function(event){
+		if(event.target!=document.body) return;
 		let prev = false, key = event.keyCode;
 		switch(key) {
 			case 37: // <-
