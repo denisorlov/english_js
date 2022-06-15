@@ -1440,36 +1440,41 @@ function showA(word){
 }
 
 
-function storeHistoryList(){ localStorage.setItem("_dictHistoryList", JSON.stringify(dh.getArray())) }
+function storeHistoryList(){
+	let back = localStorage.getItem("dictionary.historyList");
+	if(back != null && back!='[]') localStorage.setItem("dictionary.historyList.back", back);
+	localStorage.setItem("dictionary.historyList", JSON.stringify(dh.getArray()));
+}
 function restoreHistoryList(){
-	let lst = localStorage.getItem("_dictHistoryList");
+	let lst = localStorage.getItem("dictionary.historyList");
 	if(lst==null) return;
 	let arr = JSON.parse(lst);
 	if(arr.length < 1 && dh.getArray().length > 0) return;
 	arr.forEach(function(it){
 		if(dh.getArray().indexOf(it)<0) dh.insert(it);
 	});
-	if(dh.getArray().length>1) showHistoryList();
 }
 function showHistoryList(){
     let hList = [], currIdx = dh.getIndex(), orig = dh.getArray();
     orig.forEach(function(it, idx){
         hList.push(
-        "<button title=\"delete\" onClick='dh.remove("+idx+");showHistoryList()'>&#10060;</button> "+
+        "<button title=\"remove from list "+(idx+1)+"\" onClick='dh.remove("+idx+");showHistoryList()'>&#10060;</button> "+
         "<button title=\"to top\" onClick='dh.moveTop("+idx+");showHistoryList()'>&#11165;</button> "+
         "<button title=\"to bottom\" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
-        orig[idx]+
-        (idx==currIdx ? ' &#8666;' : ' ' )+
-        (idx==19 ? '<hr title="'+(idx+1)+' words" style="background-color: white;height: 2px;border: none;">' : '<br/>')
+        getStylizated(' '+orig[idx], true)+
+        (idx==currIdx ? ' &#8666;' : '' )+
+        (idx==19 ? '<hr title="'+(idx+1)+' primary words" style="background-color: white;height: 2px;border: none;">' : '<br/>')
 		);
     });
-    if(hList.length>1)
-        getElem('infoDictContent').innerHTML = getStylizated(' '+hList.join(' '), true); //.sort()
+
+    getElem('infoDictContent').innerHTML = hList.join('');
 }
 
 function treatHistoryNavigator(word){
     dh.getArray().indexOf(word)<0 ? dh.insert(word) : dh.setTo(word);
-    var dictPrevBut = getElem('dictPrevBut'),
+	if(dh.getArray().length == 1) restoreHistoryList();
+
+    let dictPrevBut = getElem('dictPrevBut'),
         dictNextBut = getElem('dictNextBut');
     if(dh.hasPrevious()){
         dictPrevBut.removeAttribute('disabled');

@@ -112,17 +112,15 @@ body{
 	</div>
 	<script>document.getElementById('infoDictInput')._value="input the word...";</script>
 	<div>
-		<input type="button" class="dcBut" id="dictPrevBut" disabled="disabled" value="&#8666;" onclick="showA(dh.previous())">
+		<input type="button" class="dcBut" id="dictPrevBut" style="color:blue" disabled="disabled" value="&#8666;" onclick="showA(dh.previous())">
 		<input type="button" class="dcBut"  value="list..." title="show history list..." onclick="showHistoryList()">
-		<input type="button" class="dcBut"  value="store" title="store history list to local storage..." onclick="storeHistoryList()">
-		<input type="button" class="dcBut"  value="restore" title="restore history list from local storage..." onclick="restoreHistoryList()">
-		<input type="button" class="dcBut" style="float:right" id="dictNextBut" disabled="disabled" value="&#8667;" onclick="showA(dh.next())">
+		<input type="button" class="dcBut"  value="store" title="store history list to local storage..." onclick="storeHistoryList()" id="dictStoreBut">
+		<input type="button" class="dcBut" style="float:right;color:blue" id="dictNextBut" disabled="disabled" value="&#8667;" onclick="showA(dh.next())">
 	</div>
 	<button id="playInfoDict" onclick="playWord( getElem('infoDictHead').innerHTML );">
 		<div id="swPlayer" style="height:0"></div><audio id="swHtml5Player" src=""></audio>
-        <input type="checkbox" checked="checked" onclick="event.stopPropagation();" id="checkboxWordAutoPlaying" title="Word Auto Playing"/>
-		&#9654;
 		<span id="infoDictTranscription" class="transcription">[ˈdɪkʃənrɪ]</span>
+        <input type="checkbox" checked="checked" onclick="event.stopPropagation();" id="checkboxWordAutoPlaying" title="word auto playing"/>
 	</button>
 	<div id="infoDictContent">&#9997; Здесь будут отображаться словарные статьи.<br/>Щелкните по заголовку и введите искомое слово.</div>
 </div>

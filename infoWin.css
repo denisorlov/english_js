@@ -32,7 +32,6 @@
     font-weight: bold;
     font-size: 1em;
     margin-bottom: 2px;
-	/*border-radius: 0.2em;*/
 }
 .ipBut{
     float:right;
@@ -54,12 +53,8 @@
 
 #playInfoDict{
 	cursor:pointer;
-	border-radius: 0.2em;
 	font-size: 1em;
 	display:block;
 	width:100%;
-    color: green;
+    color: #0075ff;
 }
-	#playInfoDict:hover{
-		background-color:lightgreen
-	}
