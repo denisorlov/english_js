@@ -1455,13 +1455,13 @@ function restoreHistoryList(){
 	});
 }
 function showHistoryList(){
-    let hList = [], currIdx = dh.getIndex(), orig = dh.getArray();
-    orig.forEach(function(it, idx){
+    let hList = [], dis = 'disabled="disabled"', currIdx = dh.getIndex();
+    dh.getArray().forEach(function(it, idx, arr){
         hList.push(
         "<button title=\"remove from list "+(idx+1)+"\" onClick='dh.remove("+idx+");showHistoryList()'>&#10060;</button> "+
-        "<button title=\"to top\" onClick='dh.moveTop("+idx+");showHistoryList()'>&#11165;</button> "+
-        "<button title=\"to bottom\" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
-        getStylizated(' '+orig[idx], true)+
+        "<button title=\"to top\" "+(idx==0?dis:'')+" onClick='dh.moveTop("+idx+");showHistoryList()'>&#11165;</button> "+
+        "<button title=\"to bottom\" "+(idx==arr.length-1?dis:'')+" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
+        getStylizated(' '+it, true)+
         (idx==currIdx ? ' &#8666;' : '' )+
         (idx==19 ? '<hr title="'+(idx+1)+' primary words" style="background-color: white;height: 2px;border: none;">' : '<br/>')
 		);
