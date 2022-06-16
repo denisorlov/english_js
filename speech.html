@@ -324,8 +324,9 @@ function setCurrInd(val){
 				prev = true; break;
 		}
 
-		if(key>=97 && key<=105){ // 1-9
-			let pl = key-96, sliceText, arrsl,
+		if(key>=49 && key<=57 || key>=97 && key<=105){ // 1-9
+			let pl = key>96 ? key-96 : key-48, // get pl from 1 to 9
+				sliceText, arrsl,
 				arr = treatText(trs[currInd]._en).trim().split(/\s/),
 				from = Math.ceil(arr.length/10*pl);
 			// для целостности фрагмента дополняем из начала часть от запятой и т.п.

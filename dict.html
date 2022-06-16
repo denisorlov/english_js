@@ -11,6 +11,7 @@
     <!--script type="text/javascript" src="dict51100.js"></script-->
     <script type="text/javascript" src="dict71700.js"></script>
     <script type="text/javascript" src="dictMnemonic.js"></script>
+    <script type="text/javascript" src="dictExample.js"></script>
     <script type="text/javascript" src="trans.js"></script>
 	
     <!--script type="text/javascript" src="system.js"></script-->
@@ -123,6 +124,27 @@ body{
 		<span id="infoDictTranscription" class="transcription">[ˈdɪkʃənrɪ]</span>
         <input type="checkbox" checked="checked" onclick="event.stopPropagation();" id="checkboxWordAutoPlaying" title="word auto playing"/>
 	</button>
+<!-- speechSynthesis -->
+	<select id="speechSynthesisVoicesEn"></select>
+	<select id="speechSynthesisVoicesRu"></select>
+	<button id="speechSynthesisVoicesInitBut" class="red" onclick="speechSynthesisVoicesInit(this);">Активировать голосовые движки</button>
+	<script type="text/javascript" src="speechUtils.js"></script>
+	<script type="text/javascript">
+	speechUtils.utteranceEn = new SpeechSynthesisUtterance();
+	speechUtils.utteranceEn.onend = function(){ playNext(); };
+	speechUtils.utteranceRu = new SpeechSynthesisUtterance();
+	function speechSynthesisVoicesInit(button){
+		if(speechUtils.initVoicesSelect('speechSynthesisVoicesEn', speechUtils.utteranceEn, 'Google UK English Male')) {
+			speechUtils.initVoicesSelect('speechSynthesisVoicesRu', speechUtils.utteranceRu, 'Google русский');
+			speechUtils.voicesInited = true;
+			button.remove();
+			//showStatus('Активировано!');
+		}else{
+			//showStatus('Не удалось, попробуйте еще раз...');
+		}
+	}
+	</script>
+<!-- /speechSynthesis -->
 	<div id="infoDictContent">&#9997; Здесь будут отображаться словарные статьи.<br/>Щелкните по заголовку и введите искомое слово.</div>
 </div>
 
@@ -241,6 +263,13 @@ jQuery(document).ready(function(){
 			case 38: // up narrow
 				showA(dh.getArray()._rand());
 				prev = true; break;
+		}
+		
+		if(key>=49 && key<=57 || key>=97 && key<=105){ // 1-9
+			let pl = key>96 ? key-96 : key-48; // get pl from 1 to 9
+			let playBtn = getElem('playBtn'+pl);
+			if(playBtn!=null) playBtn.click();
+			prev = true;
 		}
 		prev === true ? event.preventDefault() : 0;
 	}

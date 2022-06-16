@@ -48,6 +48,27 @@ function getElem(select){
     return typeof select == 'string'? document.getElementById(select):select ;
 }
 
+function toggleElem(id, handle){
+	let el = document.getElementById(id);
+	el.style.display = el.style.display === 'none' ? 'block' : 'none';
+
+	if(handle){
+		handle.innerHTML = el.style.display === 'block' ? '-' : '+';
+	}
+	return el.style.display === 'block'; // boolean
+}
+
+function toggleElemVisibility(id, handle){
+	let el = document.getElementById(id);
+	if(!el) return;
+	el.style.visibility = el.style.visibility === 'hidden' ? '' : 'hidden';
+
+	if(handle){
+		handle.style.color = el.style.visibility === '' ? '#000000' : '#00000050';
+	}
+	return el.style.visibility === ''; // boolean
+}
+
 {/* SELECT */
 	function setSelectValue(select){
 		select = getElem( select );

@@ -1408,7 +1408,27 @@ function initInfoDictElements(initAResult) {
         infoDictInput._value = initAResult.word;
     }
 
-    getElem('infoDictContent').innerHTML = initAResult.as;// article stylizated
+    getElem('infoDictContent').innerHTML = '';
+	
+	if(window.dictExample){
+        let example = dictExample[initAResult.word], exHtml='';
+        if(example){
+			example.forEach((it, idx, arr)=>{
+				exHtml+='<div>'+(idx+1)+
+					getStylizated(' '+it.en, true)+': <b>'+it.ru+'</b><br/>'+
+					'&nbsp;'+
+						' <button title="'+(it.ruex.replace(/"/g, "'"))+'">&#128195;</button>'+
+						' <button id="playBtn'+(idx+1)+'" onclick="speechUtils.play(this.nextSibling.innerText)">&#128264;</button>'+
+						'<span>'+getStylizated(' '+it.enex, true)+'</span>'+
+				'</div>'
+			});
+            getElem('infoDictContent').innerHTML = getElem('infoDictContent').innerHTML + 
+			'<button title="toggle examples" onclick="toggleElem(this.nextSibling.id)">&#128195;</button>'+
+			'<div id="exampleDiv" style="border: 1px dashed blue;padding: 0.5em;">'+ exHtml + '</div>';
+        }
+    }
+	
+	getElem('infoDictContent').innerHTML = getElem('infoDictContent').innerHTML + initAResult.as;// article stylizated
     getElem('infoDictTranscription').innerHTML = initAResult.tr ;
 	let autoPlay = getElem('checkboxWordAutoPlaying');
 	if(autoPlay!=null && autoPlay.checked){
@@ -1418,7 +1438,7 @@ function initInfoDictElements(initAResult) {
     if(window.dictMnemonic){
         var mnem = dictMnemonic[initAResult.word];
         if(mnem){
-            getElem('infoDictContent').innerHTML = initAResult.as +'<h4>мнемоника:</h4>'+getStylizated(mnem, true).replace(/\n/g, '</br>');//mnem.replace(/\n/, '</br>');
+            getElem('infoDictContent').innerHTML = getElem('infoDictContent').innerHTML +'<h4>мнемоника:</h4>'+getStylizated(mnem, true).replace(/\n/g, '<br/>');//mnem.replace(/\n/, '<br/>');
         }
     }
 }
@@ -1459,8 +1479,8 @@ function showHistoryList(){
     dh.getArray().forEach(function(it, idx, arr){
         hList.push(
         "<button title=\"remove from list "+(idx+1)+"\" onClick='dh.remove("+idx+");showHistoryList()'>&#10060;</button> "+
-        "<button title=\"to top\" "+(idx==0?dis:'')+" onClick='dh.moveTop("+idx+");showHistoryList()'>&#11165;</button> "+
-        "<button title=\"to bottom\" "+(idx==arr.length-1?dis:'')+" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
+        "<button "+(idx==0?dis:'title=\"to top\"')				+" onClick='dh.moveTop("+idx+");showHistoryList()'>&#11165;</button> "+
+        "<button "+(idx==arr.length-1?dis:'title=\"to bottom\"')+" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
         getStylizated(' '+it, true)+
         (idx==currIdx ? ' &#8666;' : '' )+
         (idx==19 ? '<hr title="'+(idx+1)+' primary words" style="background-color: white;height: 2px;border: none;">' : '<br/>')
