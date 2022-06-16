@@ -50,12 +50,12 @@ function getElem(select){
 
 function toggleElem(id, handle){
 	let el = document.getElementById(id);
-	el.style.display = el.style.display === 'none' ? 'block' : 'none';
+	el.style.display = el.style.display === 'none' ? '' : 'none';
 
 	if(handle){
-		handle.innerHTML = el.style.display === 'block' ? '-' : '+';
+		handle.innerHTML = el.style.display === '' ? '-' : '+';
 	}
-	return el.style.display === 'block'; // boolean
+	return el.style.display === ''; // boolean
 }
 
 function toggleElemVisibility(id, handle){

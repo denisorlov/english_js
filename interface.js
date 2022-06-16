@@ -1417,8 +1417,10 @@ function initInfoDictElements(initAResult) {
 				exHtml+='<div>'+(idx+1)+
 					getStylizated(' '+it.en, true)+': <b>'+it.ru+'</b><br/>'+
 					'&nbsp;'+
-						' <button title="'+(it.ruex.replace(/"/g, "'"))+'">&#128195;</button>'+
-						' <button id="playBtn'+(idx+1)+'" onclick="speechUtils.play(this.nextSibling.innerText)">&#128264;</button>'+
+						' <button title="'+(it.ruex.replace(/"/g, "'"))+'" onclick="toggleElem(this.nextSibling.id)">&#128195;</button>'+
+						'<span id="exampleRu'+(idx+1)+'" style="display:none;"> '+it.ruex+'</span>'+
+						'<button id="playBtnRu'+(idx+1)+'" style="display:none;" onclick="speechUtils.play(this.previousSibling.innerText, speechUtils.utteranceRu)">&#128264;</button>'+
+						' <button id="playBtnEn'+(idx+1)+'" onclick="speechUtils.play(this.nextSibling.innerText)">&#128264;</button>'+
 						'<span>'+getStylizated(' '+it.enex, true)+'</span>'+
 				'</div>'
 			});
