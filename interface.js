@@ -1418,7 +1418,7 @@ function initInfoDictElements(initAResult) {
 					getStylizated(' '+it.en, true)+': <b>'+it.ru+'</b><br/>'+
 					'&nbsp;'+
 						' <button title="'+(it.ruex.replace(/"/g, "'"))+'" onclick="toggleElem(this.nextSibling.id)">&#128195;</button>'+
-						'<span id="exampleRu'+(idx+1)+'" style="display:none;"> '+it.ruex+'</span>'+
+						'<span id="exampleRu'+(idx+1)+'" style="display:none;"> '+it.ruex+'<br/></span>'+
 						'<button id="playBtnRu'+(idx+1)+'" style="display:none;" onclick="speechUtils.play(this.previousSibling.innerText, speechUtils.utteranceRu)">&#128264;</button>'+
 						' <button id="playBtnEn'+(idx+1)+'" onclick="speechUtils.play(this.nextSibling.innerText)">&#128264;</button>'+
 						'<span>'+getStylizated(' '+it.enex, true)+'</span>'+
@@ -1437,12 +1437,13 @@ function initInfoDictElements(initAResult) {
         playWord( initAResult.word.toLowerCase() );
     }
 
-    if(window.dictMnemonic){
+    /* // @TODO полагаю, что мнемоника - это вредная затея, ложный обходной	путь
+	if(window.dictMnemonic){
         var mnem = dictMnemonic[initAResult.word];
         if(mnem){
             getElem('infoDictContent').innerHTML = getElem('infoDictContent').innerHTML +'<h4>мнемоника:</h4>'+getStylizated(mnem, true).replace(/\n/g, '<br/>');//mnem.replace(/\n/, '<br/>');
         }
-    }
+    }*/
 }
 
 function showInitARes(initAResult){
