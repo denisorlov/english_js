@@ -29,6 +29,22 @@ console.log('"'+word+'":['+all.join(',\n\t')+'],');
 */
 // check TODO
 var dictExNew = {
+	"typo":[{"en":"typo","ru":"опечатка","enex":"a small mistake in a text made when it was typed or printed","ruex":"небольшая ошибка в тексте, допущенная при его вводе или распечатке"}],
+	"vehemence":[{"en":"vehemence","ru":"страстность, горячность","enex":"the forceful expression of strong feelings:","ruex":"сильное выражение сильных чувств"}],
+	"vehement":[{"en":"vehement","ru":"неистовый, страстный","enex":"expressing very strong feelings, or showing great energy or force:","ruex":"выражение очень сильных чувств или демонстрация большой энергии или силы"}],
+	"sullen":[{"en":"sullen","ru":"угрюмый, мрачный","enex":"in an unpleasant mood and not smiling or speaking to anyone","ruex":"в неприятном настроении, не улыбается и ни с кем не разговаривает"}],
+	"perfunctory":[{"en":"perfunctory","ru":"невнимательный, небрежный","enex":"done quickly, without taking care or interest","ruex":"сделано быстро, без всякой заботы или интереса"}],
+	"upholster":[{"en":"upholster","ru":"обивать (мебель)","enex":"to fill a seat, chair, or sofa with a suitable material and cover it with cloth","ruex":"набить сиденье, стул или диван подходящим материалом и накрыть его тканью"}],
+	"spatter":[{"en":"spatter","ru":"обрызгать","enex":"to cover someone or something with small drops of liquid","ruex":"покрыть кого-то или что-то маленькими каплями жидкости"}, {"en":"spatter","ru":"опорочить","enex":"to spatter a man's good name","ruex":"опорочить человека"}],
+	"cobble":[{"en":"cobble","ru":"булыжник","enex":"a rounded stone used on the surface of an old-fashioned road","ruex":"округлый камень, используемый на поверхности старомодной дороги"}],
+	"hulk":[{"en":"hulk","ru":"корпус большого транспорта или оборудования","enex":"the body of an old ship, car, or very large piece of equipment that is broken and no longer used:","ruex":"корпус старого корабля, автомобиля или очень большого оборудования, которое сломано и больше не используется"},
+	{"en":"hulk","ru":"громадина, бугай","enex":"a large, awkward person or thing:","ruex":"большой неуклюжий человек или вещь"}],
+	"querulous":[{"en":"querulous","ru":"ворчливый","enex":"He became increasingly dissatisfied and querulous in his old age.","ruex":"В старости он становился все более недовольным и ворчливым"}],
+	"barrow":[{"en":"barrow","ru":"тачка","enex":"a wheelbarrow - a large, open container for moving things in with a wheel at the front and two handles at the back, used especially in the garden","ruex":"большой открытый контейнер для перемещения вещей с колесом спереди и двумя ручками сзади, особенно используемый в саду"},
+	{"en":"barrow","ru":"курган","enex":"a large structure consisting of a pile of soil over a place where people were buried in ancient times","ruex":"большое сооружение, состоящее из кучи земли над местом, где в древние времена хоронили людей"}],
+	"viscera":[{"en":"viscera","ru":"внутренности","enex":"the large organs inside the body, including the heart, stomach, lungs, and intestines","ruex":"крупные органы внутри тела, включая сердце, желудок, легкие и кишечник"}],
+	"writhe":[{"en":"writhe","ru":"корчиться, извиваться","enex":"She lay on her bed, writhing in agony.","ruex":"Она лежала на своей кровати, корчась в агонии."}],
+	"honeycomb":[{"en":"honeycomb","ru":"пчелинные соты","enex":"a wax structure containing many small holes, made by bees to store their honey","ruex":"восковая структура, содержащая множество маленьких отверстий, сделанных пчелами для хранения своего меда"}],
 	"sweep":[{"en":"sweep","ru":"проноситься по/в/мимо и т. д.","enex":"She swept past me in the corridor.","ruex":"Она пронеслась мимо меня по коридору."}],
 	"whip":[{"en":"whip out | off | away","ru":"быстро принести или забрать что-либо","enex":"She whipped a handkerchief out of her pocket and wiped his face.","ruex":"Она достала из кармана носовой платок и вытерла ему лицо."}],
 	"remembrance":[{"en":"remembrance","ru":"память","enex":"They erected a statue in remembrance of him.","ruex":"Они воздвигли статую в память о нем."}],
