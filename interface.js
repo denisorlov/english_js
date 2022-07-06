@@ -1487,7 +1487,7 @@ function showHistoryList(){
         "<button "+(idx==arr.length-1?dis:'title=\"to bottom\"')+" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
         getStylizated(' '+it, true)+
         (idx==currIdx ? ' &#8666;' : '' )+
-        (idx==19 ? '<hr title="'+(idx+1)+' primary words" style="background-color: white;height: 2px;border: none;">' : '<br/>')
+        (idx==24 ? '<hr title="'+(idx+1)+' primary words" style="background-color: white;height: 2px;border: none;">' : '<br/>')
 		);
     });
 

@@ -29,6 +29,9 @@ console.log('"'+word+'":['+all.join(',\n\t')+'],');
 */
 // check TODO
 var dictExNew = {
+	"disconcert":[{"en":"disconcert","ru":"приводить в замешательство, смущать","enex":"She was disconcerted by his questions.","ruex":"Она была сбита с толку его вопросами"}],
+	"knuckle":[{"en":"knuckle","ru":"сустав пальца","enex":"one of the parts of the finger where it bends","ruex":"одна из частей пальца, где он сгибается"}],
+	"viper":[{"en":"viper","ru":"гадюка","enex":"a small, poisonous snake","ruex":"маленькая ядовитая змея"}],
 	"typo":[{"en":"typo","ru":"опечатка","enex":"a small mistake in a text made when it was typed or printed","ruex":"небольшая ошибка в тексте, допущенная при его вводе или распечатке"}],
 	"vehemence":[{"en":"vehemence","ru":"страстность, горячность","enex":"the forceful expression of strong feelings:","ruex":"сильное выражение сильных чувств"}],
 	"vehement":[{"en":"vehement","ru":"неистовый, страстный","enex":"expressing very strong feelings, or showing great energy or force:","ruex":"выражение очень сильных чувств или демонстрация большой энергии или силы"}],
