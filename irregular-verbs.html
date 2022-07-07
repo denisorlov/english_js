@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta property="og:title" content="Русско-Английский Разговорник Тренажер"/>
-    <meta property="og:description" content="Веб-приложение 'Разговорник - тренажер' для изучения/повторения иностранных фраз, адаптировано под мобильные устройства."/>
-    <meta property="og:image" content="http://denisorlovmusic.ru/english4040/i/phrases.png"/>
-    <meta property="og:url" content= "http://denisorlovmusic.ru/english4040/phrases.html"/>
+    <meta property="og:title" content="Тренажер-Неправильные глаголы"/>
+    <meta property="og:description" content="Веб-приложение 'Тренажер-Неправильные глаголы' для изучения иностранных слов, адаптировано под мобильные устройства."/>
+    <meta property="og:image" content="http://denisorlovmusic.ru/english4040/i/irregular-verbs.png"/>
+    <meta property="og:url" content= "http://denisorlovmusic.ru/english4040/irregular-verbs.html"/>
 
     <!--script type="text/javascript" src="http://yandex.st/jquery/1.6.1/jquery.min.js"></script-->
     <title>Русско-Английский Разговорник Тренажер</title>
 	<style>
+body{
+    background-color: lightgray;
+}
 textarea{
 	display:none;
 }
@@ -38,7 +41,7 @@ textarea{
 	display: block;
 	overflow: hidden;
 }
-#phraseOutput{
+#phraseOutput, #phraseInput{
 	font-size: 48px;
 	float: left;
     width: 82%;
@@ -294,6 +297,38 @@ He is a software developer.	Он программист.	hiː ɪz ə ˈsɒftw
 		<div id="swmIndicator" style="background-color: green; text-align: center; color: white; width: 0%;"></div>
 	</div>
 	<div id="phraseOutput"></div>
+<!-- Input -->
+	<input type="text" id="phraseInput" placeholder="введите три формы..."
+	onkeyup="phraseInputOnKeyup(this)" onkeydown="phraseInputOnKeydown(this)">
+<script type="text/javascript">
+	function phraseInputOnKeydown( input ){
+		if([37,38,39].indexOf(event.keyCode)>-1){// ◄ ▲ ►
+			event.stopPropagation();
+		}
+	}
+	function phraseInputOnKeyup( input ){
+		let curr = trainer.getCurrent();
+		if(curr==null) return;
+		if(phraseInput.value.length<1) return;
+		let inputLower = input.value.toLowerCase();
+
+		if(curr.en.toLowerCase().indexOf(inputLower)==0){
+			input.style.color='initial';
+		}else{
+			input.style.color='red';
+		}
+		
+		if(event.keyCode==13){
+			if(curr!=null && curr.en==phraseInput.value){
+				phraseInput.value = '';
+				document.getElementById('buttonLearnedPhrase').click();
+				if(!trainer.isCurrentLessonFinished())
+					document.getElementById('buttonNextPhrase').click();
+			}
+		}
+	}
+</script>
+<!-- Input -->	
 </div>
 <div class="butPanel">
 	<button id="buttonGooTr" class="but">▲Google...</button>
@@ -318,8 +353,8 @@ function infoWrapToggle(infoContentId){
 
 }
 function changeTheme(night){
-	document.body.style.backgroundColor = night ? 'black' : 'white';
-    document.body.style.color = night ? 'white' : 'black';
+	document.body.style.backgroundColor = night ? 'black' : null;
+    document.body.style.color = night ? 'lightgray' : 'black';
 }
 </script>
 <div  id="infoWrap" style="">
@@ -331,10 +366,7 @@ function changeTheme(night){
     </div>
 	<div class="infoContent" id="infoHelp" style=""><h3>&#9786; Help</h3><hr/>
 		<p>
-			Веб-приложение "Разговорник - тренажер" для изучения/повторения иностранных фраз, адаптировано под мобильные устройства.
-		</p>
-		<p>
-			Специальное издание:
+			Веб-приложение "Тренажер-Неправильные глаголы" для изучения иностранных слов, адаптировано под мобильные устройства.
 		</p>
 		
 		<h4>"Неправильные глаголы"</h4>
@@ -352,30 +384,31 @@ function changeTheme(night){
 		<h4>Режимы обучения:</h4>
 		<ul>
 			<li>По темам - наборам в списке</li>
-			<li>По фразам результатам поиска - "Find", "Результаты поиска"</li>
-			<li>По случайным фразам - "Mix"</li>
+			<li>По вопросам результатам поиска - "Find", "Результаты поиска"</li>
+			<li>По случайным вопросам - "Mix"</li>
 			<li>От простых к сложным - "Pаge"</li>
 		</ul>
 		<h4>Как учить:</h4>
 		<ol>
-			<li>►Next... - смотреть фразу и переводить</li>
+			<li>►Next... - смотреть следующий вопрос и переводить</li>
 			<li>▼Hint...  - при затруднении использовать подсказку</li>
-			<li>◄Learned! - выученную фразу метить "Выучено!"</li>
+			<li>◄Learned! - выученный вопрос метить "Выучено!"</li>
+			<li>Но лучше всего - печатать ответ в поле ввода и нажимать Enter</li>
 		</ol>
 		<h4>Кнопки и настройки:</h4>
 		<ul>
 			<li><i>▲Google...</i>: гор.клавиша ▲, открыть окно переводчика Google</li>
-			<li><i>►Next...</i>: гор.клавиша ►, перейти к следующей фразе урока</li>
+			<li><i>►Next...</i>: гор.клавиша ►, перейти к следующему вопросу урока, либо рестартовать завершенный</li>
 			<li><i>▼Hint...</i>: гор.клавиша ▼, подсказать, первый клик "прикрытая" подсказка, второй - открытая</li>
-			<li><i>◄Learned!</i>: гор.клавиша ◄, пометить фразу выученной в рамках данного урока</li>
-			<li><i>🔎Find...</i>: гор.клавиша F3, искать фразы по выражению(принимает regex), составить урок из найденных фраз в пункт "Результаты поиска"</li>
+			<li><i>◄Learned!</i>: гор.клавиша ◄, пометить вопрос выученным в рамках данного урока</li>
+			<li><i>🔎Find...</i>: гор.клавиша F3, искать вопросы по выражению(принимает regex), составить урок из найденных вопросов в пункт "Результаты поиска"</li>
 			<li><i>☭Setting</i>: настройки приложения
 				<ul>
 					<li><i>Interchange native-foreign</i>: поменять языки местами</li>
-					<li><i>Show transription (or show on click)</i>: показывать транскрипцию автоматически, или только по клику по фразе</li>
+					<li><i>Show transription (or show on click)</i>: показывать транскрипцию автоматически, или только по клику по "вопросу"</li>
 					<li><i>Night theme</i>: ночной режим</li>
-					<li><i>Make mixed lesson</i>: создать случайный микс фраз в пункт списка "Mix"</li>
-					<li><i>Load paged lesson</i>: загрузить "страницу" урока в пункт списка "Pаge". Все фразы группируются в страницы-уроки по принципу от простых коротких к сложным длинным, но примерно равного количества. Т.е. первые "страницы" содержат больше, но коротких фраз, последние - меньше, но длинных. (искл.: самая последняя страница может быть неполной)</li>
+					<li><i>Make mixed lesson</i>: создать случайный микс вопросов в пункт списка "Mix"</li>
+					<li><i>Load paged lesson</i>: загрузить "страницу" урока в пункт списка "Pаge". Все вопросы группируются в страницы-уроки по принципу от простых коротких к сложным длинным, но примерно равного количества. Т.е. первые "страницы" содержат больше, но коротких вопросов, последние - меньше, но длинных. (искл.: самая последняя страница может быть неполной)</li>
 				</ul>
 			</li>
 		</ul>
@@ -430,8 +463,17 @@ function Trainer(
 		msg_EmptyLesson = 'Текущий урок пройден или пуст. Выберите новый...'
 	;
 		
-	this.isCurrentLessonNotFinished = function(id){
+	this.isCurrentLessonFinished = function(id){
+		return currentLessons==null || currentLessons.length<1;
+	}
+	this.isCurrentLessonInMiddle = function(id){
 		return currentLessons!==null && currentLessons.length>0 && currentLessons.length!==currentLessonsOrigLength;
+	}
+	this.getCurrent = function(){
+		if(currentLessons.length<1){
+			alert(msg_EmptyLesson); return null;
+		}
+		return currentLessons[currentIndex];
 	}
 	this.getRandomInt = (function randomInt(){
 		var last, rand;
@@ -471,9 +513,10 @@ function Trainer(
 		document.getElementById(buttonLearnedPhraseId).removeAttribute('disabled');
 		document.getElementById(buttonLearnedPhraseId).style.opacity = 1;
 	};
-	function checkEmptyOrNext(){
+	function checkEmptyOrNext(indicator){
 		if(currentLessons.length<1){
-			document.getElementById(phraseOutputId).innerHTML = '(урок окончен, выберите новый...)';
+			let mess = indicator==100 ? 'Поздравляю, урок пройден!' : '(урок пуст)';
+			document.getElementById(phraseOutputId).innerHTML = mess;
 		}else{
 			_showNextPhrase();
 		}
@@ -501,8 +544,9 @@ function Trainer(
 	};
 	var _markLearnedPhrase = function(){
 		currentLessons.splice(currentIndex, 1); // remove learned
-		_this.setIndicator( 100 - Math.round( currentLessons.length*100/currentLessonsOrigLength ) );
-		checkEmptyOrNext();
+		let ind = 100 - Math.round( currentLessons.length*100/currentLessonsOrigLength );
+		_this.setIndicator( ind );
+		checkEmptyOrNext(ind);
 	};
 	function _openGooTr(event, top, left, width,height){
 		if(currentLessons.length<1){
@@ -523,7 +567,7 @@ function Trainer(
 		currentLessons = _this.getLessonArray(id);
 		currentLessonsOrigLength = currentLessons.length;
 		_this.setIndicator(0);
-		checkEmptyOrNext();
+		checkEmptyOrNext(0);
 	}
 	this.getLessonArray = function(id){
 		if(!id) return;
@@ -740,7 +784,7 @@ trainer.utils = {
 trainer.utils.initKeydown();
 trainer.utils.initPages(450, 1.02);
 window.onbeforeunload = function() {
-	if(trainer.isCurrentLessonNotFinished()){
+	if(trainer.isCurrentLessonInMiddle()){
 		return 'The lesson is not finished, are you sure you want to exit this page?';
 	}
 };

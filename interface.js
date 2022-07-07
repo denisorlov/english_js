@@ -1496,7 +1496,6 @@ function showHistoryList(){
 
 function treatHistoryNavigator(word){
     dh.getArray().indexOf(word)<0 ? dh.insert(word) : dh.setTo(word);
-	if(dh.getArray().length == 1) restoreHistoryList();
 
     let dictPrevBut = getElem('dictPrevBut'),
         dictNextBut = getElem('dictNextBut');

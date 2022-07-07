@@ -261,6 +261,7 @@ function showAByHash(){
 var readRu = false;
 
 jQuery(document).ready(function(){
+	restoreHistoryList();
     showAByHash();
 
     $( window ).bind( 'popstate', function( e ){
