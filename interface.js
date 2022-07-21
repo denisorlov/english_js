@@ -1479,15 +1479,22 @@ function restoreHistoryList(){
 	});
 }
 function showHistoryList(){
-    let hList = [], dis = 'disabled="disabled"', currIdx = dh.getIndex();
+    let hList = [],
+	toolPanel = document.getElementById("toolPanel"),
+	toolPanelHeight = toolPanel ? toolPanel.getBoundingClientRect().height : 150,
+	cH = parseInt(((document.body.offsetHeight-toolPanelHeight)/27).toFixed())-1, // высота колонки для шрифта ~24
+	dis = 'disabled="disabled"', currIdx = dh.getIndex();
+	console.log('cH='+cH);
     dh.getArray().forEach(function(it, idx, arr){
         hList.push(
-        "<button title=\"remove from list "+(idx+1)+"\" onClick='dh.remove("+idx+");showHistoryList()'>&#10060;</button> "+
-        "<button "+(idx==0?dis:'title=\"to top\"')				+" onClick='dh.moveTop("+idx+");showHistoryList()'>&#11165;</button> "+
-        "<button "+(idx==arr.length-1?dis:'title=\"to bottom\"')+" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
-        getStylizated(' '+it, true)+
-        (idx==currIdx ? ' &#8666;' : '' )+
-        (idx==24 ? '<hr title="'+(idx+1)+' primary words" style="background-color: white;height: 2px;border: none;">' : '<br/>')
+		(idx%cH==0?'<div style="display: inline-block;float: left;margin: 0 0.3em 0 0;">':'')+ // колонка
+			"<button title=\"remove from list "+(idx+1)+"\" onClick='dh.remove("+idx+");showHistoryList()'>&#10060;</button> "+
+			"<button "+(idx==0?dis:'title=\"to top\"')				+" onClick='dh.moveTop("+idx+");showHistoryList()'>&#11165;</button> "+
+			"<button "+(idx==arr.length-1?dis:'title=\"to bottom\"')+" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
+			getStylizated(' '+it, true)+
+			(idx==currIdx ? ' &#8666;' : '' )+
+			'</br>'+
+		(idx%cH==cH-1?'</div>':'')
 		);
     });
 
