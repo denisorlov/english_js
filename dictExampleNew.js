@@ -29,6 +29,8 @@ console.log('"'+word+'":['+all.join(',\n\t')+'],');
 */
 // check TODO
 var dictExNew = {
+	"acrid":[{"en":"acrid","ru":"едкий","enex":"An acrid smell is unpleasant and causes a burning feeling in your throat.","ruex":"Едкий запах неприятен и вызывает чувство жжения в горле."}],
+	"acrimonious":[{"en":"acrimonious","ru":"исполненный злобы","enex":"involving a lot of anger, disagreement, and bad feelings","ruex":"содержащий много гнева, разногласий и плохих чувств"}],
 	"disconcert":[{"en":"disconcert","ru":"приводить в замешательство, смущать","enex":"She was disconcerted by his questions.","ruex":"Она была сбита с толку его вопросами"}],
 	"knuckle":[{"en":"knuckle","ru":"сустав пальца","enex":"one of the parts of the finger where it bends","ruex":"одна из частей пальца, где он сгибается"}],
 	"viper":[{"en":"viper","ru":"гадюка","enex":"a small, poisonous snake","ruex":"маленькая ядовитая змея"}],

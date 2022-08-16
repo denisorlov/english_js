@@ -134,7 +134,7 @@ body{
 	<script type="text/javascript" src="speechUtils.js"></script>
 	<script type="text/javascript">
 	speechUtils.utteranceEn = new SpeechSynthesisUtterance();
-	speechUtils.utteranceEn.onend = function(){ playNext(); };
+	//speechUtils.utteranceEn.onend = function(){ };
 	speechUtils.utteranceRu = new SpeechSynthesisUtterance();
 	function speechSynthesisVoicesInit(button){
 		if(speechUtils.initVoicesSelect('speechSynthesisVoicesEn', speechUtils.utteranceEn, 'Google UK English Male')) {

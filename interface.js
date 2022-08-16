@@ -1393,10 +1393,11 @@ function wrapDictLink(word, value){
     return '<a href="javascript:void(0)" onmouseover="tryTitle(this)" onclick="showA(\''+value+'\')">'+word+'</a>';
 }
 
-function initA(word){
-    if( !window.dict || ! dict[ word ] ) return null;
+function initA(_word){
+	if( !window.dict || ! dict[ _word.toLowerCase() ] && !dict[ firstToUpper(_word) ] ) return null;
 
-    var tr = getTranscription(word);
+    let word = dict[ _word.toLowerCase() ] ? _word.toLowerCase() : firstToUpper(_word), 
+	tr = getTranscription(word);
     return {word:word, a:dict[ word ].a, as:getA(word, true), tr: tr!=word ? tr : ''};
 }
 
@@ -1490,7 +1491,7 @@ function showHistoryList(){
 		(idx%cH==0?'<div style="display: inline-block;float: left;margin: 0 0.3em 0 0;">':'')+ // колонка
 			"<button title=\"remove from list "+(idx+1)+"\" onClick='dh.remove("+idx+");showHistoryList()'>&#10060;</button> "+
 			"<button "+(idx==0?dis:'title=\"to top\"')				+" onClick='dh.moveTop("+idx+");showHistoryList()'>&#11165;</button> "+
-			"<button "+(idx==arr.length-1?dis:'title=\"to bottom\"')+" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
+			//"<button "+(idx==arr.length-1?dis:'title=\"to bottom\"')+" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
 			getStylizated(' '+it, true)+
 			(idx==currIdx ? ' &#8666;' : '' )+
 			'</br>'+
