@@ -9,6 +9,9 @@
     <!--script type="text/javascript" src="http://yandex.st/jquery/1.6.1/jquery.min.js"></script-->
     <title></title>
 	<style>
+body{
+	font-size: 1.5em;
+}
 textarea{
 	width:99%;
 }
@@ -23,7 +26,11 @@ textarea{
 	#infoDiv{
 		background-color: antiquewhite;
 	}
-h3{
+	#logDiv pre{
+		margin: 0;
+	}
+h2, h3{
+    margin-block-start: 0.2em;
 	margin-block-end: 0;
 }
 	</style>
@@ -48,8 +55,8 @@ enRuDicUrl = 'https://dictionary.cambridge.org/dictionary/english-russian',
 enDicUrl = 'https://dictionary.cambridge.org/dictionary/english'
 ;
 
-function log(html){
-	appendDiv(logDiv, html);
+function log(html, cls){
+	appendDiv(logDiv, html, cls);
 }
 
 function checkJson(value){
@@ -60,9 +67,10 @@ function checkJson(value){
 	}
 }
 
-function appendDiv(elem, html){
+function appendDiv(elem, html, cls){
 	let div = document.createElement('div');
 	div.innerHTML = html;
+	if(cls) div.className = cls;
 	elem.appendChild(div);
 }
 
@@ -71,8 +79,9 @@ async function run(word){
 	logDiv.innerHTML = '';
 
 	await fetchAndOut(word, enRuDicUrl);
-	if(all.length>0) return;
+	if(all.length>0) return; else log('Не найдено.', 'red');
 	await fetchAndOut(word, enDicUrl);
+	if(all.length>0) return; else log('Не найдено.', 'red');
 }
 
 async function fetchAndOut(word, url){

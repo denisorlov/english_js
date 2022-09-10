@@ -29,6 +29,8 @@ console.log('"'+word+'":['+all.join(',\n\t')+'],');
 */
 // check TODO
 var dictExNew = {
+	"query":[{"en":"query","ru":"вопрос ","enex":"His job is to answer telephone queries about airline schedules.","ruex":"Его работа заключается в том, чтобы отвечать на телефонные вопросы о расписании авиакомпаний."},
+	{"en":"query","ru":"подвергать сомнению ","enex":"A few students have queried whether exam marks were added up correctly.","ruex":"Несколько студентов поинтересовались, правильно ли суммированы экзаменационные оценки."}],
 	"perch":[{"en":"perch","ru":"взгромоздить(ся), располагать(ся) высоко на/в/над и т.д.","enex":"The village was perched on the side of a mountain.","ruex":"Деревня располагалась на склоне горы."},
 	{"en":"perch","ru":"сидеть на краю чего-либо ","enex":"The children perched on the edges of their seats.","ruex":"Дети присели на края своих кресел."},
 	{"en":"perch","ru":"насест, жердочка ","enex":"a place where a bird sits, especially a stick inside a cage","ruex":"место, где сидит птица, особенно палка внутри клетки"}],
