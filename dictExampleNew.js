@@ -29,6 +29,18 @@ console.log('"'+word+'":['+all.join(',\n\t')+'],');
 */
 // check TODO
 var dictExNew = {
+	"perch":[{"en":"perch","ru":"взгромоздить(ся), располагать(ся) высоко на/в/над и т.д.","enex":"The village was perched on the side of a mountain.","ruex":"Деревня располагалась на склоне горы."},
+	{"en":"perch","ru":"сидеть на краю чего-либо ","enex":"The children perched on the edges of their seats.","ruex":"Дети присели на края своих кресел."},
+	{"en":"perch","ru":"насест, жердочка ","enex":"a place where a bird sits, especially a stick inside a cage","ruex":"место, где сидит птица, особенно палка внутри клетки"}],
+	"prickle":[{"en":"prickle","ru":"шип, колючка ","enex":"a sharp point on the surface of some plants or the skin of some animals","ruex":"острие на поверхности некоторых растений или кожи некоторых животных"},
+	{"en":"prickle","ru":"покалывать, испытывать покалывание ","enex":"a prickling sensation","ruex":"ощущение покалывания"}],
+	"prowl":[{"en":"prowl","ru":"рыскать ","enex":"to prowl the streets","ruex":"бродить по улицам"},
+	{"en":"prowl","ru":"охотиться за кем-либо/чем-либо ","enex":"to be hunting for someone or something","ruex":"охотиться за кем-то или чем-то"}],
+	"intent":[{"en":"intent","ru":"намерение","enex":"It had not been his intent to hurt anyone.","ruex":"У него не было намерения причинить кому-либо вред."},
+	{"en":"intent","ru":"иметь намерение","enex":"She seems intent on winning this year's tennis tournament.","ruex":"Кажется, она намерена выиграть теннисный турнир в этом году."},
+	{"en":"intent","ru":"сосредоточенный, пристальный","enex":"She had an intent look on her face.","ruex":"У нее было сосредоточенное выражение лица."}],
+	"elide":[{"en":"elide","ru":"не произносить","enex":"The \"t\" of \"acts\" is often elided if someone is speaking quickly.","ruex":"Буква «т» в слове «акты» часто опускается, если кто-то говорит быстро."}],
+	"elision":[{"en":"elision","ru":"непроизнесение","enex":"the fact of not pronouncing a particular sound in a word","ruex":"факт непроизнесения определенного звука в слове"}],
 	"acrid":[{"en":"acrid","ru":"едкий","enex":"An acrid smell is unpleasant and causes a burning feeling in your throat.","ruex":"Едкий запах неприятен и вызывает чувство жжения в горле."}],
 	"acrimonious":[{"en":"acrimonious","ru":"исполненный злобы","enex":"involving a lot of anger, disagreement, and bad feelings","ruex":"содержащий много гнева, разногласий и плохих чувств"}],
 	"disconcert":[{"en":"disconcert","ru":"приводить в замешательство, смущать","enex":"She was disconcerted by his questions.","ruex":"Она была сбита с толку его вопросами"}],

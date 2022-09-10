@@ -569,6 +569,9 @@ function Trainer(
 		_this.setIndicator(0);
 		checkEmptyOrNext(0);
 	}
+	this.getCurrentLessons = function(id){
+		return currentLessons;
+	}
 	this.getLessonArray = function(id){
 		if(!id) return;
 		var lesson = document.getElementById(id).value;

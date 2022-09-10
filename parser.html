@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--meta property="og:title" content="Русско-Английский Разговорник Тренажер"/>
+    <meta property="og:description" content="Веб-приложение 'Разговорник - тренажер' для изучения/повторения иностранных фраз, адаптировано под мобильные устройства."/>
+    <meta property="og:image" content="http://denisorlovmusic.ru/english4040/i/phrases.png"/>
+    <meta property="og:url" content= "http://denisorlovmusic.ru/english4040/phrases.html"/-->
+
+    <!--script type="text/javascript" src="http://yandex.st/jquery/1.6.1/jquery.min.js"></script-->
+    <title></title>
+	<style>
+textarea{
+	width:99%;
+}
+.red{
+	color:red;
+}
+#logDiv, #infoDiv{
+	border: 1px dashed blue;
+    padding: 0.5em;
+    background-color: aliceblue;
+}
+	#infoDiv{
+		background-color: antiquewhite;
+	}
+h3{
+	margin-block-end: 0;
+}
+	</style>
+</head>
+<body>
+<input type="text" value="dash" id="inputText">
+<input type="button" value="Получить!" onclick="run(inputText.value)" id="buttonDo">
+<div id="logDiv">(здесь будет лог работы)</div>
+<div id="resDiv"></div>
+<div id="infoDiv">
+Информация.<br/>
+Это парсер сайта <a href="https://dictionary.cambridge.org">https://dictionary.cambridge.org</a> для получения значений слов с примерами.<br/>
+Вводим слово и вперед!.<br/>
+<br/>
+<b>Важно</b>: запросы на сторонний ресурс работают с расширением <a href="https://chrome.google.com/webstore/detail/cors-unblock/lfhmikememgdcahcdlaciloancbhjino">"CORS Unblock"</a> или подобными.
+</div>
+<script type="text/javascript">
+// global 
+var 
+all = [], enExAr = [], means = [],
+enRuDicUrl = 'https://dictionary.cambridge.org/dictionary/english-russian',
+enDicUrl = 'https://dictionary.cambridge.org/dictionary/english'
+;
+
+function log(html){
+	appendDiv(logDiv, html);
+}
+
+function checkJson(value){
+	try {
+		JSON.parse(value);
+	} catch (error) {
+		log('<pre class="red">Error on JSON.parse: \n'+error+'</pre>');
+	}
+}
+
+function appendDiv(elem, html){
+	let div = document.createElement('div');
+	div.innerHTML = html;
+	elem.appendChild(div);
+}
+
+async function run(word){
+	logDiv.innerHTML = '';
+	logDiv.innerHTML = '';
+
+	await fetchAndOut(word, enRuDicUrl);
+	if(all.length>0) return;
+	await fetchAndOut(word, enDicUrl);
+}
+
+async function fetchAndOut(word, url){
+	url = url +'/'+ word;
+	log('Пробуем получить слово "<b>'+word+'</b>" с '+'<a target="black" href="'+url+'">'+url+'</a>');
+	let text = await fetchDoc(url);
+	let dom  = buildDom();
+	dom.body.innerHTML = text.split('</body>')[0].split(/<body[^>]*>/)[1];
+	
+	fillArrays(word, dom);
+	if(all.length>0){
+		let allStr = JSON.stringify(all),
+			outDiv = document.createElement('div'),
+			id = makeid(5), meanDivBgn = '<div class="mean'+id+'">',
+			exDivBgn = '<div class="expl'+id+'">';
+
+		appendDiv(outDiv, '<h2>'+word+'</h2>');
+		appendDiv(outDiv, '<h3>Значения</h3>');
+		appendDiv(outDiv, meanDivBgn+means.join('</div>'+meanDivBgn)+'</div>');
+		if(/TODO_MN/.test(allStr)) // кнопка переноса значений в TODO_MN
+			appendDiv(outDiv, '<input type="button" value="Перенести значения в TODO_MN" '+
+		'onclick="move(\'mean'+id+'\',\'json'+id+'\', \'TODO_MN\')">');
+		
+		appendDiv(outDiv, '<h3>Примеры</h3>');
+		appendDiv(outDiv, exDivBgn+enExAr.join('</div>'+exDivBgn)+'</div>');
+		if(/TODO_EX/.test(allStr)) // кнопка переноса значений в TODO_EX
+			appendDiv(outDiv, '<input type="button" value="Перенести примеры в TODO_EX" '+
+		'onclick="move(\'expl'+id+'\',\'json'+id+'\', \'TODO_EX\')">');
+		appendDiv(outDiv, '<textarea id="json'+id+'" rows=20>'+
+			'"'+word+'":'+allStr.replace(/},{/g, '},\n\t{')+
+		'</textarea>');
+		
+		resDiv.insertBefore(outDiv, resDiv.firstChild);
+		checkJson('{'+document.getElementById('json'+id).value+'}');
+	}
+}
+
+function move(cls, id, tmpl){
+	let arr = [], cnt = 0, reg = new RegExp(tmpl,'g'),
+		target = document.getElementById(id);
+	document.querySelectorAll('.'+cls).forEach((it, ind)=>{
+		arr.push(it.innerText);
+	});
+	if(!/[А-Яа-я]+/.test(arr[cnt])){
+		log('<pre class="red">Переведите страницу для подстановки "'+tmpl+'"</pre>');
+		return;
+	}
+	
+	target.value = target.value.replace(reg, str=>{
+		return arr[cnt++].replace(/"/g, '\\"');
+	});
+	checkJson('{'+target.value+'}');
+}
+
+// https://dictionary.cambridge.org/dictionary/english/elide
+async function fetchDoc(url){
+	let fetched = await fetch( url );
+	let text = await fetched.text();
+	return text;
+}
+
+function buildDom(){
+	var dom = document.implementation.createHTMLDocument('http://www.w3.org/1999/xhtml', 'html', null);
+	dom.documentElement.appendChild(dom.createElement("body"));
+	return dom;
+}
+
+function fillArrays(word, doc){
+	all = []; enExAr = []; means = [];
+	doc.querySelectorAll("div.def-block.ddef_block").forEach((it)=>{
+		let res = {"en": word, "ru":"TODO_MN", "enex":'', "ruex":"TODO_EX"}, mean;
+		it.querySelectorAll("div.def.ddef_d.db").forEach((it, idx)=>{
+			if(idx==0) mean = it.innerText; // definition
+		});
+		it.querySelectorAll("span.trans.dtrans.dtrans-se").forEach((it, idx)=>{
+			if(idx==0) res.ru = it.innerText; // russian
+		});
+		it.querySelectorAll("span.eg.deg").forEach((it, idx)=>{
+			if(idx==0) res.enex = it.innerText; // english example
+		});
+		// if empty set definition as english example
+		if(res.enex=='') res.enex = mean; 
+		
+		if(res.enex!=null){
+			all.push(res);
+			enExAr.push(res.enex);
+			means.push(mean);
+		}
+
+		it.querySelectorAll("div.xref.synonyms span.x-h.dx-h").forEach((it)=>console.log(it.innerText));
+	});
+}
+
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+   }
+   return result;
+}
+
+inputText.addEventListener("keyup", ({key}) => {
+    if (event.key === "Enter") {
+        buttonDo.onclick();
+    }
+});
+
+//console.log(enExAr.join('.\n'));
+//console.log('"'+word+'":['+all.join(',\n\t')+'],');
+
+</script>
+</body>
+</html>
