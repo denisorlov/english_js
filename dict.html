@@ -294,6 +294,11 @@ jQuery(document).ready(function(){
 			if(playBtn!=null) playBtn.click();
 			prev = true;
 		}else
+		if(event.keyCode==46){// Delete
+			let btn = getElem('removeCurrBut'); // see interface.js
+			if(btn!=null) btn.click();
+			prev = true;
+		}else
 		if(event.keyCode==48 || event.keyCode==48+48){//0
 			readRu = !readRu;
 			prev = true;

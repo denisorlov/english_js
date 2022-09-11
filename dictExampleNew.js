@@ -29,6 +29,17 @@ console.log('"'+word+'":['+all.join(',\n\t')+'],');
 */
 // check TODO
 var dictExNew = {
+	"haunt":[{"en":"haunt","ru":"являться, обитать (о привидении)","enex":"a haunted house","ruex":"дом с привидениями"},
+	{"en":"haunt","ru":"преследовать, мучить","enex":"He was haunted by memories of the war.","ruex":"Его преследовали воспоминания о войне."},
+	{"en":"haunt","ru":"излюбленное место","enex":"Regents Park is one of my favourite haunts in London.","ruex":"Риджентс-парк — одно из моих любимых мест в Лондоне."}],
+	"stem":[{"en":"stem","ru":"останавливать ","enex":"The new procedures are intended to stem the flow of drugs into the country.","ruex":"Новые процедуры призваны остановить поток наркотиков в страну."}],
+	"dip":[{"en":"dip","ru":"соус","enex":"a blue cheese dip","ruex":"дип из голубого сыра"},
+	{"en":"dip","ru":"впадина ","enex":"a sudden dip in the road","ruex":"внезапный провал на дороге"},
+	{"en":"dip","ru":"купание ","enex":"Let's have a quick dip in the pool before breakfast.","ruex":"Давай окунемся в бассейн перед завтраком."},
+	{"en":"dip","ru":"падать ","enex":"The number of students taking sciences has dipped sharply.","ruex":"Резко сократилось количество студентов, изучающих науки."}],
+	"dangle":[{"en":"dangle","ru":"свободно свисать ","enex":"Electrical wires were dangling from the ceiling.","ruex":"С потолка свисали электрические провода."},
+	{"en":"dangle","ru":"манить, соблазнять","enex":"They dangled the possibility of a job in Paris in front of him.","ruex":"Они предлагали ему работу в Париже."}],
+	"collar":[{"en":"collar","ru":"останавливать, поймать (чтобы поговорить)","enex":"On my way to the meeting, Jack collared me about his new proposal.","ruex":"По дороге на встречу Джек рассказал мне о своем новом предложении."}],
 	"query":[{"en":"query","ru":"вопрос ","enex":"His job is to answer telephone queries about airline schedules.","ruex":"Его работа заключается в том, чтобы отвечать на телефонные вопросы о расписании авиакомпаний."},
 	{"en":"query","ru":"подвергать сомнению ","enex":"A few students have queried whether exam marks were added up correctly.","ruex":"Несколько студентов поинтересовались, правильно ли суммированы экзаменационные оценки."}],
 	"perch":[{"en":"perch","ru":"взгромоздить(ся), располагать(ся) высоко на/в/над и т.д.","enex":"The village was perched on the side of a mountain.","ruex":"Деревня располагалась на склоне горы."},

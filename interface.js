@@ -1410,6 +1410,7 @@ function initInfoDictElements(initAResult) {
     }
 
     getElem('infoDictContent').innerHTML = '';
+
 	
 	if(window.dictExample){
         let example = dictExample[initAResult.word], exHtml='';
@@ -1426,12 +1427,15 @@ function initInfoDictElements(initAResult) {
 						'<span>'+getStylizated(' '+it.enex, true)+'</span>'+
 				'</div>'
 			});
-            getElem('infoDictContent').innerHTML = getElem('infoDictContent').innerHTML + 
-			'<button title="toggle examples" onclick="toggleElem(this.nextSibling.id)">&#128195;</button>'+
+            getElem('infoDictContent').innerHTML = getElem('infoDictContent').innerHTML +
+			'<button title="toggle examples" style="display: block;" onclick="toggleElem(this.nextSibling.id)">&#128195;</button>'+
 			'<div id="exampleDiv" style="border: 1px dashed blue;padding: 0.5em;">'+ exHtml + '</div>';
         }
     }
 	
+	getElem('infoDictContent').innerHTML = getElem('infoDictContent').innerHTML +
+	'<button id="removeCurrBut" style="float:right;" title="remove from memory list" onClick="dh.remove(dh.getIndex());this.disabled=\'disabled\';">&#10060;</button>';
+
 	getElem('infoDictContent').innerHTML = getElem('infoDictContent').innerHTML + initAResult.as;// article stylizated
     getElem('infoDictTranscription').innerHTML = initAResult.tr ;
 	let autoPlay = getElem('checkboxWordAutoPlaying');
@@ -1485,7 +1489,6 @@ function showHistoryList(){
 	toolPanelHeight = toolPanel ? toolPanel.getBoundingClientRect().height : 150,
 	cH = parseInt(((document.body.offsetHeight-toolPanelHeight)/27).toFixed())-1, // высота колонки для шрифта ~24
 	dis = 'disabled="disabled"', currIdx = dh.getIndex();
-	console.log('cH='+cH);
     dh.getArray().forEach(function(it, idx, arr){
         hList.push(
 		(idx%cH==0?'<div style="display: inline-block;float: left;margin: 0 0.3em 0 0;">':'')+ // колонка

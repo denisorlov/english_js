@@ -11,12 +11,17 @@
 	<style>
 body{
 	font-size: 1.5em;
+	background-color: lightgray;
 }
 textarea{
 	width:99%;
+	font-size: 1.1em;
 }
 .red{
 	color:red;
+}
+.green{
+	color:green;
 }
 #logDiv, #infoDiv{
 	border: 1px dashed blue;
@@ -58,6 +63,12 @@ enDicUrl = 'https://dictionary.cambridge.org/dictionary/english'
 function log(html, cls){
 	appendDiv(logDiv, html, cls);
 }
+function logError(html){
+	log(html, 'red');
+}
+function logSuccess(html){
+	log(html, 'green');
+}
 
 function checkJson(value){
 	try {
@@ -78,10 +89,15 @@ async function run(word){
 	logDiv.innerHTML = '';
 	logDiv.innerHTML = '';
 
-	await fetchAndOut(word, enRuDicUrl);
-	if(all.length>0) return; else log('Не найдено.', 'red');
-	await fetchAndOut(word, enDicUrl);
-	if(all.length>0) return; else log('Не найдено.', 'red');
+	try {
+		await fetchAndOut(word, enRuDicUrl);
+	} catch (error) { logError('Error on fetchAndOut: '+ error);}
+	if(all.length>0) {logSuccess('Найдено '+all.length); return;} else logError('Не найдено.');
+
+	try {
+		await fetchAndOut(word, enDicUrl);
+	} catch (error) { logError('Error on fetchAndOut: '+ error);}
+	if(all.length>0) {logSuccess('Найдено '+all.length); return;} else logError('Не найдено.');
 }
 
 async function fetchAndOut(word, url){
@@ -110,7 +126,7 @@ async function fetchAndOut(word, url){
 		if(/TODO_EX/.test(allStr)) // кнопка переноса значений в TODO_EX
 			appendDiv(outDiv, '<input type="button" value="Перенести примеры в TODO_EX" '+
 		'onclick="move(\'expl'+id+'\',\'json'+id+'\', \'TODO_EX\')">');
-		appendDiv(outDiv, '<textarea id="json'+id+'" rows=20>'+
+		appendDiv(outDiv, '<textarea id="json'+id+'" rows=7>'+
 			'"'+word+'":'+allStr.replace(/},{/g, '},\n\t{')+
 		'</textarea>');
 		
@@ -187,7 +203,7 @@ function makeid(length) {
 
 inputText.addEventListener("keyup", ({key}) => {
     if (event.key === "Enter") {
-        buttonDo.onclick();
+        buttonDo.click();
     }
 });
 
