@@ -29,6 +29,7 @@ console.log('"'+word+'":['+all.join(',\n\t')+'],');
 */
 // check TODO
 var dictExNew = {
+	"impostor":[{"en":"impostor","ru":"самозванец ","enex":"someone who pretends to be someone else in order to deceive people","ruex":"тот, кто притворяется кем-то другим, чтобы обмануть людей"}],
 	"haunt":[{"en":"haunt","ru":"являться, обитать (о привидении)","enex":"a haunted house","ruex":"дом с привидениями"},
 	{"en":"haunt","ru":"преследовать, мучить","enex":"He was haunted by memories of the war.","ruex":"Его преследовали воспоминания о войне."},
 	{"en":"haunt","ru":"излюбленное место","enex":"Regents Park is one of my favourite haunts in London.","ruex":"Риджентс-парк — одно из моих любимых мест в Лондоне."}],
