@@ -29,6 +29,18 @@ console.log('"'+word+'":['+all.join(',\n\t')+'],');
 */
 // check TODO
 var dictExNew = {
+	"throb":[{"en":"throb","ru":"сильно болеть, пульсировать ","enex":"My head was throbbing.","ruex":"Моя голова пульсировала."}],
+	"reprieve":[{"en":"reprieve","ru":"передышка","enex":"He had felt a sense of relief, almost of reprieve.","ruex":"Он почувствовал чувство облегчения, почти передышки."}],
+	"undulate":[{"en":"undulate","ru":"быть волнистым, холмистым ","enex":"The road undulates for five miles before a steep climb.","ruex":"Дорога извивается на протяжении пяти миль перед крутым подъемом."}],
+	"raven":[{"en":"raven","ru":"ворон ","enex":"a large, black bird","ruex":"большая, черная птица"}],
+	"swarthy":[{"en":"swarthy","ru":"смуглый ","enex":"having dark skin","ruex":"с темной кожей"}],
+	"emanate":[{"en":"emanate","ru":"исходить, раздаваться ","enex":"Strange noises emanated from the room next door.","ruex":"Из соседней комнаты доносились странные звуки."}],
+	"writ":[{"en":"writ","ru":"судебный приказ ","enex":"a legal document that orders someone to do something","ruex":"юридический документ, предписывающий кому-либо что-либо сделать"}],
+	"abhorrent":[{"en":"abhorrent","ru":"отвратительный, гнусный, мерзкий","enex":"an abhorrent crime","ruex":"отвратительное преступление"}],
+	"pail":[{"en":"pail","ru":"ведро ","enex":"a container with an open top and a handle used for carrying liquids","ruex":"емкость с открытым верхом и ручкой для переноски жидкостей"}],
+	"pensive":[{"en":"pensive","ru":"задумчивый, печальный","enex":"She became withdrawn and pensive, hardly speaking to anyone.","ruex":"Она стала замкнутой и задумчивой, почти ни с кем не разговаривая."}],
+	"swivel":[{"en":"swivel","ru":"вращать(ся) ","enex":"to turn round, or to make something turn round","ruex":"повернуться или заставить что-то повернуться"}],
+	"tingle":[{"en":"tingle","ru":"покалывать, онеметь ","enex":"My hands are starting to tingle with the cold.","ruex":"Мои руки начинают покалывать от холода."}],
 	"impostor":[{"en":"impostor","ru":"самозванец ","enex":"someone who pretends to be someone else in order to deceive people","ruex":"тот, кто притворяется кем-то другим, чтобы обмануть людей"}],
 	"haunt":[{"en":"haunt","ru":"являться, обитать (о привидении)","enex":"a haunted house","ruex":"дом с привидениями"},
 	{"en":"haunt","ru":"преследовать, мучить","enex":"He was haunted by memories of the war.","ruex":"Его преследовали воспоминания о войне."},
