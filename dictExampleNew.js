@@ -29,6 +29,7 @@ console.log('"'+word+'":['+all.join(',\n\t')+'],');
 */
 // check TODO
 var dictExNew = {
+	"shamble":[{"en":"shamble","ru":"волочить ноги, брести","enex":"Sick patients shambled along the hospital corridors.","ruex":"Больные брели по больничным коридорам."}],
 	"throb":[{"en":"throb","ru":"сильно болеть, пульсировать ","enex":"My head was throbbing.","ruex":"Моя голова пульсировала."}],
 	"reprieve":[{"en":"reprieve","ru":"передышка","enex":"He had felt a sense of relief, almost of reprieve.","ruex":"Он почувствовал чувство облегчения, почти передышки."}],
 	"undulate":[{"en":"undulate","ru":"быть волнистым, холмистым ","enex":"The road undulates for five miles before a steep climb.","ruex":"Дорога извивается на протяжении пяти миль перед крутым подъемом."}],
