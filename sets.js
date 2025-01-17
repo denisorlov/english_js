@@ -10,138 +10,56 @@
 var
     pronoun = {
         I: {
-            person: 1,
+            self: 'I', person: 1,
             number: 1, obj:'me', poss:'my', abs:'mine'
         },
         you: {
-            person: 2,
+            self: 'you', person: 2,
             number: 1, obj:'you', poss:'your', abs:'yours'
         },
         he: {
-            person: 3,
+            self: 'he', person: 3,
             number: 1,
             gender: 'm', obj:'him', poss:'his', abs:'his',
             genderDesc: 'masculine'
         },
         she: {
-            person: 3,
+            self: 'she', person: 3,
             number: 1,
             gender: 'f', obj:'her', poss:'her', abs:'hers',
             genderDesc: 'feminine'
         },
         it: {
-            person: 3,
+            self: 'it', person: 3,
             number: 1,
             gender: 'n', obj:'it', poss:'its', abs:'its',
             genderDesc: 'neuter'
         },
         we: {
-            person: 1,
+            self: 'we', person: 1,
             number: 2, obj:'us', poss:'our', abs:'ours'
         },
         you: {
-            person: 2,
+            self: 'you', person: 2,
             number: 2, obj:'you', poss:'your', abs:'yours'
         },
         they: {
-            person: 3,
+            self: 'they', person: 3,
             number: 2, obj:'them', poss:'their', abs:'theirs'
         }
 
     },
-verbs = [
-//        [ 'miss'],
-//        [ 'kiss'],
-//        [ 'close'],
-//        [ 'push'],
-//        [ 'teach'],
-//        [ 'mix'],
-//        [ 'buzz'],
-//
-//        [ 'study'],
-//        [ 'copy'],
-//        [ 'try'],
-//
-//        [ 'play'],
-//        [ 'buy'],
-//        [ 'enjoy'],
-//
-//        [ 'go'],
-//        [ 'do'],
-//
-//        [ 'read'],
-//        [ 'study'],
-//        [ 'say'],
-//        [ 'enter'],
-//
-//        [ 'write'],
-//        [ 'make'],
-//        [ 'forgive'],
-//
-//        [ 'sit'],
-//        [ 'stop'],
-//        [ 'begin'],
-//
-//        [ 'mix'],
-//        [ 'relax'],
-//
-//        [ 'open'],
-//        [ 'order'],
-//
-//        [ 'stir'],
-//        [ 'refer'],
-//        [ 'air'],
-//        [ 'wear'],
-//        [ 'hear'],
-//
-//
-//        [ 'travel'],
-//        [ 'signal'],
-//        [ 'cancel'],
-//
-//        [ 'die'],
-//        [ 'lie'],
-//        [ 'tie'],
 
-
-    [ 'talk'],
-    [ 'cook'],
-    [ 'answer'],
-
-    [ 'live'],
-    [ 'type'],
-    [ 'explore'],
-    [ 'agree'],
-
-
-    [ 'nod'],
-    [ 'stop'],
-    [ 'permit'],
-
-    [ 'mix'],
-    [ 'relax'],
-
-    [ 'open'],
-    [ 'order'],
-
-    [ 'prefer'],
-    [ 'occur'],
-
-    [ 'travel'],
-    [ 'signal'],
-
-    [ 'compel'],
-    [ 'cool'],
-
-    [ 'dry'],
-    [ 'marry'],
-    [ 'study'],
-
-    [ 'play']
-
-    //[ 'have'],
-    //[ 'be']
-],
+    // https://english.tulagorod.ru/vocabulary/nouns
+    nouns = ["answer","comment","context","conversation","description","dialogue","discussion","dispute","emphasis","explanation","expression","letter","message","news","note","phrase","question","response","rumour","sentence","speech","statement","talk","text","theme","title","tone","topic","word","advice","assumption","attention","awareness","choice","comparison","conclusion","confidence","consideration","controversy","criterion","critic","criticism","curiosity","decision","distinction","doubt","enquiry","fact","factor","fantasy","idea","imagination","impression","information","insight","intelligence","intention","interest","interpretation","issue","lie","matter","meaning","memory","mind","mistake","notion","opinion","perception","perspective","planning","point","problem","psychology","query","reason","recognition","reflection","sense","solution","talent","thinking","thought","will","wisdom","anger","anxiety","approach","attitude","burden","category","chance","courage","definition","depression","dream","drive","emotion","estimate","exception","expectation","experience","fault","fear","feature","feeling","goal","good","grace","habit","hope","illusion","importance","initiative","joy","kind","list","look","luck","mercy","miracle","misery","mood","option","passion","patience","pity","pleasure","potential","pride","reaction","risk","rule","satisfaction","shame","sight","significance","spite","stress","surprise","terror","touch","truth","type","version","virtue","vision","abuse","addiction","affair","appeal","approval","argument","argument","behavior","betrayal","concern","conference","congratulation","contest","couple","date","debate","farewell","fellow","friend","friendship","honor","influence","interaction","introduction","involvement","joke","negotiation","neighbor","present","promise","quarrel","regret","relation","relationship","respect","secret","smile","stranger","suggestion","thanks","tip","trick","visit","warning","absence","alternative","belongings","example","exchange","existence","instance","loss","need","possession","presence","search","time","base","basis","beginning","bit of something","cause","chip","consequence","contents","detail","effect","end","insert","item","leftover","middle","outcome","part","piece","priority","queue","rest","result","session","set","shiver","stage","string","turn","whole","afternoon","April","August","autumn","century","date","day","decade","December","era","evening","fall","February","Friday","future","hour","January","July","June","March","May","minute","moment","Monday","month","morning","night","November","October","past","period","present","Saturday","season","second","September","spring","summer","Sunday","term","Thursday","time","Tuesday","Wednesday","week","while","winter","year","advance","area","arrangement","bottom","boundary","centre","corner","course","coverage","direction","distance","drag","drive","edge","fall","front","left","limit","location","motion","move","movement","passage","path","place","point","return","right","row","rush","side","step","tail","top","track","trail","turn","way","zone","album","apartment","bar","basement","bathroom","bed","bedroom","bowl","box","brick","brush","bucket","bunch","card","case","ceiling","cell","chair","cigarette","clock","cloth","collection","comfort","cover","cupboard","desk","door","duster","entrance","exit","fan","fence","flat","floor","frame","fridge","fun","furniture","garbage","garden","gate","glass","guest","hall","helping","home","hood","host","house","household","housing","kettle","key","kitchen","knife","lawn","lid","living","match","mess","mirror","net","oven","pack","pad","pillow","pool","pot","receipt","roll","roof","room","rubbish","shelf","sleep","sofa","spot","stair","stuff","table","tablet","tape","telephone","thing","tube","view","wall","wardrobe","window","alcohol","apple","beans","beer","bottle","bread","breakfast","butter","cake","can","carrot","cheese","chocolate","coffee","cook","corn","cream","cucumber","cup","dinner","dish","drink","fat","food","fork","fruit","garlic","honey","ingredient","juice","lunch","meal","meat","milk","onion","pepper","plate","potato","restaurant","rice","salad","salt","sauce","soda","spoon","sugar","supper","taste","tea","tomato","vegetables","wine","bag","belt","boots","button","cap","clothes","coat","dress","fashion","glasses","gloves","hat","jacket","label","pocket","purse","ring","shirt","shoes","skirt","suit","T-shirt","tie","trousers","wallet","watch","zip","ability","access","accountant","achievement","action","activity","administrator","advantage","adviser","agenda","agent","application","assistance","assistant","attempt","award","background","break","breakdown","career","cargo","case","chairman","challenge","characteristic","charge","check","chief","circumstance","colleague","command","company","complaint","conflict","consultant","contacts","contribution","control","cooperation","copy","craft","creation","day off","dealer","dedication","delivery","deputy","designer","difficulty","director","disguise","disorder","distribution","document","driver","duty","earnings","editor","effort","employee","employer","engineer","entry","executive","farmer","file","gift","head","help","hold","holiday","instruction","instrument","interview","job","journalist","labor","lack","lead","leadership","line","load","manner","means","meeting","mission","money","objective","observer","occasion","offer","office","operation","opponent","opportunity","order","participant","participation","partner","pass","performance","personnel","plan","policy","position","practice","print","procedure","producer","profession","professional","progress","project","prospect","purpose","quality","recommendation","record","recovery","report","reporter","repute","request","requirement","resolution","retirement","routine","salary","schedule","secretary","service","sheet","signal","site","skill","specialist","staff","stamp","struggle","success","support","target","task","team","tips","tool","trial","trouble","trust","use","visitor","wage","way","weekend","wizard","work","worker","account","advertisement","agency","agreement","asset","bank","benefit","bill","branch","brand","budget","business","buyer","cash","charge","claim","client","commission","competition","consumer","contract","corporation","cost","credit","crop","customer","deal","debt","decrease","deficit","demand","division","economy","employment","energy","enterprise","euro","evaluation","expense","facilities","facility","factory","fee","finance","firm","fortune","foundation","founder","fund","funding","gain","goods","income","increase","industry","investment","licence","loan","machine","maker","management","manufacturer","market","mine","oil","organization","owner","package","partnership","pay","payment","plant","poverty","price","product","production","profit","property","provision","rate","real estate","representation","representative","resource","revenue","sale","savings","share","spendings","stability","stock","storage","store","supplies","supply","tax","technology","term","trade","transfer","value","values","waste","waste","wealth","welfare","athlete","ball","bet","chess","coach","exercise","fan","game","hit","hockey","league","loser","match","player","race","round","run","score","sport","training","winner","workout","aid","blood","cancer","care","cold","cough","cure","cut","diet","disability","disease","doctor","drug","health","hospital","infection","injury","insurance","medicine","nurse","pain","patient","physician","pills","protein","recipe","relief","remedy","scratch","shock","surgery","survival","symptom","therapy","thirst","treatment","virus","abstract","class","classroom","college","curriculum","degree","discipline","dormitory","draft","education","figure","grade","graduate","history","knowledge","laboratory","learning","lesson","library","mark","preparation","professor","school","student","study","subject","teacher","test","testing","university","application","barrier","board","bracket","brake","call","capability","chain","chamber","communication","component","computer","concentration","concept","connection","content","core","cycle","damage","data","decline","destruction","device","discovery","electricity","element","engine","engineering","equipment","error","expansion","experiment","expert","failure","finding","function","fusion","gap","gear","historian","impact","improvement","keyboard","layer","link","mechanism","method","mode","model","network","object","observation","opening","origin","pattern","phase","phenomenon","platform","portion","possibility","power","principle","process","programme","radio","reduction","release","research","researcher","rise","sample","satellite","scale","scholar","science","scientist","scope","screen","settings","shift","standard","surface","survey","system","tank","tap","tear","technique","telescope","theory","transition","tube","user","wire","workaround","addition","amount","chart","circle","combination","cone","cube","degree","digit","dimension","equality","form","fraction","half","level","line","mean","million","minus","multiplication","number","pair","percent","plane","plus","quantity","quarter","range","ratio","rectangle","sphere","square","statistics","subtraction","table","total","triangle","unit","value","capacity","chemical","coal","colour","contrast","depth","exposure","fiber","force","glass","gold","height","inch","iron","kilogram","lead","length","mass","material","metal","meter","mile","mixture","noise","pace","paper","plank","plastic","pound","property","resistance","shape","silver","size","smell","smoke","speed","state","steel","strength","substance","temperature","tension","variation","volume","weight","width","wood","air","atmosphere","bank","blizzard","camp","climate","cloud","coast","dark","desert","dirt","disaster","diversity","dust","earth","east","environment","field","fire","flow","forest","ground","heat","hill","hole","ice","island","lake","landscape","light","lightning","moon","mountain","mud","nature","north","ocean","peak","planet","pole","pollution","rain","reality","relief","river","rock","sand","sea","selection","shade","shadow","shore","shower","silence","sky","snake","snow","soil","sort","south","space","star","stick","stone","storm","stream","sun","universe","water","wave","weather","west","wind","world","animal","bear","bee","bird","bite","bull","cat","cell","chicken","cock","cow","creature","crow","deer","dog","duck","egg","evolution","female","fish","flower","fly","fox","grass","growth","horse","leaf","lion","male","mice","mouse","pig","pigeon","plant","poultry","rabbit","root","seed","sheep","shell","sparrow","sting","tree","variety","wing","wolf","actor","adventure","art","article","artist","audience","author","band","bell","book","camera","celebrity","character","concert","culture","dance","dancer","design","drama","drawing","episode","essay","event","exhibition","fame","fiction","film","guitar","image","journal","language","literature","masterpiece","movie","music","musician","mystery","novel","page","paint","painting","pen","pencil","performance","photograph","piano","picture","play","plot","poem","poet","poetry","portrait","publication","reader","reading","role","scene","script","series","show","singer","song","stage","story","string","studio","style","tale","theater","tragedy","video","viewer","writer","writing","accident","address","aircraft","airline","airport","beach","beacon","bench","bike","block","board","boat","bridge","building","bus","car","car park","city","club","column","construction","crash","crew","deck","district","emergency","flight","fuel","gas","highway","hotel","lifeline","mail","mayor","museum","neighbourhood","outskirts","park","parking lot","passenger","pilot","port","post","post","resort","ride","road","route","seat","ship","shop","sidewalk","sightseeing","station","stop","street","ticket","tour","tower","town","traffic","train","transport","trip","truck","tyre","vehicle","vessel","wheel","yard","act","administration","authority","border","campaign","candidate","capital","citizen","community","convention","council","country","crisis","crowd","department","election","farm","flag","freedom","glory","government","governor","group","independence","institution","intervention","king","land","leader","majority","map","master","member","minister","minority","nation","opposition","party","peace","people","politician","politics","poll","population","president","protest","public","reform","refugee","region","regulation","resident","revolution","right","settlement","shelter","slave","society","speaker","spokesman","state","status","strike","supporter","symbol","territory","terror","tribe","union","village","volunteer","vote","voter","court","crime","danger","evidence","fine","gang","guard","incident","investigation","investigator","jailbreak","judge","judgment","jury","justice","killer","law","lawyer","legacy","legislation","murder","offence","officer","penalty","police","prison","prisoner","proof","prosecutor","protection","responsibility","safety","security","suicide","suspect","testimony","thief","threat","victim","violation","violence","witness","ally","ammunition","armor","army","banner","battle","bomb","bullet","combat","commander","defeat","enemy","fight","gun","hero","intelligence","machine gun","military","missile","rank","rifle","Roger!","shell","shooting","shot","soldier","strategy","tactics","troops","victory","war","weapon","adult","age","aunt","baby","beauty","birth","birthday","boy","boyfriend","bride","bridegroom","brother","child","childhood","children","cousin","daughter","death","desire","divorce","engagement","family","fate","father","funeral","gentleman","girl","girlfriend","grandfather","grandmother","guy","human","husband","identity","individual","jealousy","kid","kids","lady","life","lifetime","love","lover","man","marriage","men","mother","name","nephew","niece","parents","person","personality","proposal","relatives","sex","sister","son","surname","teenager","twins","uncle","wedding","wife","woman","women","youth","belief","Bible","buddhist","christian","church","devil","faith","god","heaven","hell","muslim","paradise","philosophy","prayer","priest","religion","sin","soul","spirit","arm","back","body","bone","brain","breast","breath","cheek","chest","ear","eye","face","feet","finger","foot","gait","gesture","hair","hand","head","hearing","heart","hip","knee","leg","lips","mouth","muscle","neck","nose","profile","shoulder",
+        "sight","skin","stomach","tear","teeth","throat","tissue","tongue","tooth","voice"],
+    // https://english.tulagorod.ru/vocabulary/verbs
+    verbs = ["answer","ask","cite","comment","describe","discuss","emphasize","explain","express","inform","interpret","joke","list","mention","name","narrate","quote","refer","reply","report","respond","say","scream","shout","sound","speak","state","talk","tell","translate","whisper","yell","acknowledge","advise","agree","analyse","assume","believe","calculate","choose","commit","compare","conclude","confuse","consider","contrast","count","criticize","decide","define","determine","disagree","doubt","focus","forget","guess","hint","identify","imagine","intend","invent","know","lie","link","match","mean","mind","mind","mislead","mistake","note","notice","object","plan","pray","predict","question","read","realize","recall","recognize","reflect","regard","remember","remind","select","suppose","think","understand","wonder","adapt","applaud","appreciate","boast","concern","delight","differ","disgrace","dislike","dream","enjoy","estimate","expect","fancy","fear","feel","hate","hear","help","hope","inspire","like","listen","long","look","love","matter","may","observe","overestimate","overhear","overreact","praise","prefer","pretend","react","regard","resemble","risk","see","seem","smell","stare","suffer","suit","taste","tend","tolerate","underestimate","view","want","watch","wish","worry","accept","address","admit","affect","allow","announce","apologize","appeal","approve","argue","assure","back","beg","behave","blame","borrow","bother","call","care","challenge","communicate","complain","contact","convince","cry","dare","date","declare","decline","demand","deny","depend","disturb","dominate","encourage","ensure","excuse","face","forbid","forgive","guarantee","honor","ignore","insist","introduce","invite","judge","justify","kid","kiss","laugh","lend","let","meet","misbehave","miss","neglect","offer","permit","persuade","prohibit","promise","propose","receive","recommend","refuse","regret","require","respect","scold","settle","smile","spare","subject","suggest","support","thank","treat","trick","trust","urge","visit","warn","welcome","act","arrange","attach","beat","bend","bind","bite","blow","break","build","capsize","catch","clear","close","collect","cover","cut","demonstrate","dig","draw","drop","grab","hand","hit","hold","hug","kick","knock","lean","load","lock","mix","mount","nod","open","pack","pick","plant","point","pose","pour","press","pull","push","put","ring","rub","scratch","show","shut","smoke","squeeze","stick","stick","stir","stretch","strike","sweep","tap","tear","tie","touch","untie","wind","wipe","wrap","abandon","acquire","add","appear","arise","be","belong","come","delete","deprive","disappear","discard","dump","eliminate","emerge","enter","escape","except","exchange","exclude","exist","find","free","gain","get","give","happen","hide","house","include","insert","involve","join","last","leave","limit","lose","miss","need","obtain","occupy","occur","possess","present","preserve","receive","release","remain","remove","reserve","retain","return","reveal","rid","search","seek","share","vanish","withdraw","abstract","accomplish","alternate","assemble","become","begin","cancel","cause","cease","change","compile","complete","consist","contain","continue","delay","divide","end","finish","gather","last","launch","pause","persist","postpone","prepare","proceed","quit","repeat","replace","result","reverse","separate","split","start","stop","substitute","terminate","wait","yield","accompany","admit","advance","approach","arrive","bear","bring","carry","climb","come","cross","drag","fall","float","fly","follow","go","hang","hurry","jump","land","lay","leave","lie","lift","mount","move","place","raise","reach","ride","rise","roll","run","rush","send","shake","shift","ship","sink","sit","slide","slip","spin","spread","stand","stay","stick","swim","swing","take","throw","toss","transport","travel","turn","walk","wave","bake","book","brush","celebrate","clean","comb","cook","do","dress","drink","eat","feed","fix","freeze","have","host","iron","keep","make","order","oversleep","relax","rest","shave","sleep","spend","take","use","wake","wash","waste","wear","achieve","apply","apply","appoint","arrange","assign","assist","attempt","attend","avoid","award","balance","base","check","claim","conduct","confirm","connect","construct","control","copy","create","deliver","deserve","design","develop","direct","dismiss","drive","dye","employ","engage","enhance","establish","fail","fill","fire","grant","guide","handle","head","help","hire","implement","improve","install","interview","lead","locate","maintain","manage","master","monitor","operate","order","paint","participate","pass","perform","practise","prevent","prove","provide","publish","realize","record","reject","rescue","resolve","review","save","schedule","serve","serve","set","sign","solve","specialize","succeed","supply","try","undertake","work","account","afford","benefit","buy","charge","contribute","convert","cost","deal","decrease","deposit","distribute","double","earn","evaluate","impose","increase","invest","manage","pay","produce","promote","purchase","rent","represent","save","sell","trade","transfer","bet","coach","compete","gamble","hunt","overcome","play","score","track","win","ache","breathe","examine","harm","hurt","recover","shiver","slake","sting","tire","treat","fail","graduate","learn","study","teach","train","adjust","charge","discover","display","enable","explore","fit","measure","test","absorb","alter","burn","burst","contract","expand","expose","extend","fade","flow","form","light","pop","rain","reflect","shape","shine","snap","snow","thunder","transform","weigh","compose","dance","draw","sing","star","write","accuse","arrest","charge","cheat","commit","confess","elect","found","investigate","kill","lift","offend","punish","rob","rule","settle","steal","struggle","sue","suspect","swear","testify","try","violate","vote","waste","aim","attack","capture","confront","damage","defend","destroy","fight","fire","force","protect","resist","retreat","ruin","shoot","surrender",
+        "threaten","adopt","bury","die","divorce","grow","inherit","live","marry","retire","survive"
+    ],
+    // https://english.tulagorod.ru/vocabulary/adjectives
+    adjectives = ["black","blue","brown","dark","deep","green","grey","light","orange","pale","pink","purple","red","silver","violet","white","yellow","aware","called","certain","clever","committed","confident","crazy","critical","curious","intellectual","interested","mad","moral","psychological","reasonable","silly","stupid","supposed","wise","acquainted","afraid","aggressive","amazing","angry","annoyed","annoying","anxious","apparent","appropriate","ashamed","attractive","awful","awkward","bad","bad-tempered","beautiful","best","better","bitter","blue","bored","boring","careful","comfortable","complicated","content","convenient","cool","correct","cruel","cute","dangerous","different","difficult","disappointed","dramatic","easy","emotional","evil","excellent","excited","exciting","explicit","fair","fake","false","familiar","famous","favorite","fed up","fine","fond","friendly","frightened","fun","funny","genuine","glad","good","great","handsome","happy","hard","honest","honourable","ideal","identical","implicit","inappropriate","indecent","interesting","kind","lovely","lucky","mean","neat","nervous","nice","normal","obvious","odd","patient","perfect","pleased","polite","popular","pretty","proper","proud","reddish","remarkable","ridiculous","right","risky","rude","sad","satisfied","scared","secret","sensitive","serious","severe","shy","significant","silent","simple","sincere","smart","smart","sorry","strange","strict","sure","surprised","surprising","sweet","tasty","terrible","tricky","true","ugly","uncomfortable","unknown","upset","useful","vain","visible","weird","well-done","womanish","boyish","childish","wonderful","worse","worst","wrong","absent","available","existing","involved","lost","own","present","related","shared","advanced","alternative","based on","both","broken","coherent","complete","concrete","each","either","entire","final","further","left","middle","neither","next","opposite","other","previous","ready","remaining","repeated","reverse","same","separate","such","ultimate","whole","ancient","annual","brief","constant","contemporary","current","daily","early","following","former, ex-","future","immediate","initial","instant","last","late","latest","long-term","long-time","modern","new","obsolete","ongoing","outdated","past","permanent","present","quick","recent","sudden","temporary","up-to-date","astray","bottom","central","close","deep","direct","distant","eastern","extensive","external","far","farther","farthest","front","furthest","inner","internal","left","local","located","long-distance","near","nearby","next door","northern","rear","remote","right","shallow","situated","southern","top","upper","western","able","accustomed","active","brilliant","busy","capable","chief","closed","creative","free","handy","home-made","incapable","literary","musical","open","part-time","principal","professional","responsible","ruined","skilled","subject","successful","suitable","thorough","top","used","willing","working","cheap","commercial","competitive","economic","effective","expensive","financial","free","greedy","industrial","joint","paid","poor","profitable","rich","valuable","worth","addicted","bald","blind","clinical","drunk","fat","healthy","hungry","hurt","ill","lean","medical","overcome","painful","pregnant","safe","sick","slim","sound","strong","thirsty","tired","weak","academic","broken","chemical","complex","digital","educational","electric","electronic","elementary","fundamental","genetic","intense","negative","positive","relevant","scientific","technical","visual","accurate","actual","additional","assistant","average","basic","classic","common","comprehensive","considerable","consistent","conventional","crucial","disposable","diverse","double","due","enough","equal","essential","extra","extraordinary","extreme","formal","frequent","general","growing","half","important","impossible","increased","increasing","key","large","leading","likely","limited","main","major","mass","minor","multiple","necessary","numerous","only","ordinary","original","particular","possible","potential","practical","primary","rare","real","received","regular","several","similar","single","spare","special","specific","standard","steady","substantial","total","typical","unique","universal","unlikely","unnecessary","unusual","unwanted","urgent","usual","various","vast","very","vital","big","bright","broad","clean","clear","cold","cool","dirty","dry","empty","enormous","fast","flat","fresh","full","giant","gold","heavy","high","hot","huge","light","little","long","loose","loud","low","massive","narrow","noisy","physical","powerful","pure","quiet","raw","rough","round","sharp","short","slow","small","smooth","soft","solid","square","stable","still","straight","tall","thick","thin","tight","tiny","tough","transparent","warm","wet","wide","wooden","biological","environmental","global","natural","solar","wild","civil","conservative","corporate","cultural","domestic","ethnic","folk","foreign","historic","independent","international","liberal","mutual","national","nuclear","official","political","public","racial","regional","rural","social","strategic","traditional","united","urban","accused","armed","criminal","defensive","guilty","illegal","innocent","just","legal","military","violent","vulnerable","aged","aged","alive","alone","awake","born","dead","dressed","elder","eldest","female","human","individual","junior","live","living","male","married","native","old",
+        "personal","private","senior","single","young","faithful","holy","religious","spiritual"],
     /**
      * Неправильные глаголы
      * ps: past simple

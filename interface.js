@@ -1,6 +1,9 @@
 Array.prototype._rand = function(){
     return this[ Math.floor(Math.random() * (this.length -1 - 0 + 1)) + 0 ];
 }
+Array.prototype._inArray = function(el){
+    return this.indexOf(el) !== -1;
+}
 
 function tableToArray(text){
     var rowAr = text.split("\n"), colAr,
@@ -749,7 +752,7 @@ function setLearnedEnImg( checked ){
 
 
 /////////////////
-var dictSmall = dict71700;//dict51100;
+var dictSmall = window.dict71700;//dict51100;
 
 function checkLearned( word, checked ){
     if(word.length>0){
@@ -1351,9 +1354,10 @@ function getA(w, forHtml){
 	
     return getStylizated(dict[ w ].a, forHtml);
 }
-function getStylizated(a, forHtml){
+function getStylizated(a, forHtml, innerStyle){
 	var br = forHtml ? "\n<br/>" : "\n",
         tb = forHtml ? "&nbsp; " : "  ",
+		innerStyle = innerStyle || '',
         tb3 = new Array(4).join(tb);
 
     return a.
@@ -1366,7 +1370,7 @@ function getStylizated(a, forHtml){
                         w[i]= wrapDictLink(w[i], dObj.fw);
                     }
                 }
-                return ' <b class="origin">'+ w.join('') +'</b> ';
+                return ' <b class="origin" style="'+innerStyle+'">'+ w.join('') +'</b> ';
             }
         ).
         //replace(/;([^;]+[;\s]*а\)\s)/ig, //; some text; а)
@@ -1473,6 +1477,8 @@ function storeHistoryList(){
 	let back = localStorage.getItem("dictionary.historyList");
 	if(back != null && back!='[]') localStorage.setItem("dictionary.historyList.back", back);
 	localStorage.setItem("dictionary.historyList", JSON.stringify(dh.getArray()));
+	// если контент отображает лист истории  - обновляем его
+	if(getElem('infoDictContent').firstChild.id=='HistoryListInd') showHistoryList();
 }
 function restoreHistoryList(){
 	let lst = localStorage.getItem("dictionary.historyList");
@@ -1485,6 +1491,7 @@ function restoreHistoryList(){
 }
 function showHistoryList(){
     let hList = [],
+	stored = JSON.parse(localStorage.getItem("dictionary.historyList")),
 	toolPanel = document.getElementById("toolPanel"),
 	toolPanelHeight = toolPanel ? toolPanel.getBoundingClientRect().height : 150,
 	cH = parseInt(((document.body.offsetHeight-toolPanelHeight)/27).toFixed())-1, // высота колонки для шрифта ~24
@@ -1495,14 +1502,15 @@ function showHistoryList(){
 			"<button title=\"remove from list "+(idx+1)+"\" onClick='dh.remove("+idx+");showHistoryList()'>&#10060;</button> "+
 			"<button "+(idx==0?dis:'title=\"to top\"')				+" onClick='dh.moveTop("+idx+");showHistoryList()'>&#11165;</button> "+
 			//"<button "+(idx==arr.length-1?dis:'title=\"to bottom\"')+" onClick='dh.moveBtm("+idx+");showHistoryList()'>&#11167;</button> "+
-			getStylizated(' '+it, true)+
+			getStylizated(' '+it, true, (stored==null || stored.indexOf(it)<0 ? 'background-color:gainsboro' : null))+
+			(stored!=null && stored.indexOf(it)>-1 ? '<sup title="stored">&#128190;</sup>' : '')+
 			(idx==currIdx ? ' &#8666;' : '' )+
 			'</br>'+
 		(idx%cH==cH-1?'</div>':'')
 		);
     });
 
-    getElem('infoDictContent').innerHTML = hList.join('');
+    getElem('infoDictContent').innerHTML = '<i id="HistoryListInd"></i>'+hList.join('');
 }
 
 function treatHistoryNavigator(word){

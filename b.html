@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--meta property="og:title" content="Русско-Английский Разговорник Тренажер"/>
+    <meta property="og:description" content="Веб-приложение 'Разговорник - тренажер' для изучения/повторения иностранных фраз, адаптировано под мобильные устройства."/>
+    <meta property="og:image" content="http://denisorlovmusic.ru/english4040/i/phrases.png"/>
+    <meta property="og:url" content= "http://denisorlovmusic.ru/english4040/phrases.html"/-->
+
+    <!--script type="text/javascript" src="http://yandex.st/jquery/1.6.1/jquery.min.js"></script-->
+
+	<!-- DICTIONARY -->
+	<script type="text/javascript" src="dict71700.js"></script>
+	<script type="text/javascript" src="trans.js"></script>
+	<script type="text/javascript" src="dictUtils.js"></script>
+	<script type="text/javascript" src="beginEnglishBase.js"></script>
+
+	<script type="text/javascript" src="interface.js"></script>
+	<script type="text/javascript" src="system.js"></script>
+	<script type="text/javascript" src="scheme.js"></script>
+	<script type="text/javascript" src="sets.js"></script>
+	<script type="text/javascript" src="utils.js"></script>
+    <title>Конструктор фраз</title>
+	<style>
+textarea{
+	display:none;
+}
+#lessonCombo{
+	width: 100%;
+	font-size: 20px;
+}
+#swMesure{
+    border-radius: 3px;
+}
+.contentPanel{
+    float: left;
+    width: 83%;
+	margin: 0;
+}
+.butPanel{
+    float: right;
+    width: 15%;
+	margin: 0;
+}	
+.but{
+	width: 95%;
+	padding: 15% 5%;
+	text-align: start;
+    margin: 0 0 8% 0;
+    font-size: 20px;
+	display: block;
+	overflow: hidden;
+}
+#phraseOutput{
+	font-size: 48px;
+	float: left;
+    width: 82%;
+}
+.blue{
+	color: blue;
+}
+.green{
+	color: green;
+}
+.transription{
+	color: orange;
+}
+
+#infoWrap{
+    display:none;
+    border: 1px solid navy;
+    width: 95%;
+    height: 95%;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.941176);
+	color: black;
+    padding: 2%;
+    border-radius: 5px;
+    box-sizing: border-box;
+    position: fixed;
+    right: 2%;;
+    bottom: 2%;;
+    left: 2%;
+    font-size: 2em;
+}
+#infoPanel{
+    float: right;
+    width: 3.5em;
+    overflow: auto;
+    height: 100%;
+}
+.ipBut,.dcBut{
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-bottom: 2px;
+}
+.ipBut{
+    float:right;
+    font-size: 2em;
+    width: 1.5em;
+    height: 20%;
+}
+.infoContent{
+    height: 100%;
+    overflow: auto;
+    display: none;
+}
+#infoSetting input,#infoSetting select{
+    text-align: center;
+    font-size: 100%;
+    width: 20%;
+    margin: 0.2em 0.2em 0 0;
+}
+
+td{
+	border: solid 1px grey;
+}
+span.word {
+	border-bottom: 1px dashed;
+	cursor: pointer;
+}
+	</style>
+</head>
+<body>
+
+<div class="contentPanel">
+	<!--div id="swMesure" style="border: 1px solid green;box-sizing: border-box;position: relative;" title="">
+		<div id="swmIndicator" style="background-color: green; text-align: center; color: white; width: 0%;"></div>
+	</div-->
+<div id="toolDiv">
+	<table id="tensesTbl"><tbody>
+	<tr>
+		<th><button onclick="bUtils.toggleAllChb('.tenses-chb')">Toggle all</button></th>
+		<th>Simple</th>
+		<th>Continuous</th>
+		<th>Perfect</th>
+		<th>PerfectContinuous</th>
+	</tr><tr>
+		<th>Past</th>
+		<td><input type="checkbox" value="PastSimple" id="PastSimple_chbId" class="tenses-chb"><label for="PastSimple_chbId">PastSimple</label></td>
+		<td><input type="checkbox" value="PastContinuous" id="PastContinuous_chbId" class="tenses-chb"><label for="PastContinuous_chbId">PastContinuous</label></td>
+		<td><input type="checkbox" value="PastPerfect" id="PastPerfect_chbId" class="tenses-chb"><label for="PastPerfect_chbId">PastPerfect</label></td>
+		<td><input type="checkbox" value="PastPerfectContinuous" id="PastPerfectContinuous_chbId" class="tenses-chb"><label for="PastPerfectContinuous_chbId">PastPerfectContinuous</label></td>
+	</tr><tr>
+		<th>Present</th>
+		<td><input type="checkbox" checked="checked" value="PresentSimple" id="PresentSimple_chbId" class="tenses-chb"><label for="PresentSimple_chbId">PresentSimple</label></td>
+		<td><input type="checkbox" value="PresentContinuous" id="PresentContinuous_chbId" class="tenses-chb"><label for="PresentContinuous_chbId">PresentContinuous</label></td>
+		<td><input type="checkbox" value="PresentPerfect" id="PresentPerfect_chbId" class="tenses-chb"><label for="PresentPerfect_chbId">PresentPerfect</label></td>
+		<td><input type="checkbox" value="PresentPerfectContinuous" id="PresentPerfectContinuous_chbId" class="tenses-chb"><label for="PresentPerfectContinuous_chbId">PresentPerfectContinuous</label></td>
+	</tr><tr>
+		<th>Future</th>
+		<td><input type="checkbox" value="FutureSimple" id="FutureSimple_chbId" class="tenses-chb"><label for="FutureSimple_chbId">FutureSimple</label></td>
+		<td><input type="checkbox" value="FutureContinuous" id="FutureContinuous_chbId" class="tenses-chb"><label for="FutureContinuous_chbId">FutureContinuous</label></td>
+		<td><input type="checkbox" value="FuturePerfect" id="FuturePerfect_chbId" class="tenses-chb"><label for="FuturePerfect_chbId">FuturePerfect</label></td>
+		<td><input type="checkbox" value="FuturePerfectContinuous" id="FuturePerfectContinuous_chbId" class="tenses-chb"><label for="FuturePerfectContinuous_chbId">FuturePerfectContinuous</label></td>
+	</tr>
+	</tbody></table>
+	<hr/>
+	<table id="modeTbl"><tbody>
+	<tr>
+		<th><button onclick="bUtils.toggleAllChb('.mode-chb')">Toggle all</button></th>
+		<th>Positive</th>
+		<th>Negative</th>
+		<th>Other</th>
+	</tr><tr>
+		<th>Statement</th>
+		<td><input type="checkbox" checked="checked" value="statementPositive" id="statementPositive" class="mode-chb"><label for="statementPositive">Statement Positive</label></td>
+		<td><input type="checkbox" checked="checked" value="statementNegative" id="statementNegative" class="mode-chb"><label for="statementNegative">Statement Negative</label></td>
+		<td><input type="checkbox" value="timeMarkers" id="timeMarkers" class="mode-chb"><label for="timeMarkers">Time Markers</label></td>
+	</tr><tr>
+		<th>Question</th>
+		<td><input type="checkbox" checked="checked" value="questionPositive" id="questionPositive" class="mode-chb"><label for="questionPositive">Question Positive</label></td>
+		<td><input type="checkbox" value="questionNegative" id="questionNegative" class="mode-chb"><label for="questionNegative">Question Negative</label></td>
+		<td><input type="checkbox" checked="checked" value="questionWords" id="questionWords" class="mode-chb"><label for="questionWords">Questiont Words</label></td>
+	</tr>
+	</tbody></table>
+	<hr/>Change:
+	<button onclick="bUtils.buildParams.verb = 	bUtils.dict.verbs._rand();bUtils.buildAndOut('phraseOutput');">Verb</button>
+	<button onclick="bUtils.buildParams.adjective = bUtils.dict.adjectives._rand();bUtils.buildAndOut('phraseOutput');">Adjective</button>
+	<button onclick="bUtils.buildParams.noun = bUtils.dict.nouns._rand();bUtils.buildAndOut('phraseOutput');">Noun</button>
+	<button onclick="bUtils.buildParams.questionWords = bUtils.buildParams.modes._inArray('questionWords')? bUtils.getQuestionWords()+' ' : '';bUtils.buildAndOut('phraseOutput');">Question Words</button>
+	<hr/>
+
+
+</div><!-- toolDiv -->
+
+	<div id="phraseOutput"></div>
+</div>
+<div class="butPanel">
+	<button id="buildAndOutBut" class="but" onclick="bUtils.initBuildParams(); bUtils.buildAndOut('phraseOutput')">Build!</button>
+	<button onclick="infoWrapToggle('infoSetting')" class="but">☭Setting</button>
+</div>
+
+<div style="clear:both"></div>
+<script type="text/javascript">
+function infoWrapToggle(infoContentId){
+	var i, elems = document.querySelectorAll('.infoContent');
+	for(i=0;i<elems.length;i++){
+		var infoContId = elems[i].id;
+		document.getElementById(infoContId).style.display = infoContId===infoContentId ? 'block' : 'none'
+	}
+
+	document.getElementById('infoWrap').style.display = infoContentId ? 'block' : 'none';
+
+}
+function changeTheme(night){
+	document.body.style.backgroundColor = night ? 'black' : 'white';
+    document.body.style.color = night ? 'white' : 'black';
+}
+</script>
+<div  id="infoWrap" style="">
+	<div id="infoPanel">
+        <input class="ipBut" title="Закрыть" type="button" value="&#215;" style="color: red;" onclick="infoWrapToggle();"/>
+		<input class="ipBut" title="Настройки" type="button" value="☭" style="" onclick="infoWrapToggle('infoSetting')">
+		<input class="ipBut" title="Помощь" type="button" value="&#9786;" style="" onclick="infoWrapToggle('infoHelp')">
+        <!-- $('.ipBut').height(Math.floor(100/($('.ipBut').length+1))+'%')// автоподгон высоты -->
+    </div>
+	<div class="infoContent" id="infoHelp" style=""><h3>&#9786; Help</h3><hr/>
+		<p>
+			Веб-приложение ....
+		</p>
+
+		<script type="text/javascript" src="pluso.js"></script>
+			<p>
+				&#174; Денис Орлов <img style="height: 0.8em;" src="http://denisorlovmusic.ru/favicon.ico"> <a href="http://denisorlovmusic.ru/" title="Электронная музыка - Денис Орлов">HOME</a>
+			</p>
+	</div>
+	<div class="infoContent" id="infoSetting" style=""><h3>☭ Settings</h3><hr/>
+		<label><input type="checkbox" onclick="changeTheme(this.checked)"/>
+			Night theme</label><br/>
+	</div>
+</div>
+<script type="text/javascript">
+	let bUtils = {
+		dict:{
+			nouns:["door","window","table","computer","mobile phone","pen","pencil","book","bag","key","watch","glasses","glass","car","purse","wallet","notebook","camera","brush","comb","mirror","clothes","bike","money","headphones","earphones","laptop","newspaper","scissors","umbrella","toy","ball","doll","map","piece of paper","towel","soap","toothbrush","bed","shoes","tissue","plate","spoon","flower","magazine","bus","floor","coat","ticket","chair"],
+			verbs:['swim', 'dance', 'work', 'be', 'have', 'do', 'know', 'take', 'can', 'can', 'need', 'need', 'should', 'should', 'think', 'see', 'give', 'like', 'buy', 'eat', 'sleep', 'drink', 'understand', 'write', 'read', 'speak', 'learn', 'forget', 'dream', 'play', 'drive', 'travel', 'start', 'stop', 'clean', 'help', 'run', 'cook', 'open', 'close', 'sing'],
+			adjectives:['small','big','high','low','long','short','tall','thin','fat','thick','hot','cold','narrow','wide','blunt','sharp']
+		},
+		getChecked: function(selector){
+			let res = [];
+			document.querySelectorAll(selector).forEach((it)=>{
+				if(it.checked) res.push(it.value);
+			});
+			return res;
+		},
+		toggleAllChb(selector){
+			let chd = false;
+			document.querySelectorAll(selector).forEach((it, ind)=>{
+				if(ind===0) chd = !it.checked;
+				it.checked = chd;
+			});
+		},
+		buildAndOut: function(outId){
+			let outElem = document.getElementById(outId),
+				res = bUtils.build();
+			outElem.innerHTML = '';
+			res.forEach((it)=>{
+				let div = document.createElement('div');
+				div.innerHTML = dictUtils.wrapInClass(it, dictUtils.WORD_CLASS);
+				outElem.appendChild(div);
+			});
+			dictUtils.initClass(dictUtils.WORD_CLASS);
+		},
+		buildParams:{},
+		initBuildParams: function(){
+			bUtils.buildParams.objPron = pronoun[getPronoun()];
+			bUtils.buildParams.possPron = pronoun[getPronoun()];
+			bUtils.buildParams.verb = 	bUtils.dict.verbs._rand();
+			bUtils.buildParams.noun = bUtils.dict.nouns._rand();
+			bUtils.buildParams.adjective = bUtils.dict.adjectives._rand();
+			bUtils.buildParams.modes = bUtils.getChecked('.mode-chb'); /*statementPositive,statementNegative,timeMarkers, questionPositive,questionNegative,questionWords*/
+			bUtils.buildParams.tenses = bUtils.getChecked('.tenses-chb');
+			bUtils.buildParams.questionWords = bUtils.buildParams.modes._inArray('questionWords')? bUtils.getQuestionWords()+' ' : '';
+		},
+		build: function(){
+			let res = [];
+			for(let i = 0; i<bUtils.buildParams.tenses.length;i++){
+				let tense = bUtils.buildParams.tenses[i],
+				timeMarkers = bUtils.buildParams.modes._inArray('timeMarkers')? ' '+bUtils.getTimeMarkers(tense) : '';
+				if(bUtils.buildParams.modes._inArray('statementPositive')){
+					res.push(bUtils.state(tense, 0, timeMarkers));
+				}
+				if(bUtils.buildParams.modes._inArray('statementNegative')){
+					res.push(bUtils.state(tense, 1, timeMarkers));
+				}
+				if(bUtils.buildParams.modes._inArray('questionPositive')){
+					res.push(bUtils.quest(tense, 0));
+				}
+				if(bUtils.buildParams.modes._inArray('questionNegative')){
+					res.push(bUtils.quest(tense, 1));
+				}
+
+			}
+			return res;
+		},
+		getTimeMarkers: function(tense){
+			return window['get'+tense+'Markers'] ?window['get'+tense+'Markers']() : '';
+		},
+		getQuestionWords: function(){
+			return ['where','when','why','how', 'how many hours','how much time']._rand();
+		},
+		state: function(tense, negative, timeMarkers){
+			return firstToUpper(bUtils.buildParams.objPron.self+' '+
+					verbToTense(bUtils.buildParams.verb, tense, bUtils.buildParams.objPron.person, bUtils.buildParams.objPron.number, negative)+' '+
+					bUtils.buildParams.possPron.poss+' '+bUtils.buildParams.adjective+' '+bUtils.buildParams.noun+timeMarkers+'.');
+		},
+		quest: function(tense, negative){
+			return firstToUpper(bUtils.buildParams.questionWords+askInTense(bUtils.buildParams.verb, tense, bUtils.buildParams.objPron.self, negative)+' '+
+					bUtils.buildParams.possPron.poss+' '+bUtils.buildParams.noun+'?'); // bUtils.buildParams.adjective+' '
+		},
+		createCheckBox: function(value, className, parent ){
+			let chBox = document.createElement('INPUT');
+			chBox.type = 'checkbox';
+			chBox.value = value;
+			chBox.id = value+'_chbId';
+			chBox.className = className;
+			let chBoxLabel = document.createElement('LABEL');
+			chBoxLabel.setAttribute("for", chBox.id);
+			chBoxLabel.innerHTML = value;
+			parent.appendChild(chBox);
+			parent.appendChild(chBoxLabel);
+		}
+	};
+	for(var i=0;i<SYSTEM.TENSES.length;i++){
+		//bUtils.createCheckBox(SYSTEM.TENSES[i], 'tenses-chb', toolDiv);
+	}
+
+	/*
+	let baseDict2 = beginEnglishBase.slice(1, 50);
+	bUtils.dict.nouns = nouns.filter((it)=>{return baseDict2._inArray(it)});
+	bUtils.dict.verbs = verbs.filter((it)=>{return baseDict2._inArray(it)});
+	bUtils.dict.adjectives = adjectives.filter((it)=>{return baseDict2._inArray(it)});
+	*/
+</script>
+<script>
+
+</script>
+</body>
+</html>

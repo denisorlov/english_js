@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<script type="text/javascript" src="speechMediaLib2.js"></script>
+	<script type="text/javascript" src="speechMediaLib3.js"></script>
 
 	<script type="text/javascript" src="cookieLib.js"></script>
 
@@ -25,7 +25,7 @@ body {
 }
 
 #objectPanel, #infoDict{
-	display:none;
+	/*display:none;*/
 	border: 1px solid navy;
 	width: 95%;
 	height: 95%;
@@ -90,11 +90,10 @@ body {
 	<select id="selTextEdit" style="width: 100px;">
 		<option value="">править тексты...</option>
 	</select>
-	<!--input type="button" value="Построить..." onclick="buildTable()"/-->
-	<select onchange="buildTableSelect(this)">
+	<select id="buildTableMode" onchange="buildTable(this.value)">
 		<option value="none" class="gray">построить таблицу:...</option>
-		<option>По фразам</option>
-		<option>По строкам</option>
+		<option value="by_phrases">По фразам</option>
+		<option value="by_lines">По строкам</option>
 	</select>
 	<input type="button" value="Завернуть..."  onclick="wrapToObj()"/>
 	<input type="checkbox" id="hotKeysOff"> <label for="hotKeysOff">Отключить горячие клавиши</label>
@@ -452,8 +451,9 @@ function loadForEdit(){
 	taEn.value = les.en;
 	taRu.value = les.ru;
 	taTr.value = les.tr || '';
+	let split_mode = les.split_mode || 'by_phrases';
 
-	buildTable();
+	buildTable(split_mode);
 }
 function resetForEdit(){
 	if(taEn.value.length>1 && !confirm('Точно очистить редактор?')) return;
@@ -466,6 +466,7 @@ function resetForEdit(){
 	taEn.value = '';
 	taRu.value = '';
 	taTr.value = '';
+	buildTableMode.value = 'none';
 }
 
 function playNext(){
@@ -526,6 +527,7 @@ function wrapToObj(){
 	let resObj = {
 				title: window.inTitle ? inTitle.value : '',
 				lev: window.selLevel ? selLevel.value : '',
+				split_mode: buildTableMode.value,
 				en: taEn.value,
 				ru: taRu.value,
 				tr: window.taTr ? taTr.value : ''
@@ -540,26 +542,24 @@ function wrapToObj(){
 function splitText(text){
 	return text.replace(/\n/g, '').replace(/([;\.!\?…]+)/g, '$1\n').trim().split('\n')
 }
-function buildTableSelect(sel){
-	switch(sel.value) {
-		case 'По фразам':
-			buildTable()
+function buildTable(split_mode){
+	let enArr, ruArr;
+	switch(split_mode) {
+		case 'by_phrases': //'По фразам'
+			enArr = splitText(taEn.value);
+			ruArr = splitText(taRu.value);
 			break;
-		case 'По строкам':
-			let enArr = taEn.value.split(/\n/).filter(function(s){return s.trim().length>0}),
-				ruArr = taRu.value.split(/\n/).filter(function(s){return s.trim().length>0});
-			buildPosTable(enArr, ruArr, []);
+		case 'by_lines': //'По строкам'
+			enArr = taEn.value.split(/\n/).filter(function(s){return s.trim().length>0});
+			ruArr = taRu.value.split(/\n/).filter(function(s){return s.trim().length>0});
 			break;
+		default:
+			return;
 	}
-	sel.value = 'none'; // reset
-}
-
-function buildTable(){
-	let enArr = splitText(taEn.value),
-		ruArr = splitText(taRu.value);
 	buildPosTable(enArr, ruArr, []);
 	initStoredCurrInd(enArr.length);
 }
+
 function resetPosTable(){
 	document.querySelectorAll("#posTable tbody tr").forEach(function(e){e.remove()});
 }

@@ -15,7 +15,7 @@ var timeFrame = ['second', 'minute', 'hour', 'day', 'week', 'month', 'year', 'de
 function getPresentSimpleMarkers(){
    var res='',
        preArr = [
-       ['today','usually','always', 'never','often','seldom','rarely','at weekends','sometimes','from time to time'], //
+       ['today','usually','at weekends','sometimes','from time to time'], //,'always', 'never','often','seldom','rarely'
        ['every', 'twice a', 'three times a', 'four or six times a'], // 'every day', 'twice a week'
        ['on']//'on MondayS'
    ];

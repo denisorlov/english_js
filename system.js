@@ -109,10 +109,6 @@ function getPossessivePronoun( person, number, gender ){
     return pronoun[ getPronoun( person, number, gender ) ].poss;
 }
 
-function randomVerb(){
-    return verbs[ getRandomInt(1, verbs.length-1 ) ][0];
-}
-
 function randomSystemPerson( out ){
     SYSTEM.LAST_WORD.person = getRandomInt(1,3);
     return out? SYSTEM.LAST_WORD.person :'';
@@ -258,10 +254,11 @@ var timeKind = ['Past', 'Present', 'Future'];
                             return (
                                 time == 'Future' ? ( negative ? 'wo' : 'will' ) :
                                 verb == 'be' || !verb ? window['verbTo' + time + 'Simple']('be'):
+                                verb == 'can' ? window['verbTo' + time + 'Simple']('can'):
                                 window['verbTo' + time + 'Simple']('do')
                             )+
                             ( negative? 'n’t' : '' )+' '+ pronoun +
-                            ( verb && ( verb!='be' || time == 'Future' ) ? ' '+ verb : '');
+                            ( verb && ( verb!='be' && verb!='can' && time != 'Future' ) ? ' '+ verb : '');
                         }
                     }
 
