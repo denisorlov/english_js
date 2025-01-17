@@ -984,7 +984,7 @@ function reinitStudyWords(e){//if ( e.ctrlKey )
             learning_dict[ key ] = {};
             if(window.beginEnglishBase && beginEnglishBase.indexOf(key)>-1){
                 var img = document.createElement('img');
-                img.src = 'http://begin-english.ru/img/word/'+key+'.jpg';
+                img.src = 'begin_english_img/'+key[0].toLowerCase()+'/'+key.toLowerCase()+'.jpg';//'http://begin-english.ru/img/word/'+key.toLowerCase()+'.jpg';
                 //if(i==els.length-1)
                 img.onload = function(e){
                     outInfo( (--unloadImg<1)? 'Загрузка картинок завершена.' : 'Загружается картинок: '+unloadImg);
@@ -1302,7 +1302,7 @@ function setImage(key, start){
     }
     else
     if(window.beginEnglishBase && beginEnglishBase.indexOf(origK)>-1){
-        img.src = 'http://begin-english.ru/img/word/'+origK+'.jpg';
+        img.src = 'begin_english_img/'+origK[0].toLowerCase()+'/'+origK.toLowerCase()+'.jpg';//'http://begin-english.ru/img/word/'+origK.toLowerCase()+'.jpg';
     }else{
         //if(start<5)
             //setTimeout( function(){ getGoogleImg( key, start) }, 1000*start );
