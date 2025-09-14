@@ -2269,7 +2269,7 @@ var /*beginEnglishBase = [
         'mediator': 'посредник',
         'medical': 'медицинский',
         'medicine': 'медицина',
-        'meet': 'удовлетворения',
+        'meet': 'встречать',
         'meeting': 'встреча',
         'melon': 'дыня',
         'melt': 'расплав',
