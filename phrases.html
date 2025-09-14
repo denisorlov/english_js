@@ -1509,7 +1509,7 @@ Trainer.prototype.toggle = function(selector){
 trainer.utils = {
 	initKeydown: function(){
 		document.onkeydown = function(event){
-			var id;
+			let id = null;
 			switch(event.keyCode) {
 			  case 37:
 				id = 'buttonLearnedPhrase';
@@ -1527,8 +1527,11 @@ trainer.utils = {
 				id = 'buttonfindByWord';
 				break;
 			}
-			let el = document.getElementById(id);
-			if(el) el.click();
+			let el = id != null ? document.getElementById(id) : null;
+			if(el) {
+                el.click();
+                event.preventDefault();
+            }
 		}
 	}, 
 	
@@ -1681,5 +1684,6 @@ window.onbeforeunload = function() {
 
 <script>showStatus = function(m){alert(m)};</script><!-- dumb -->
 <script type="text/javascript" src="statusPanel.js"></script>
+<script type="text/javascript" src="donateInfo.js"></script><script>donateInfoInit()</script>
 </body>
 </html>

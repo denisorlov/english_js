@@ -117,7 +117,7 @@
     }
 #swTranslation{
     color:green;
-
+    background-color: #ffffff99;
     /*
     height: 30%;
     line-height: 88%;
@@ -229,7 +229,7 @@
 	<div id="panel"></div>
 </div>
 
-<div id="studyWords">
+<div id="studyWords" style="font-size: 2em;" >
     <div id="swMesure" style="border: 1px solid green;box-sizing: border-box;position: relative;" title="">
         <div id="swmPosition" style="height: 90%; border: 1px solid red; position: absolute; background-color: red; left: 89%;"></div>
         <div id="swmIndicator" style="background-color: green; text-align: center; color: white; width: 0%;"></div>
@@ -264,7 +264,7 @@
             <audio id="swHtml5Player" src="http://www.howjsay.com/mp3/appear.mp3"></audio>
 
             <button style="float: right;" onclick="playWord( getElem('swOrigin').innerHTML );">&#9654;<br>play</button>
-            <button style="float: right;" onclick="infoWrapToggle();">&#9786;<br>help</button>
+            <button style="float: right;" onclick="initCookieElemValue();infoWrapToggle();">&#9786;<br>help</button>
 
             <select style="display: none" id="swDictMode" title="Режим словаря">
                 <option>common</option><option>irreg.verbs</option><!--option>fast dict</option-->
@@ -353,6 +353,7 @@
     height: 100%;
     overflow: auto;
     display: none;
+    font-size: 2em;
 }
 #infoSetting input,#infoSetting select{
     text-align: center;

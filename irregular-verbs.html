@@ -101,6 +101,9 @@ textarea{
     width: 20%;
     margin: 0.2em 0.2em 0 0;
 }
+.red{
+	color: red;
+}
 	</style>
 </head>
 <body>
@@ -272,6 +275,7 @@ textarea{
 </textarea>
 <textarea id="irregular verbs 7gr: 1!=2!=3">
 идти, уходить	go went gone	[gəʊ] [went] [ɡɒn]
+делать, сделать	do did done	[duː] [dɪd] [dʌn]
 родить	bear bore born	[bɛə] [bɔː] [bɔːn]
 носить(одежду)	wear wore worn	[wɛə] [wɔːr] [wɔːn]
 просыпаться, будить	wake woke woken	[weɪk] [wəʊk] [ˈwəʊ.kən]
@@ -281,7 +285,7 @@ textarea{
 (по)клясться, присягнуть	swear swore sworn	[swɛə] [swɔːr] [swɔːn]
 </textarea>
 </div>
-<textarea id="Результаты поиска"></textarea>
+<textarea id="Результаты поиска/ввода"></textarea>
 <textarea id="Mix"></textarea>
 <!--textarea id="Карьера, профессия(тест)">
 He is a software developer.	Он программист.	hiː ɪz ə ˈsɒftweə dɪˈvɛləpə. (ˈprəʊgræmə) 
@@ -302,8 +306,8 @@ He is a software developer.	Он программист.	hiː ɪz ə ˈsɒftw
 	onkeyup="phraseInputOnKeyup(this)" onkeydown="phraseInputOnKeydown(this)">
 <script type="text/javascript">
 	function phraseInputOnKeydown( input ){
-		if([37,38,39].indexOf(event.keyCode)>-1){// ◄ ▲ ►
-			event.stopPropagation();
+		if([38,40].indexOf(event.keyCode)>-1){// 37,39,◄ ► ▲ ▼ 
+			event.preventDefault();
 		}
 	}
 	function phraseInputOnKeyup( input ){
@@ -319,7 +323,7 @@ He is a software developer.	Он программист.	hiː ɪz ə ˈsɒftw
 		}
 		
 		if(event.keyCode==13){
-			if(curr!=null && curr.en==phraseInput.value){
+			if(curr!=null && curr.en.toLowerCase()==phraseInput.value.toLowerCase()){
 				phraseInput.value = '';
 				document.getElementById('buttonLearnedPhrase').click();
 				if(!trainer.isCurrentLessonFinished())
@@ -331,10 +335,11 @@ He is a software developer.	Он программист.	hiː ɪz ə ˈsɒftw
 <!-- Input -->	
 </div>
 <div class="butPanel">
-	<button id="buttonGooTr" class="but">▲Google...</button>
-	<button id="buttonNextPhrase" class="but">►Next...</button>
+	<!--button id="buttonGooTr" class="but">▲Google...</button-->
+	<button id="buttonRead" class="but">▲Read...</button>
+	<button id="buttonNextPhrase" class="but" style="display:none">►Next...</button>
 	<button id="buttonEngPhrase" class="but green">▼Hint...</button>
-	<button id="buttonLearnedPhrase" class="but">◄Learned!</button>
+	<button id="buttonLearnedPhrase" class="but" style="display:none">◄Learned!</button>
 	<button id="buttonfindByWord" onclick="trainer.utils.findByWord('phraseOutput')" class="but">🔎Find...</button>
 	<!--button onclick="window.open('http://denisorlovmusic.ru/');" class="but">@Author...</button-->
 	<button onclick="infoWrapToggle('infoSetting')" class="but">☭Setting</button>
@@ -384,31 +389,39 @@ function changeTheme(night){
 		<h4>Режимы обучения:</h4>
 		<ul>
 			<li>По темам - наборам в списке</li>
-			<li>По вопросам результатам поиска - "Find", "Результаты поиска"</li>
+			<li>По заданным словам - "Input words for learning", "Результаты поиска/ввода"</li>
+			<li>По вопросам результатам поиска - "Find", "Результаты поиска/ввода"</li>
 			<li>По случайным вопросам - "Mix"</li>
 			<li>От простых к сложным - "Pаge"</li>
 		</ul>
 		<h4>Как учить:</h4>
 		<ol>
-			<li>►Next... - смотреть следующий вопрос и переводить</li>
+			<li>Выбрать набор для обучения - верхний список</li>
+			<li>Фокус на строку ввода, дальше только печатаем ответы и помогаем кнопками/горячими клавишами</li>
+			<li>▲Read... - озвучить текущий вопрос</li>
+			<!--li>►Next... - смотреть следующий вопрос и переводить</li-->
 			<li>▼Hint...  - при затруднении использовать подсказку</li>
-			<li>◄Learned! - выученный вопрос метить "Выучено!"</li>
+			<!--li>◄Learned! - выученный вопрос метить "Выучено!"</li-->
 			<li>Но лучше всего - печатать ответ в поле ввода и нажимать Enter</li>
+			<li>Совет: Удобнее учить на компьютере</li>
 		</ol>
 		<h4>Кнопки и настройки:</h4>
 		<ul>
-			<li><i>▲Google...</i>: гор.клавиша ▲, открыть окно переводчика Google</li>
-			<li><i>►Next...</i>: гор.клавиша ►, перейти к следующему вопросу урока, либо рестартовать завершенный</li>
+			<li><i>▲Read...</i>: гор.клавиша ▲, озвучить, требует активировать голосовые движки в настройках (Speech Voices)</li>
+			<!--li><i>►Next...</i>: гор.клавиша ►, перейти к следующему вопросу урока, либо рестартовать завершенный</li-->
 			<li><i>▼Hint...</i>: гор.клавиша ▼, подсказать, первый клик "прикрытая" подсказка, второй - открытая</li>
-			<li><i>◄Learned!</i>: гор.клавиша ◄, пометить вопрос выученным в рамках данного урока</li>
-			<li><i>🔎Find...</i>: гор.клавиша F3, искать вопросы по выражению(принимает regex), составить урок из найденных вопросов в пункт "Результаты поиска"</li>
+			<!--li><i>◄Learned!</i>: гор.клавиша ◄, пометить вопрос выученным в рамках данного урока</li-->
+			<li><i>🔎Find...</i>: гор.клавиша F3, искать вопросы по выражению(принимает regex), составить урок из найденных вопросов в пункт "Результаты поиска/ввода"</li>
 			<li><i>☭Setting</i>: настройки приложения
 				<ul>
 					<li><i>Interchange native-foreign</i>: поменять языки местами</li>
 					<li><i>Show transription (or show on click)</i>: показывать транскрипцию автоматически, или только по клику по "вопросу"</li>
 					<li><i>Night theme</i>: ночной режим</li>
+					<!--li><i>Disable "◄Learned!"</i>: отключить кнопку ◄Learned!</li-->
+					<li><i>Input words for learning</i>: ввести определенные слова для изучения, через запятую</li>
 					<li><i>Make mixed lesson</i>: создать случайный микс вопросов в пункт списка "Mix"</li>
 					<li><i>Load paged lesson</i>: загрузить "страницу" урока в пункт списка "Pаge". Все вопросы группируются в страницы-уроки по принципу от простых коротких к сложным длинным, но примерно равного количества. Т.е. первые "страницы" содержат больше, но коротких вопросов, последние - меньше, но длинных. (искл.: самая последняя страница может быть неполной)</li>
+					<li><i>Speech Voices</i>: активировать голосовые движки для озвучивания, два нажатия</li>
 				</ul>
 			</li>
 		</ul>
@@ -425,17 +438,39 @@ function changeTheme(night){
 		Show transription (or show on click)</label><br/>
 		<label><input type="checkbox" onclick="changeTheme(this.checked)"/>
 		Night theme</label><br/>
+		<!--label><input type="checkbox" id="buttonLearnedToggler" onclick="document.getElementById('buttonLearnedPhrase').disabled = this.checked;" checked="checked">
+		Disable "◄Learned!"</label><br/-->
+		<label><input type="button" value="Words..." onclick="trainer.utils.findByWordArray()">
+		Input words for learning</label><br/>
 		<label><input type="button" value="Mix!" onclick="trainer.utils.makeMix(33)">
 		Make mixed lesson</label><br/>
 		<label><input type="text" value="1" onclick="trainer.utils.setNextPage(this)" id="InpPageId"><input type="button" value="Page" onclick="trainer.utils.loadPage(this.previousSibling.value)">
 		Load paged lesson</label><br/>
+		<!-- speechSynthesis -->
+		<label class="speechUtils"><select id="speechSynthesisVoicesEn"></select>
+			<input type="button" id="speechSynthesisVoicesInitBut" class="red" value="Activate, double click" onclick="speechSynthesisVoicesInit(this);"> Speech Voices</label><br/>
+		<script type="text/javascript" src="speechUtils.js" onerror="document.querySelectorAll('.speechUtils').forEach(function(i){i.remove()})"></script>
+		<script>
+			function speechSynthesisVoicesInit(button){
+				speechUtils.utteranceEn = new SpeechSynthesisUtterance();
+				if(speechUtils.initVoicesSelect('speechSynthesisVoicesEn', speechUtils.utteranceEn, '(Google UK English Male|English)')) {
+					speechUtils.voicesInited = true;
+					button.remove();
+					showStatus('Activated!');
+				}else{
+					showStatus('Activation failed, try once more...');
+				}
+			}
+		</script>
+		<!-- /speechSynthesis -->
 	</div>
 </div>
 <script type="text/javascript">
 var trainer = new Trainer(
 	'lessonCombo', 
-	'buttonNextPhrase', 'buttonEngPhrase', 'buttonLearnedPhrase', 
-	'buttonGooTr',
+	'buttonNextPhrase', 'buttonEngPhrase',
+	'buttonLearnedPhrase', //'buttonLearnedToggler',
+	'buttonRead',//'buttonGooTr',
 	'phraseOutput',
 	function(learned){ // setIndicatorFunction
 		var swmIndicator = document.getElementById("swmIndicator");
@@ -446,8 +481,9 @@ var trainer = new Trainer(
 
 function Trainer(
 	lessonComboId,
-	buttonNextPhraseId, buttonEngPhraseId, buttonLearnedPhraseId, 
-	buttonGooTranslateId,
+	buttonNextPhraseId, buttonEngPhraseId,
+	buttonLearnedPhraseId, //buttonLearnedTogglerId,
+	buttonReadId, //buttonGooTranslateId,
 	phraseOutputId,
 	setIndicatorFunction
 ){
@@ -548,6 +584,9 @@ function Trainer(
 		_this.setIndicator( ind );
 		checkEmptyOrNext(ind);
 	};
+	function _read(){
+		speechUtils.play(currentLessons[currentIndex].en.replaceAll(' ', ','), speechUtils.utteranceEn, 'see Settings: Activate Speech Voices');
+	}
 	function _openGooTr(event, top, left, width,height){
 		if(currentLessons.length<1){
 			alert(msg_EmptyLesson); return;
@@ -611,7 +650,8 @@ function Trainer(
 		document.getElementById(buttonNextPhraseId).onclick = _showNextPhrase;
 		document.getElementById(buttonEngPhraseId).onclick = _showEngPhrase;
 		document.getElementById(buttonLearnedPhraseId).onclick = _markLearnedPhrase;
-		document.getElementById(buttonGooTranslateId).onclick = _openGooTr;
+		//document.getElementById(buttonGooTranslateId).onclick = _openGooTr;
+		document.getElementById(buttonReadId).onclick = _read;
 	}());
 };
 Trainer.prototype.toggle = function(selector){
@@ -623,18 +663,18 @@ Trainer.prototype.toggle = function(selector){
 
 trainer.utils = {
 	initKeydown: function(){
-		document.onkeydown = function(event){
+		document.getElementById('phraseInput').onkeydown = function(event){
 			var id;
 			switch(event.keyCode) {
-			  case 37:
+			  /*case 37:
 				id = 'buttonLearnedPhrase';
-				break;
+				break;*/
 			  case 38:
-				id = 'buttonGooTr';
+				id = 'buttonRead';//'buttonGooTr';
 				break;
-			  case 39:
+			  /*case 39:
 				id = 'buttonNextPhrase';
-				break;
+				break;*/
 			  case 40:
 				id = 'buttonEngPhrase';
 				break;
@@ -654,7 +694,8 @@ trainer.utils = {
 		ind = trainer.getRandomInt(0, arr.length-1, true);
 		return arr[ind];
 	}()),
-	findResultId: 'Результаты поиска',
+	wordArray: 'go,ride,swim,come,see,have',
+	findResultId: 'Результаты поиска/ввода',
 	mixId: 'Mix',
 	getSkipIds: function(){
 		return [this.findResultId, this.mixId];
@@ -692,6 +733,42 @@ trainer.utils = {
 			document.getElementById(phraseOutputId).innerHTML = resMess+':<br/>'+result.join('<br/>\n');
 			document.getElementById(this.findResultId).value = resLesson.join('\n');
 			document.querySelector('option[value="'+this.findResultId+'"]').innerHTML = resMess+': '+w;
+		}
+	},
+	findByWordArray: function(){
+		let w = prompt('Input words for learning', this.wordArray);
+		if(w==='' || w==null) return;
+		
+		this.wordArray = w;
+		var wordArray = w.split(/\s*,\s*/),
+			resLesson = [],
+			skipId = this.getSkipIds(),		
+			i, q, k, aLessons, oLesson,
+			tas = document.getElementsByTagName('textarea');
+		for(i=0;i<tas.length;i++){
+			if(skipId.indexOf(tas[i].id)>-1) continue; // skip
+			aLessons = trainer.getLessonArray(tas[i].id);
+			for(q=0;q<aLessons.length;q++){
+				oLesson = aLessons[q];
+				let word = oLesson.en.split(/\s+/)[0];
+				for(k=wordArray.length-1;k>=0;k--){
+					if(word.toLowerCase()==wordArray[k].toLowerCase()){
+						this._resLessonPush(resLesson, oLesson);
+						wordArray.splice(k, 1); // начиная с индекса k, удалить 1 элемент
+						break; 
+					}
+				}
+				if(wordArray.length<1) break;
+			}
+			if(wordArray.length<1) break;
+		}
+		if(wordArray.length>0){
+			showStatus('Not found: '+wordArray.join(', '));
+		}
+		if(resLesson.length>0){
+			var resMess = this.findResultId+' ('+resLesson.length+')';
+			document.getElementById(this.findResultId).value = resLesson.join('\n');
+			document.querySelector('option[value="'+this.findResultId+'"]').innerHTML = resMess;
 		}
 	},
 	/** начальный размер страницы, коэффициент повышения */
@@ -793,5 +870,7 @@ window.onbeforeunload = function() {
 };
 
 </script>
+<script type="text/javascript" src="statusPanel.js"></script>
+<script type="text/javascript" src="donateInfo.js"></script><script>donateInfoInit()</script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 function donateInfoInit(position) {
-    return;
+    //return;
     //if(!/https*:/.test(window.location.protocol)) return; // only for http/https
     // defaults
     position = position || 'position:fixed;top:0;right:0;'; //position:fixed;bottom:0;left:0;
@@ -49,13 +49,16 @@ function donateInfoInit(position) {
         'Чему бы ты ни учил, будь краток.|Гораций',
         'Я не могу никого ничему научить, я только могу заставить думать.|Сократ'
     ];
+    Array.prototype._rand = function(){
+        return this[ Math.floor(Math.random() * (this.length -1 - 0 + 1)) + 0 ];
+    }
     let citateArr = citates._rand().split('|'),
         donateInfo = document.createElement('div');
     donateInfo.id = 'donateInfo';
     donateInfo.style.cssText = position+"display:none;font-size:1.5em;background-color: #fffffff0;" +
         "border:dashed 2px green;text-align:center;padding: 0.5em;border-radius:0.5em;max-width: 30em;";
     donateInfo._shCrd = function(el){
-        el.innerHTML='Сбер: <b>54'+'69'+' 55'+'00'+' 50'+'22'+' 35'+'66</b>';
+        el.innerHTML='Сбер: <b>2202 '+'2061 '+'7289 '+'7493</b>';
         el.style.textDecoration = 'none ';
     };
     donateInfo.innerHTML = 'Спасибо, что пользуетесь приложениями.<br/>'
